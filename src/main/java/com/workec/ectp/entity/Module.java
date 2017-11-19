@@ -1,14 +1,16 @@
 package com.workec.ectp.entity;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 @Entity
-public class ModuleEntity extends TimeEntity{
+public class Module extends TimeEntity{
 
     private static final long serialVersionUID = 1L;
 
@@ -16,12 +18,25 @@ public class ModuleEntity extends TimeEntity{
     @GeneratedValue
     private int id;
 
+    @Column(length=50)
     @NotBlank(message = "模块名称不能为空")
-    @Size(min=1,max=50,message = "模块名称长度必须在1-50之间")
+    @Size(max = 50, message = "模块名称长度不能超过50")
     private String name;
 
-    private int parantId;
+    private int parentId;
 
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    //必须要有构造函数
+    public Module(){
+
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -43,13 +58,13 @@ public class ModuleEntity extends TimeEntity{
         this.name = name;
     }
 
-    public int getParantId() {
-        return parantId;
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + id +
+                "\"name\":\"" + name + '\"' +
+                ", \"parentId\":" + parentId +
+                '}';
     }
-
-    public void setParantId(int parantId) {
-        this.parantId = parantId;
-    }
-
 
 }
