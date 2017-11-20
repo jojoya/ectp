@@ -4,8 +4,10 @@ import com.workec.ectp.dao.ModuleDao;
 import com.workec.ectp.entity.Module;
 import com.workec.ectp.entity.ModuleTree;
 import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.ResultWithData;
 import com.workec.ectp.enums.BaseResultEnum;
-import com.workec.ectp.utils.ResultUtil;
+import com.workec.ectp.utils.ResultWithDataListUtil;
+import com.workec.ectp.utils.ResultWithDataObjectUtil;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,90 +28,90 @@ public class ModuleService {
 
     private Result<Module> checkResult;
 
-    public Result<Module> getModuleList() throws Exception {
+    public ResultWithData<Module> getModuleList() throws Exception {
 
-        return ResultUtil.success(moduleDao.findAll());
+        return ResultWithDataObjectUtil.success(moduleDao.findAll());
     }
 
-    public Result<Module> addModule(@Valid Module module, BindingResult bindingResult) {
+    public ResultWithData<Module> addModule(@Valid Module module, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return ResultUtil.error(
+            return (ResultWithData)ResultWithDataObjectUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
         module.setName(module.getName());
         module.setParentId(module.getParentId());
 
-        return ResultUtil.success(moduleDao.save(module));
+        return ResultWithDataObjectUtil.success(moduleDao.save(module));
     }
 
-    public Result<Module> updateModule(@Valid Module module, BindingResult bindingResult) {
+    public ResultWithData<Module> updateModule(@Valid Module module, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return ResultUtil.error(
+            return (ResultWithData)ResultWithDataObjectUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
         module.setName(module.getName());
         module.setParentId(module.getParentId());
 
-        return ResultUtil.success(moduleDao.save(module));
+        return ResultWithDataObjectUtil.success(moduleDao.save(module));
     }
 
     public Result<Module> deleteModuleById(Integer id) {
-        checkResult = checkId(id);
+        checkResult = CheckId(id);
         if(checkResult!=null){
             return checkResult;
-        }else if (moduleDao.findChildsCountByParentId(id) > 0) {
-            return ResultUtil.error(121, "存在下级");
+        }else if (moduleDao.findChildrenCountByParentId(id) > 0) {
+            return ResultWithDataObjectUtil.error(121, "存在下级");
         }else {
             moduleDao.delete(id);
-            return ResultUtil.success();
+            return ResultWithDataObjectUtil.success();
         }
     }
 
-    public Result<Module> findModuleById(Integer id) {
-        checkResult = checkId(id);
+    public ResultWithData<Module> findModuleById(Integer id) {
+        checkResult = CheckId(id);
         if(checkResult!=null){
-            return checkResult;
+            return (ResultWithData)checkResult;
         }else {
-            return ResultUtil.success(moduleDao.findOne(id));
+            return ResultWithDataObjectUtil.success(moduleDao.findOne(id));
         }
     }
 
-    public Result<Module> findModuleListByName(String name) {
+    public ResultWithData<Module> findModuleListByName(String name) {
         if (trim(name) == null || trim(name).equals("")) {
-            return ResultUtil.error(
+            return (ResultWithData)ResultWithDataListUtil.error(
                     BaseResultEnum.PARAMETER_IS_NULL.getCode(),
-                    BaseResultEnum.PARAMETER_IS_NULL.getMessage(), "[name]");
+                    "name"+BaseResultEnum.PARAMETER_IS_NULL.getMessage());
         }
         List<Module> list = moduleDao.findByName(name);
         if (list == null) {
-            return ResultUtil.error(
+            return (ResultWithData)ResultWithDataListUtil.error(
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),
                     BaseResultEnum.DATA_NOT_EXIST.getMessage());
         } else {
-            return ResultUtil.success(list);
+            return ResultWithDataListUtil.success((ArrayList)list);
         }
 
     }
 
-    public Result<Module> findChildsCountByParentId(Integer id) throws JSONException {
-        checkResult = checkId(id);
+    public ResultWithData<Module> findChildrenCountByParentId(Integer id) throws JSONException {
+        checkResult = CheckId(id);
         if(checkResult!=null){
-            return checkResult;
+            return (ResultWithData)checkResult;
         }else {
-            return ResultUtil.success(moduleDao.findChildsCountByParentId(id));
+            return ResultWithDataObjectUtil.success(moduleDao.findChildrenCountByParentId(id));
         }
     }
 
-    public Result<Module> findChildsByParentId(Integer id) throws JSONException {
-        checkResult = checkId(id);
+    public ResultWithData<Module> findChildrenByParentId(Integer id) throws JSONException {
+        checkResult = CheckId(id);
         if(checkResult!=null){  //id不能为空，数据也不能为空
-            return checkResult;
+            return (ResultWithData)checkResult;
         }else {
-            return ResultUtil.success(getModuleTree(id));
+            return ResultWithDataObjectUtil.success(getModuleTree(id));
         }
     }
 
@@ -117,18 +119,18 @@ public class ModuleService {
         ModuleTree moduleTree = new ModuleTree();
         moduleTree.setId(id);
         moduleTree.setName(findModuleById(id).getData().getName());
-        List<Module> list = moduleDao.findChildsByParentId(id);
+        List<Module> list = moduleDao.findChildrenByParentId(id);
         if(list.isEmpty()) {
-            moduleTree.setChilds(null);
+            moduleTree.setChildren(null);
         }else {
-            List<ModuleTree> treeList =getChildList(list);
-            moduleTree.setChilds(treeList);
+            List<ModuleTree> treeList =getChildrenList(list);
+            moduleTree.setChildren(treeList);
         }
 
         return moduleTree;
     }
 
-    public List<ModuleTree> getChildList(List<Module> list){
+    public List<ModuleTree> getChildrenList(List<Module> list){
 
         List<ModuleTree> list1 = new ArrayList<ModuleTree>();
 
@@ -140,16 +142,16 @@ public class ModuleService {
         return list1;
     }
 
-    public Result<Module> checkId(Integer id) {
+    public ResultWithData<Module> CheckId(Integer id) {
 
         if (id == null || id.equals("")) {
-            return ResultUtil.error(
+            return ResultWithDataObjectUtil.error(
                     BaseResultEnum.PARAMETER_IS_NULL.getCode(),
                     BaseResultEnum.PARAMETER_IS_NULL.getMessage(), "[id]");
         }else if (id!=0 && moduleDao.findOne(id) == null) {
-            return ResultUtil.error(
+            return ResultWithDataObjectUtil.error(
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),
-                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage(),"[id]");
         }
         return null;
     }

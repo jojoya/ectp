@@ -5,7 +5,7 @@ import java.util.List;
 public class ModuleTree {
     private Integer id;
     private String name;
-    private List<ModuleTree> childs;
+    private List<ModuleTree> children;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class ModuleTree {
         this.name = name;
     }
 
-    public List<ModuleTree> getChilds() {
-        return childs;
+    public List<ModuleTree> getChildren() {
+        return children;
     }
 
-    public void setChilds(List<ModuleTree> childs) {
-        this.childs = childs;
+    public void setChildren(List<ModuleTree> children) {
+        this.children = children;
     }
 }

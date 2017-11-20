@@ -1,12 +1,12 @@
 package com.workec.ectp.handle;
 
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.workec.ectp.entity.Result;
 import com.workec.ectp.enums.BaseResultEnum;
-import com.workec.ectp.exception.ModuleException;
 import com.workec.ectp.exception.ModuleFreedomException;
 import com.workec.ectp.utils.ResultUtil;
+import com.workec.ectp.utils.ResultWithDataListUtil;
+import com.workec.ectp.utils.ResultWithDataObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
