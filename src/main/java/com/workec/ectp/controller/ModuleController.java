@@ -47,15 +47,15 @@ public class ModuleController {
     }
 
     /* 根据当前节点ID统计直属子节点数量 */
-    @GetMapping(value = "/findChildsCountByParantId/{id}")
-    public Result<Module> findChildsCountByParantId(@PathVariable("id") Integer id) throws Exception {
-        return moduleService.findChildsCountByParantId(id);
+    @GetMapping(value = "/findChildsCountByParentId/{id}")
+    public Result<Module> findChildsCountByParentId(@PathVariable("id") Integer id) throws Exception {
+        return moduleService.findChildsCountByParentId(id);
     }
 
     /* 根据当前节点ID查询直属子节点信息 */
-    @GetMapping(value = "/findChildsByParantId/{id}")
-    public Result<Module> findChildsByParantId(@PathVariable("id") Integer id) throws Exception {
-        return moduleService.findChildsByParantId(id);
+    @GetMapping(value = "/findChildsByParentId/{id}")
+    public Result<Module> findChildsByParentId(@PathVariable("id") Integer id) throws Exception {
+        return moduleService.findChildsByParentId(id);
     }
 
     /* 按照name查询模块 */

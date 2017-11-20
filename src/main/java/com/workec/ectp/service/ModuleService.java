@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 import static jdk.nashorn.internal.objects.NativeString.trim;
@@ -60,7 +61,7 @@ public class ModuleService {
         checkResult = checkId(id);
         if(checkResult!=null){
             return checkResult;
-        }else if (moduleDao.findChildsCountByParantId(id) > 0) {
+        }else if (moduleDao.findChildsCountByParentId(id) > 0) {
             return ResultUtil.error(121, "存在下级");
         }else {
             moduleDao.delete(id);
@@ -94,16 +95,16 @@ public class ModuleService {
 
     }
 
-    public Result<Module> findChildsCountByParantId(Integer id) throws JSONException {
+    public Result<Module> findChildsCountByParentId(Integer id) throws JSONException {
         checkResult = checkId(id);
         if(checkResult!=null){
             return checkResult;
         }else {
-            return ResultUtil.success(moduleDao.findChildsCountByParantId(id));
+            return ResultUtil.success(moduleDao.findChildsCountByParentId(id));
         }
     }
 
-    public Result<Module> findChildsByParantId(Integer id) throws JSONException {
+    public Result<Module> findChildsByParentId(Integer id) throws JSONException {
         checkResult = checkId(id);
         if(checkResult!=null){  //id不能为空，数据也不能为空
             return checkResult;
@@ -113,10 +114,10 @@ public class ModuleService {
     }
 
     public ModuleTree getModuleTree(Integer id){
-        ModuleTree moduleTree = null;
+        ModuleTree moduleTree = new ModuleTree();
         moduleTree.setId(id);
         moduleTree.setName(findModuleById(id).getData().getName());
-        List<Module> list = moduleDao.findChildsByParantId(id);
+        List<Module> list = moduleDao.findChildsByParentId(id);
         if(list.isEmpty()) {
             moduleTree.setChilds(null);
         }else {
@@ -129,7 +130,7 @@ public class ModuleService {
 
     public List<ModuleTree> getChildList(List<Module> list){
 
-        List<ModuleTree> list1 = null;
+        List<ModuleTree> list1 = new ArrayList<ModuleTree>();
 
         for (int i = 0; i < list.size(); i++) {
             int id = list.get(i).getId();
