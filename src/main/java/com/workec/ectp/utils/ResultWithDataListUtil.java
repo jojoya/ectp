@@ -1,6 +1,5 @@
 package com.workec.ectp.utils;
 
-import com.workec.ectp.entity.Result;
 import com.workec.ectp.entity.ResultWithData;
 import com.workec.ectp.enums.BaseResultEnum;
 

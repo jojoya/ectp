@@ -1,5 +1,9 @@
 package com.workec.ectp.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+//@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Result<T> {
 
     /* 错误码 */
