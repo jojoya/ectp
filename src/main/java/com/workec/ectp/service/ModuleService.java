@@ -24,6 +24,9 @@ public class ModuleService {
     @Autowired
     private ModuleDao moduleDao;
 
+    @Autowired
+    private ProjectModuleRelationDao projectModuleRelationDao;
+
     private Result<Module> checkResult;
 
     public ResultWithData<Module> getModuleList() throws Exception {
@@ -105,10 +108,15 @@ public class ModuleService {
     }
 
 //xxxxxxxxxxxxxxxxxxxxxx
-    public ResultWithData<Module> findModuleTreeByProjectId(Integer id) {
-        ProjectModuleRelationDao projectModuleRelationDao = new ProjectModuleRelationDao;
-        projectModuleRelationDao.findModuleIdByProjectId(id);
-            return null;
+    public ResultWithData<Module> findModuleTreeByProjectId(Integer id) throws JSONException {
+        List<ModuleTree> moduleList = new ArrayList<ModuleTree>();
+        List<ProjectModuleRelation> relationList = projectModuleRelationDao.findModuleIdByProjectId(id);
+        for(ProjectModuleRelation projectModuleRelation : relationList){
+            int moduleId = projectModuleRelation.getModuleId();
+            moduleList.add(getModuleTree(moduleId));
+        }
+
+            return ResultWithDataObjectUtil.success(moduleList);
     }
 
 
