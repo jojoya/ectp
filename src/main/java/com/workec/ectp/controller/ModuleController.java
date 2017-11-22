@@ -58,6 +58,12 @@ public class ModuleController {
         return moduleService.findChildrenByParentId(id);
     }
 
+    /* 根据项目ID查询下级模块信息 */
+    @GetMapping(value = "/module/findModuleTreeByProjectId/{id}")
+    public Result<Module> findModuleTreeByProjectId(@PathVariable("id") Integer id) throws Exception {
+        return moduleService.findModuleTreeByProjectId(id);
+    }
+
     /* 按照name查询模块 */
     @GetMapping(value = "/module/findModuleListByName/{name}")
     public Result<Module> findModuleListByName(@PathVariable("name") String name) throws Exception {

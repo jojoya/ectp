@@ -1,10 +1,8 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.dao.ModuleDao;
-import com.workec.ectp.entity.Module;
-import com.workec.ectp.entity.ModuleTree;
-import com.workec.ectp.entity.Result;
-import com.workec.ectp.entity.ResultWithData;
+import com.workec.ectp.dao.ProjectModuleRelationDao;
+import com.workec.ectp.entity.*;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.utils.ResultWithDataListUtil;
 import com.workec.ectp.utils.ResultWithDataObjectUtil;
@@ -105,6 +103,14 @@ public class ModuleService {
             return ResultWithDataObjectUtil.success(moduleDao.findChildrenCountByParentId(id));
         }
     }
+
+//xxxxxxxxxxxxxxxxxxxxxx
+    public ResultWithData<Module> findModuleTreeByProjectId(Integer id) {
+        ProjectModuleRelationDao projectModuleRelationDao = new ProjectModuleRelationDao;
+        projectModuleRelationDao.findModuleIdByProjectId(id);
+            return null;
+    }
+
 
     public ResultWithData<Module> findChildrenByParentId(Integer id) throws JSONException {
         checkResult = CheckId(id);
