@@ -16,8 +16,8 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
-    /* 查询模块列表 */
-    @GetMapping(value = "/project/getProjectList")
+    /* 查询项目列表 */
+    @GetMapping(value = "/project/getlist")
     public Result<Module> getModuleList() throws Exception {
         return projectService.getProjectList();
     }
@@ -40,8 +40,8 @@ public class ProjectController {
 //        return moduleService.deleteModuleById(id);
 //    }
 
-    /* 按照id查询模块 */
-    @GetMapping(value = "/project/findProjectById/{id}")
+    /* 按照id查询项目 */
+    @GetMapping(value = "/project/findbyid/{id}")
     public Result<Module> findProjectById(@PathVariable("id") Integer id) throws Exception {
         return projectService.findProjectById(id);
     }

@@ -3,8 +3,7 @@ package com.workec.ectp.service;
 import com.workec.ectp.dao.ProjectDao;
 import com.workec.ectp.entity.Module;
 import com.workec.ectp.entity.Result;
-import com.workec.ectp.entity.ResultWithData;
-import com.workec.ectp.utils.ResultWithDataObjectUtil;
+import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,42 +14,44 @@ public class ProjectService {
     @Autowired
     private ProjectDao projectDao;
 
-    public ResultWithData<Module> getProjectList() throws Exception {
+//    查询项目列表
+    public Result<Module> getProjectList() throws Exception {
 
-        return ResultWithDataObjectUtil.success(projectDao.findAll());
+        return ResultUtil.success(projectDao.findAll());
     }
 //
-//    public ResultWithData<Module> addProject(@Valid Project project, BindingResult bindingResult) {
+//    public Result<Module> addProject(@Valid Project project, BindingResult bindingResult) {
 //
 //        if (bindingResult.hasErrors()) {
-//            return (ResultWithData)ResultWithDataObjectUtil.error(
+//            return (Result)ResultUtil.error(
 //                    BaseResultEnum.PARAMETER_INVALID.getCode(),
 //                    bindingResult.getFieldError().getDefaultMessage());
 //        }
 //        project.setName(project.getName());
 //
-//        return ResultWithDataObjectUtil.success(projectDao.save(project));
+//        return ResultUtil.success(projectDao.save(project));
 //    }
 //
-//    public ResultWithData<Module> updateProject(@Valid Project project, BindingResult bindingResult) {
+//    public Result<Module> updateProject(@Valid Project project, BindingResult bindingResult) {
 //
 //        if (bindingResult.hasErrors()) {
-//            return (ResultWithData)ResultWithDataObjectUtil.error(
+//            return (Result)ResultUtil.error(
 //                    BaseResultEnum.PARAMETER_INVALID.getCode(),
 //                    bindingResult.getFieldError().getDefaultMessage());
 //        }
 //        project.setName(project.getName());
 //
-//        return ResultWithDataObjectUtil.success(projectDao.save(project));
+//        return ResultUtil.success(projectDao.save(project));
 //    }
 
     public Result<Module> deleteProjectById(Integer id) {
             projectDao.delete(id);
-            return ResultWithDataObjectUtil.success();
+            return ResultUtil.success();
     }
 
-    public ResultWithData<Module> findProjectById(Integer id) {
-            return ResultWithDataObjectUtil.success(projectDao.findOne(id));
+//    按照id查询项目
+    public Result<Module> findProjectById(Integer id) {
+            return ResultUtil.success(projectDao.findOne(id));
     }
 
 }

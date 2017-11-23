@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ProjectModuleRelationDao extends JpaRepository<ProjectModuleRelation,Integer> {
 
-    @Query(value = "SELECT * FROM ProjectModuleRelation WHERE project_id=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM project_module_relation WHERE project_id=?1", nativeQuery = true)
     List<ProjectModuleRelation> findModuleIdByProjectId(Integer project_id);
 }
