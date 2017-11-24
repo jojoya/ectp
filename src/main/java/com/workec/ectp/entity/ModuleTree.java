@@ -7,7 +7,7 @@ import java.util.List;
 @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
 public class ModuleTree {
     private Integer id;
-    private String name;
+    private String label;
 //    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<ModuleTree> children;
 
@@ -20,12 +20,12 @@ public class ModuleTree {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public List<ModuleTree> getChildren() {

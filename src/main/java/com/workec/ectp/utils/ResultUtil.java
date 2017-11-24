@@ -18,6 +18,7 @@ public class ResultUtil {
     public static Result success(){
         result.setCode(BaseResultEnum.SUCCESS.getCode());
         result.setMsg(BaseResultEnum.SUCCESS.getMessage());
+        result.setData(null);
         return result;
     }
 
@@ -31,6 +32,7 @@ public class ResultUtil {
     public static Result error(Integer code, String msg){
         result.setCode(code);
         result.setMsg(msg);
+        result.setData(null);
         return result;
     }
 }

@@ -21,7 +21,7 @@ public class Module extends TimeEntity{
     @Column(length=50)
     @NotBlank(message = "模块名称不能为空")
     @Size(max = 50, message = "模块名称长度不能超过50")
-    private String name;
+    private String label;
 
     private int parentId;
 
@@ -33,10 +33,10 @@ public class Module extends TimeEntity{
         this.parentId = parentId;
     }
 
-    //必须要有构造函数
-    public Module(){
-
-    }
+//    //必须要有构造函数
+//    public Module(){
+//
+//    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -50,19 +50,19 @@ public class Module extends TimeEntity{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
     public String toString() {
         return "{" +
                 "\"id\":" + id +
-                "\"name\":\"" + name + '\"' +
+                "\"name\":\"" + label + '\"' +
                 ", \"parentId\":" + parentId +
                 '}';
     }

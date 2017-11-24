@@ -15,6 +15,6 @@ public interface ModuleDao extends JpaRepository<Module,Integer> {
     @Query(value = "SELECT * FROM MODULE WHERE parent_id = ?1", nativeQuery = true)
     List<Module> findChildrenByParentId(Integer id);
 
-    @Query(value = "SELECT * FROM MODULE WHERE name LIKE %?1%", nativeQuery = true)
+    @Query(value = "SELECT * FROM MODULE WHERE label LIKE %?1%", nativeQuery = true)
     List<Module> findByName(String name);
 }

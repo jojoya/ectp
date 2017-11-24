@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
-@RestController
+@RestController()
 public class ProjectController {
 
     @Autowired
     ProjectService projectService;
 
     /* 查询项目列表 */
-    @GetMapping(value = "/project/getlist")
-    public Result<Module> getModuleList() throws Exception {
+    @GetMapping(value = "/project/getList")
+    public Result<Module> getProjectList() throws Exception {
         return projectService.getProjectList();
     }
 
@@ -41,7 +41,7 @@ public class ProjectController {
 //    }
 
     /* 按照id查询项目 */
-    @GetMapping(value = "/project/findbyid/{id}")
+    @GetMapping(value = "/project/findById/{id}")
     public Result<Module> findProjectById(@PathVariable("id") Integer id) throws Exception {
         return projectService.findProjectById(id);
     }

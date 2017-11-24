@@ -12,7 +12,9 @@ import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static jdk.nashorn.internal.objects.NativeString.trim;
 
@@ -37,15 +39,22 @@ public class ModuleService {
 
     /* 添加模块 */
     public Result<Module> addModule(@Valid Module module, BindingResult bindingResult) {
+//    public Result<Module> addModule(Module module) {
         if (bindingResult.hasErrors()) {
             return (Result) ResultUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
-        module.setName(module.getName());
+        module.setLabel(module.getLabel());
         module.setParentId(module.getParentId());
 
-        return ResultUtil.success(moduleDao.save(module));
+        Module resultData = moduleDao.save(module);
+        Map map = new HashMap();
+        map.put("id",resultData.getId());
+        map.put("label",resultData.getLabel());
+        map.put("parentId",resultData.getParentId());
+
+        return ResultUtil.success(map);
     }
 
     /* 修改模块 */
@@ -55,7 +64,7 @@ public class ModuleService {
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
-        module.setName(module.getName());
+        module.setLabel(module.getLabel());
         module.setParentId(module.getParentId());
 
         return ResultUtil.success(moduleDao.save(module));
@@ -63,15 +72,21 @@ public class ModuleService {
 
     /* 删除模块 */
     public Result<Module> deleteModuleById(Integer id) {
-        checkResult = CheckId(id);
-        if(checkResult!=null){
-            return checkResult;
-        }else if (moduleDao.findChildrenCountByParentId(id) > 0) {
-            return ResultUtil.error(121, "存在下级");
+        if(id!=null) {
+            checkResult = CheckId(id);
+            if(checkResult!=null){
+                return checkResult;
+            }else if (moduleDao.findChildrenCountByParentId(id) > 0) {
+                return ResultUtil.error(121, "存在下级");
+            }else {
+                moduleDao.delete(id);
+                return ResultUtil.success();
+            }
         }else {
-            moduleDao.delete(id);
-            return ResultUtil.success();
+            return ResultUtil.error(BaseResultEnum.PARAMETER_IS_NULL.getCode(),
+                     BaseResultEnum.PARAMETER_IS_NULL.getMessage());
         }
+
     }
 
     /* 按照id查询模块 */
@@ -114,7 +129,7 @@ public class ModuleService {
 
     /* 根据项目ID查询下级模块信息 */
     public Result<Module> findModuleTreeByProjectId(Integer id) throws JSONException {
-        List<ModuleTree> moduleList = new ArrayList<ModuleTree>();
+        List<ModuleTree> moduleList = new ArrayList<>();
         List<ProjectModuleRelation> relationList = projectModuleRelationDao.findModuleIdByProjectId(id);
         for(ProjectModuleRelation projectModuleRelation : relationList){
             int moduleId = projectModuleRelation.getModuleId();
@@ -137,7 +152,7 @@ public class ModuleService {
     public ModuleTree getModuleTree(Integer id){
         ModuleTree moduleTree = new ModuleTree();
         moduleTree.setId(id);
-        moduleTree.setName(findModuleById(id).getData().getName());
+        moduleTree.setLabel(findModuleById(id).getData().getLabel());
         List<Module> list = moduleDao.findChildrenByParentId(id);
         if(list.isEmpty()) {
             moduleTree.setChildren(null);
