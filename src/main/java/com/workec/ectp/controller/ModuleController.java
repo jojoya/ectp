@@ -29,13 +29,13 @@ public class ModuleController {
 //    }
 
     /* 添加模块 */
-    @RequestMapping(value = "/module/add",method = RequestMethod.POST)
+    @PostMapping(value = "/module/add")
     public Result<Module> addModule(@Valid @RequestBody Module module , BindingResult bindingResult){
         return moduleService.addModule(module,bindingResult);
     }
 
     /* 修改模块 */
-    @RequestMapping(value = "/module/update",method = RequestMethod.PATCH)
+    @PatchMapping(value = "/module/update")
     public Result<Module> updateModule(@Valid @RequestBody Module module, BindingResult bindingResult){
         return moduleService.updateModule(module,bindingResult);
     }
@@ -45,10 +45,6 @@ public class ModuleController {
     public Result<Module> deleteModuleById(@PathVariable("id") Integer id) throws Exception {
             return moduleService.deleteModuleById(id);
 }
-//    @RequestMapping(value = "/module/delete",method = RequestMethod.POST)
-//    public Result<Module> deleteModuleById(@RequestBody DeleteModuleBean deleteModuleBean) throws Exception {
-//        return moduleService.deleteModuleById(deleteModuleBean);
-//    }
 
     /* 按照id查询模块 */
     @GetMapping(value = "/module/findById/{id}")

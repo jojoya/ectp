@@ -9,6 +9,7 @@ public enum BaseResultEnum {
     PARAMETER_TYPE_MISMACH(401,"参数类型不匹配"),
     PARAMETER_INVALID(404,"参数验证不通过"),
     DATA_NOT_EXIST(402,"操作的数据不存在"),
+    DATA_EXIST(403,"数据已存在,不允许重复"),
     REQUEST_METHOD_NOT_SUPPORT(405,"请求方法不支持"),
     SUCCESS(100,"成功"),
     ;

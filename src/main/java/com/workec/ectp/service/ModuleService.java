@@ -39,7 +39,6 @@ public class ModuleService {
 
     /* 添加模块 */
     public Result<Module> addModule(@Valid Module module, BindingResult bindingResult) {
-//    public Result<Module> addModule(Module module) {
         if (bindingResult.hasErrors()) {
             return (Result) ResultUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
@@ -63,6 +62,10 @@ public class ModuleService {
             return (Result) ResultUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
+        }else if (!moduleDao.exists(module.getId())){
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_NOT_EXIST.getCode(),
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
         }
         module.setLabel(module.getLabel());
         module.setParentId(module.getParentId());
@@ -112,7 +115,7 @@ public class ModuleService {
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),
                     BaseResultEnum.DATA_NOT_EXIST.getMessage());
         } else {
-            return ResultUtil.success((ArrayList)list);
+            return ResultUtil.success(list);
         }
 
     }
@@ -121,7 +124,7 @@ public class ModuleService {
     public Result<Module> findChildrenCountByParentId(Integer id) throws JSONException {
         checkResult = CheckId(id);
         if(checkResult!=null){
-            return (Result)checkResult;
+            return checkResult;
         }else {
             return ResultUtil.success(moduleDao.findChildrenCountByParentId(id));
         }
@@ -136,14 +139,14 @@ public class ModuleService {
             moduleList.add(getModuleTree(moduleId));
         }
 
-            return ResultUtil.success(moduleList);
+        return ResultUtil.success(moduleList);
     }
 
     /* 根据当前节点ID查询直属子节点信息 */
     public Result<Module> findChildrenByParentId(Integer id) throws JSONException {
         checkResult = CheckId(id);
         if(checkResult!=null){  //id不能为空，数据也不能为空
-            return (Result)checkResult;
+            return checkResult;
         }else {
             return ResultUtil.success(getModuleTree(id));
         }
@@ -166,7 +169,7 @@ public class ModuleService {
 
     public List<ModuleTree> getChildrenList(List<Module> list){
 
-        List<ModuleTree> list1 = new ArrayList<ModuleTree>();
+        List<ModuleTree> list1 = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             int id = list.get(i).getId();

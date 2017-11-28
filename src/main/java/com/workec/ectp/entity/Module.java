@@ -1,61 +1,37 @@
 package com.workec.ectp.entity;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Module extends TimeEntity{
+@Table(name = "module")
+@Data public class Module extends TimeEntity{
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private int id;
 
-    @Column(length=50)
+    @Column(name = "label",length=50,nullable = false)
     @NotBlank(message = "模块名称不能为空")
     @Size(max = 50, message = "模块名称长度不能超过50")
     private String label;
 
+    @Column(name = "parent_id",length=50,nullable = false)
     private int parentId;
 
-    public int getParentId() {
-        return parentId;
-    }
 
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
+     //必须要有构造函数
+    public Module(){
 
-//    //必须要有构造函数
-//    public Module(){
-//
-//    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     @Override

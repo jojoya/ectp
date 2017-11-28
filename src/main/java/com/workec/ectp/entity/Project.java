@@ -1,5 +1,6 @@
 package com.workec.ectp.entity;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Size;
  * Created by user on 2017/11/22.
  */
 @Entity
-public class Project {
+@Data public class Project {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,23 +31,4 @@ public class Project {
 
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 }

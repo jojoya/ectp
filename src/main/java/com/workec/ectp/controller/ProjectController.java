@@ -1,6 +1,6 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.Module;
+import com.workec.ectp.entity.Project;
 import com.workec.ectp.entity.Result;
 import com.workec.ectp.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ProjectController {
 
     /* 查询项目列表 */
     @GetMapping(value = "/project/getList")
-    public Result<Module> getProjectList() throws Exception {
+    public Result<Project> getProjectList() throws Exception {
         return projectService.getProjectList();
     }
 
@@ -42,8 +42,8 @@ public class ProjectController {
 
     /* 按照id查询项目 */
     @GetMapping(value = "/project/findById/{id}")
-    public Result<Module> findProjectById(@PathVariable("id") Integer id) throws Exception {
-        return projectService.findProjectById(id);
+    public Result<Project> findProjectById(@PathVariable("id") Integer id) throws Exception {
+        return projectService.findById(id);
     }
 
 }
