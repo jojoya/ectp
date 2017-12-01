@@ -31,4 +31,12 @@ import javax.validation.constraints.Size;
 
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + id +
+                ",\"value\":\"" + value + '\"' +
+                '}';
+    }
+
 }

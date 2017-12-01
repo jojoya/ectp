@@ -1,11 +1,12 @@
 package com.workec.ectp.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 @Entity(name = "domain")
@@ -22,7 +23,7 @@ import javax.validation.constraints.Size;
     @Size(max = 50, message = "名称长度不能超过50")
     private String value;
 
-    //必须要有构造函数
+//    必须要有构造函数
 //    public Domain(){
 //
 //    }
@@ -31,7 +32,7 @@ import javax.validation.constraints.Size;
     public String toString() {
         return "{" +
                 "\"id\":" + id +
-                "\"name\":\"" + value + '\"' +
+                ",\"name\":\"" + value + '\"' +
                 '}';
     }
 

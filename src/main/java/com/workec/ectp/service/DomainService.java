@@ -1,13 +1,10 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.dao.DomainDao;
-import com.workec.ectp.dao.ProjectDao;
 import com.workec.ectp.entity.Domain;
-import com.workec.ectp.entity.Module;
 import com.workec.ectp.entity.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.utils.ResultUtil;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -24,7 +21,6 @@ public class DomainService {
 
     /*查询列表*/
     public Result<Domain> getList() throws Exception {
-
         return ResultUtil.success(domainDao.findAll());
     }
 
@@ -39,7 +35,8 @@ public class DomainService {
         }
         //名称去空格，不允许重复
         String value = domain.getValue().trim();
-        if(domainDao.findByValue(value)!=null){
+        List<Domain> list = domainDao.findByValue(value);
+        if(list.size()>0){
             return ResultUtil.error(
                     BaseResultEnum.DATA_EXIST.getCode(),
                     BaseResultEnum.DATA_EXIST.getMessage());

@@ -1,7 +1,6 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.dao.ProjectDao;
-import com.workec.ectp.entity.Module;
 import com.workec.ectp.entity.Project;
 import com.workec.ectp.entity.Result;
 import com.workec.ectp.utils.ResultUtil;
@@ -20,30 +19,6 @@ public class ProjectService {
 
         return ResultUtil.success(projectDao.findAll());
     }
-//
-//    public Result<Project> addProject(@Valid Project project, BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return (Result)ResultUtil.error(
-//                    BaseResultEnum.PARAMETER_INVALID.getCode(),
-//                    bindingResult.getFieldError().getDefaultMessage());
-//        }
-//        project.setName(project.getName());
-//
-//        return ResultUtil.success(projectDao.save(project));
-//    }
-//
-//    public Result<Module> updateProject(@Valid Project project, BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return (Result)ResultUtil.error(
-//                    BaseResultEnum.PARAMETER_INVALID.getCode(),
-//                    bindingResult.getFieldError().getDefaultMessage());
-//        }
-//        project.setName(project.getName());
-//
-//        return ResultUtil.success(projectDao.save(project));
-//    }
 
     public Result<Project> deleteById(Integer id) {
             projectDao.delete(id);

@@ -5,30 +5,35 @@ import com.workec.ectp.enums.BaseResultEnum;
 
 public class ResultUtil {
 
-    public static Result result = new Result();
+//    public static Result result = new Result();
 
-    public synchronized static Result success(Object data){
+    public static Result success(Object data){
+        Result result = new Result();
         result.setCode(BaseResultEnum.SUCCESS.getCode());
         result.setMsg(BaseResultEnum.SUCCESS.getMessage());
+        result.setData(null);
         result.setData(data);
         return result;
     }
 
-    public synchronized static Result success(){
+    public static Result success(){
+        Result result = new Result();
         result.setCode(BaseResultEnum.SUCCESS.getCode());
         result.setMsg(BaseResultEnum.SUCCESS.getMessage());
         result.setData(null);
         return result;
     }
 
-    public synchronized static Result error(Integer code, String msg , Object data){
+    public static Result error(Integer code, String msg , Object data){
+        Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
         result.setData(data);
         return result;
     }
 
-    public synchronized static Result error(Integer code, String msg){
+    public static Result error(Integer code, String msg){
+        Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
         result.setData(null);

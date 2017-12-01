@@ -28,6 +28,7 @@ public class ModuleService {
     @Autowired
     private ProjectModuleRelationDao projectModuleRelationDao;
 
+
     private Result<Module> checkResult;
 
 
@@ -133,7 +134,7 @@ public class ModuleService {
     /* 根据项目ID查询下级模块信息 */
     public Result<Module> findModuleTreeByProjectId(Integer id) throws JSONException {
         List<ModuleTree> moduleList = new ArrayList<>();
-        List<ProjectModuleRelation> relationList = projectModuleRelationDao.findModuleIdByProjectId(id);
+        List<ProjectModuleRelation> relationList = projectModuleRelationDao.findByProjectId(id);
         for(ProjectModuleRelation projectModuleRelation : relationList){
             int moduleId = projectModuleRelation.getModuleId();
             moduleList.add(getModuleTree(moduleId));
