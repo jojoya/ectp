@@ -1,6 +1,7 @@
 package com.workec.ectp.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -11,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "module")
-@Data public class Module extends TimeEntity{
+@Data @NoArgsConstructor //构造函数
+public class Module extends TimeEntity{
 
     private static final long serialVersionUID = 1L;
 
@@ -27,12 +29,6 @@ import java.util.Set;
 
     @Column(name = "parent_id",length=50,nullable = false)
     private int parentId;
-
-
-     //必须要有构造函数
-    public Module(){
-
-    }
 
     @Override
     public String toString() {

@@ -11,6 +11,7 @@ public enum BaseResultEnum {
     DATA_NOT_EXIST(402,"操作的数据不存在"),
     DATA_EXIST(403,"数据已存在,不允许重复"),
     REQUEST_METHOD_NOT_SUPPORT(405,"请求方法不支持"),
+    REQUEST_CONTENT_TYPE_NOT_SUPPORT(406,"Content-Type格式不支持"),
     SUCCESS(100,"成功"),
     ;
 

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @CrossOrigin
 @RestController()
 public class InterfaceMainController {
@@ -23,8 +25,8 @@ public class InterfaceMainController {
     }
 
     /* 添加接口main */
-    @PostMapping(value = "/interface/main/add")
-    public Result<InterfaceMain> addInterfaceMain(@Valid @RequestBody InterfaceMain interfaceMain, BindingResult bindingResult){
+    @RequestMapping(value = "/interface/main/add",method = POST)
+    public Result<InterfaceMain> addInterfaceMain(@Valid @RequestBody InterfaceMain interfaceMain, BindingResult bindingResult) throws Exception{
         return interfaceMainService.addInterfaceMain(interfaceMain,bindingResult);
     }
 

@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin
 @RestController()
@@ -68,6 +69,12 @@ public class ModuleController {
     @GetMapping(value = "/module/findTreeByProjectId/{id}")
     public Result<Module> findModuleTreeByProjectId(@PathVariable("id") Integer id) throws Exception {
         return moduleService.findModuleTreeByProjectId(id);
+    }
+
+    /* 根据项目ID查询下级模块及接口 */
+    @GetMapping(value = "/module/findModulesAndInterfacesTreeByProjectId/{id}")
+    public Result<List> findModulesAndInterfacesTreeByProjectId(@PathVariable("id") Integer id) throws Exception {
+        return moduleService.findModulesAndInterfacesTreeByProjectId(id);
     }
 
     /* 按照name查询模块 */

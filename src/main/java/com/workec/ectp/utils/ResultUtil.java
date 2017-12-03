@@ -5,8 +5,6 @@ import com.workec.ectp.enums.BaseResultEnum;
 
 public class ResultUtil {
 
-//    public static Result result = new Result();
-
     public static Result success(Object data){
         Result result = new Result();
         result.setCode(BaseResultEnum.SUCCESS.getCode());

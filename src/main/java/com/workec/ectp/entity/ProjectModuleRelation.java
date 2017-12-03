@@ -1,6 +1,7 @@
 package com.workec.ectp.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
@@ -13,7 +14,8 @@ import javax.validation.constraints.Size;
  * Created by user on 2017/11/22.
  */
 @Entity
-@Data public class ProjectModuleRelation {
+@Data @NoArgsConstructor //构造函数
+public class ProjectModuleRelation {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,12 +23,10 @@ import javax.validation.constraints.Size;
     @GeneratedValue
     private int id;
 
+    @Column(name = "project_id",nullable = false)
     private int projectId;
 
+    @Column(name = "module_id",nullable = false)
     private int moduleId;
-
-    public ProjectModuleRelation(){
-
-    }
 
 }

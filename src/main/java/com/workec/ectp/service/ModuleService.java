@@ -1,5 +1,6 @@
 package com.workec.ectp.service;
 
+import com.workec.ectp.dao.InterfaceMainDao;
 import com.workec.ectp.dao.ModuleDao;
 import com.workec.ectp.dao.ProjectModuleRelationDao;
 import com.workec.ectp.entity.*;
@@ -131,9 +132,52 @@ public class ModuleService {
         }
     }
 
+    /* 根据项目ID查询下级模块和接口 */
+    public Result<List> findModulesAndInterfacesTreeByProjectId(Integer id) throws JSONException {
+        //找直属模块
+        List<ProjectModuleRelation> relationList = projectModuleRelationDao.findByProjectId(id);
+        List<Integer> ids = new ArrayList();
+        for(ProjectModuleRelation projectModuleRelation : relationList){
+            ids.add(projectModuleRelation.getModuleId());
+        }
+        return ResultUtil.success(getModuleAndInterfaceTree(ids));
+    }
+
+    public List<ModuleAndInterfaceTree> getModuleAndInterfaceTree(List ids) throws JSONException {
+        List<ModuleAndInterfaceTree> list = new ArrayList<>();
+        int id;
+        for (Object idn:ids) {
+            id = Integer.valueOf(idn.toString());
+            ModuleAndInterfaceTree item = new ModuleAndInterfaceTree();
+            item.setId(id);
+            item.setLabel(findModuleById(id).getData().getLabel());
+            item.setModuleList(getModuleTreeList(id));
+            item.setInterfaceList(getInterfaceList(id));
+
+            list.add(item);
+        }
+        return list;
+    }
+
+    public List getModuleTreeList(Integer id) throws JSONException {
+        List<Module> list = moduleDao.findChildrenByParentId(id);
+        List<Integer> ids = new ArrayList();
+        for(Module module : list){
+            ids.add(module.getId());
+        }
+
+        return getModuleAndInterfaceTree(ids);
+    }
+
+    public List getInterfaceList(Integer moduleId){
+        InterfaceMainService interfaceMainService = new InterfaceMainService();
+        return interfaceMainService.findListByModuleId(moduleId);
+    }
+
     /* 根据项目ID查询下级模块信息 */
     public Result<Module> findModuleTreeByProjectId(Integer id) throws JSONException {
         List<ModuleTree> moduleList = new ArrayList<>();
+        //找直属模块
         List<ProjectModuleRelation> relationList = projectModuleRelationDao.findByProjectId(id);
         for(ProjectModuleRelation projectModuleRelation : relationList){
             int moduleId = projectModuleRelation.getModuleId();
@@ -159,10 +203,10 @@ public class ModuleService {
         moduleTree.setLabel(findModuleById(id).getData().getLabel());
         List<Module> list = moduleDao.findChildrenByParentId(id);
         if(list.isEmpty()) {
-            moduleTree.setChildren(null);
+            moduleTree.setModuleList(null);
         }else {
             List<ModuleTree> treeList =getChildrenList(list);
-            moduleTree.setChildren(treeList);
+            moduleTree.setModuleList(treeList);
         }
 
         return moduleTree;

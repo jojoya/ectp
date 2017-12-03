@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Service
@@ -27,7 +28,7 @@ public class InterfaceMainService {
 
 
     /*添加*/
-    public Result<InterfaceMain> addInterfaceMain(@Valid InterfaceMain interfaceMain, BindingResult bindingResult) {
+    public Result<InterfaceMain> addInterfaceMain(@Valid InterfaceMain interfaceMain, BindingResult bindingResult) throws Exception{
 
         //检验字段值
         if (bindingResult.hasErrors()) {
@@ -38,7 +39,8 @@ public class InterfaceMainService {
         //名称去空格，不允许重复
         String value = interfaceMain.getValue().trim();
         Integer moduleId = interfaceMain.getModuleId();
-        if(interfaceMainDao.findByModuleIdAndValue(moduleId,value)!=null){
+        List<InterfaceMain> list = interfaceMainDao.findByModuleIdAndValue(moduleId,value);
+        if(list.size()>0){
             return ResultUtil.error(
                     BaseResultEnum.DATA_EXIST.getCode(),
                     BaseResultEnum.DATA_EXIST.getMessage());
@@ -78,7 +80,9 @@ public class InterfaceMainService {
 
 
 
-
+    public List findListByModuleId(Integer moduleId){
+        return interfaceMainDao.findByModuleId(moduleId);
+    }
 
     /*删除域名*/
     public Result<InterfaceMain> deleteById(Integer id) throws Exception{

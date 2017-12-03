@@ -8,6 +8,7 @@ import com.workec.ectp.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,7 +46,11 @@ public class ExceptionHandle {
             return ResultUtil.error(
                     BaseResultEnum.REQUEST_METHOD_NOT_SUPPORT.getCode(),
                     BaseResultEnum.REQUEST_METHOD_NOT_SUPPORT.getMessage());
-        }else {
+        }else if(e instanceof HttpMediaTypeNotSupportedException){
+            return ResultUtil.error(
+                    BaseResultEnum.REQUEST_CONTENT_TYPE_NOT_SUPPORT.getCode(),
+                    BaseResultEnum.REQUEST_CONTENT_TYPE_NOT_SUPPORT.getMessage());
+        }else{
             logger.error("【系统异常】{}",e);
             return ResultUtil.error(
                     BaseResultEnum.UNKNOW_ERROR.getCode(),
