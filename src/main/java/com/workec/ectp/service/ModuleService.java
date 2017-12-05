@@ -1,6 +1,5 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.dao.InterfaceMainDao;
 import com.workec.ectp.dao.ModuleDao;
 import com.workec.ectp.dao.ProjectModuleRelationDao;
 import com.workec.ectp.entity.*;
@@ -122,18 +121,13 @@ public class ModuleService {
 
     }
 
-    /* 根据当前节点ID统计直属子节点数量 */
-    public Result<Module> findChildrenCountByParentId(Integer id) throws JSONException {
-        checkResult = CheckId(id);
-        if(checkResult!=null){
-            return checkResult;
-        }else {
-            return ResultUtil.success(moduleDao.findChildrenCountByParentId(id));
-        }
+    /* 根据projectID统计直属子节点列表 */
+    public Result findByProjectId(Integer projectId) throws JSONException {
+            return ResultUtil.success(moduleDao.findByProjectId(projectId));
     }
 
     /* 根据项目ID查询下级模块和接口 */
-    public Result<List> findModulesAndInterfacesTreeByProjectId(Integer id) throws JSONException {
+    /*public Result<List> findModulesAndInterfacesTreeByProjectId(Integer id) throws JSONException {
         //找直属模块
         List<ProjectModuleRelation> relationList = projectModuleRelationDao.findByProjectId(id);
         List<Integer> ids = new ArrayList();
@@ -141,7 +135,7 @@ public class ModuleService {
             ids.add(projectModuleRelation.getModuleId());
         }
         return ResultUtil.success(getModuleAndInterfaceTree(ids));
-    }
+    }*/
 
     public List<ModuleAndInterfaceTree> getModuleAndInterfaceTree(List ids) throws JSONException {
         List<ModuleAndInterfaceTree> list = new ArrayList<>();

@@ -53,12 +53,6 @@ public class ModuleController {
         return moduleService.findModuleById(id);
     }
 
-    /* 根据当前节点ID统计直属子节点数量 */
-    @GetMapping(value = "/module/getChildrenCountByParentId/{id}")
-    public Result<Module> findChildrenCountByParentId(@PathVariable("id") Integer id) throws Exception {
-        return moduleService.findChildrenCountByParentId(id);
-    }
-
     /* 根据当前节点ID查询直属子节点信息 */
     @GetMapping(value = "/module/findChildrenByParentId/{id}")
     public Result<Module> findChildrenByParentId(@PathVariable("id") Integer id) throws Exception {
@@ -71,10 +65,10 @@ public class ModuleController {
         return moduleService.findModuleTreeByProjectId(id);
     }
 
-    /* 根据项目ID查询下级模块及接口 */
-    @GetMapping(value = "/module/findModulesAndInterfacesTreeByProjectId/{id}")
-    public Result<List> findModulesAndInterfacesTreeByProjectId(@PathVariable("id") Integer id) throws Exception {
-        return moduleService.findModulesAndInterfacesTreeByProjectId(id);
+    /* 根据项目ID查询直属模块 */
+    @GetMapping(value = "/module/findByProjectId/{projectId}")
+    public Result<List> findByProjectId(@PathVariable("projectId") Integer projectId) throws Exception {
+        return moduleService.findByProjectId(projectId);
     }
 
     /* 按照name查询模块 */
