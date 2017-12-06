@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -76,12 +79,6 @@ public class InterfaceMainService {
         interfaceMain.setDescription(interfaceMain.getDescription());
 
         return ResultUtil.success(interfaceMainDao.save(interfaceMain));
-    }
-
-
-
-    public List findListByModuleId(Integer moduleId){
-        return interfaceMainDao.findByModuleId(moduleId);
     }
 
     /*删除域名*/

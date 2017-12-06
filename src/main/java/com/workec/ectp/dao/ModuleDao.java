@@ -18,6 +18,6 @@ public interface ModuleDao extends JpaRepository<Module,Integer> {
     @Query(value = "SELECT * FROM MODULE WHERE label LIKE %?1%", nativeQuery = true)
     List<Module> findByName(String name);
 
-    @Query(value = "select b.id,b.label from project_module_relation a,module b where a.module_id = b.id AND a.project_id=?1", nativeQuery = true)
-    List findByProjectId(Integer projectId);
+    @Query(value = "select b.* from project_module_relation a,module b where a.module_id = b.id AND a.project_id=?1", nativeQuery = true)
+    List<Module> findByProjectId(Integer projectId);
 }

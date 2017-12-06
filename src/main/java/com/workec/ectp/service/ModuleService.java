@@ -1,5 +1,6 @@
 package com.workec.ectp.service;
 
+import com.workec.ectp.dao.InterfaceMainDao;
 import com.workec.ectp.dao.ModuleDao;
 import com.workec.ectp.dao.ProjectModuleRelationDao;
 import com.workec.ectp.entity.*;
@@ -28,6 +29,8 @@ public class ModuleService {
     @Autowired
     private ProjectModuleRelationDao projectModuleRelationDao;
 
+    @Autowired
+    private InterfaceMainDao interfaceMainDao;
 
     private Result<Module> checkResult;
 
@@ -123,7 +126,16 @@ public class ModuleService {
 
     /* 根据projectID统计直属子节点列表 */
     public Result findByProjectId(Integer projectId) throws JSONException {
-            return ResultUtil.success(moduleDao.findByProjectId(projectId));
+        List list = new ArrayList();
+        List<Module> moduleList =moduleDao.findByProjectId(projectId);
+        for (int i = 0; i <moduleList.size() ; i++) {
+            Map map = new HashMap();
+            map.put("id",moduleList.get(i).getId());
+            map.put("label",moduleList.get(i).getLabel());
+            list.add(map);
+        }
+
+            return ResultUtil.success(list);
     }
 
     /* 根据项目ID查询下级模块和接口 */
@@ -163,10 +175,6 @@ public class ModuleService {
         return getModuleAndInterfaceTree(ids);
     }
 
-    public List getInterfaceList(Integer moduleId){
-        InterfaceMainService interfaceMainService = new InterfaceMainService();
-        return interfaceMainService.findListByModuleId(moduleId);
-    }
 
     /* 根据项目ID查询下级模块信息 */
     public Result<Module> findModuleTreeByProjectId(Integer id) throws JSONException {
@@ -182,29 +190,38 @@ public class ModuleService {
     }
 
     /* 根据当前节点ID查询直属子节点信息 */
-    public Result<Module> findChildrenByParentId(Integer id) throws JSONException {
-        checkResult = CheckId(id);
+    public Result<Module> findChildrenByParentId(Integer moduleId) throws JSONException {
+        checkResult = CheckId(moduleId);
         if(checkResult!=null){  //id不能为空，数据也不能为空
             return checkResult;
         }else {
-            return ResultUtil.success(getModuleTree(id));
+            return ResultUtil.success(getModuleTree(moduleId));
         }
     }
 
-    public ModuleTree getModuleTree(Integer id){
+    public ModuleTree getModuleTree(Integer moduleId){
         ModuleTree moduleTree = new ModuleTree();
-        moduleTree.setId(id);
-        moduleTree.setLabel(findModuleById(id).getData().getLabel());
-        List<Module> list = moduleDao.findChildrenByParentId(id);
-        if(list.isEmpty()) {
-            moduleTree.setModuleList(null);
-        }else {
-            List<ModuleTree> treeList =getChildrenList(list);
-            moduleTree.setModuleList(treeList);
-        }
+        moduleTree.setId(moduleId);
+        moduleTree.setLabel(findModuleById(moduleId).getData().getLabel());
+        List<Module> moduleList = moduleDao.findChildrenByParentId(moduleId);
+        moduleTree.setModuleList(moduleList.isEmpty()?null:getChildrenList(moduleList));
+        moduleTree.setInterfaceList(getInterfaceList(moduleId).isEmpty()?null:getInterfaceList(moduleId));
 
         return moduleTree;
     }
+
+    public List getInterfaceList(Integer moduleId){
+        List list = new ArrayList();
+        List<InterfaceMain> interfaceMainList = interfaceMainDao.findByModuleId(moduleId);
+        for (int i=0;i<interfaceMainList.size();i++) {
+            Map map = new HashMap();
+            map.put("id",interfaceMainList.get(i).getId());
+            map.put("label",interfaceMainList.get(i).getValue());
+            list.add(map);
+        }
+        return list;
+    }
+
 
     public List<ModuleTree> getChildrenList(List<Module> list){
 
