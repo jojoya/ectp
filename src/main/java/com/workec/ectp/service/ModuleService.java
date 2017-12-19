@@ -149,35 +149,35 @@ public class ModuleService {
         return ResultUtil.success(getModuleAndInterfaceTree(ids));
     }*/
 
-    public List<ModuleAndInterfaceTree> getModuleAndInterfaceTree(List ids) throws JSONException {
-        List<ModuleAndInterfaceTree> list = new ArrayList<>();
-        int id;
-        for (Object idn:ids) {
-            id = Integer.valueOf(idn.toString());
-            ModuleAndInterfaceTree item = new ModuleAndInterfaceTree();
-            item.setId(id);
-            item.setLabel(findModuleById(id).getData().getLabel());
-            item.setModuleList(getModuleTreeList(id));
-            item.setInterfaceList(getInterfaceList(id));
+//    public List<ModuleAndInterfaceTree> getModuleAndInterfaceTree(List ids) throws JSONException {
+//        List<ModuleAndInterfaceTree> list = new ArrayList<>();
+//        int id;
+//        for (Object idn:ids) {
+//            id = Integer.valueOf(idn.toString());
+//            ModuleAndInterfaceTree item = new ModuleAndInterfaceTree();
+//            item.setId(id);
+//            item.setLabel(findModuleById(id).getData().getLabel());
+//            item.setModuleList(getModuleTreeList(id));
+//            item.setInterfaceList(getInterfaceList(id));
+//
+//            list.add(item);
+//        }
+//        return list;
+//    }
 
-            list.add(item);
-        }
-        return list;
-    }
-
-    public List getModuleTreeList(Integer id) throws JSONException {
-        List<Module> list = moduleDao.findChildrenByParentId(id);
-        List<Integer> ids = new ArrayList();
-        for(Module module : list){
-            ids.add(module.getId());
-        }
-
-        return getModuleAndInterfaceTree(ids);
-    }
+//    public List getModuleTreeList(Integer id) throws JSONException {
+//        List<Module> list = moduleDao.findChildrenByParentId(id);
+//        List<Integer> ids = new ArrayList();
+//        for(Module module : list){
+//            ids.add(module.getId());
+//        }
+//
+//        return getModuleAndInterfaceTree(ids);
+//    }
 
 
     /* 根据项目ID查询下级模块信息 */
-    public Result<Module> findModuleTreeByProjectId(Integer id) throws JSONException {
+    public Result<Module> findTreeByProjectId(Integer id) throws JSONException {
         List<ModuleTree> moduleList = new ArrayList<>();
         //找直属模块
         List<ProjectModuleRelation> relationList = projectModuleRelationDao.findByProjectId(id);
@@ -190,7 +190,7 @@ public class ModuleService {
     }
 
     /* 根据当前节点ID查询直属子节点信息 */
-    public Result<Module> findChildrenByParentId(Integer moduleId) throws JSONException {
+    public Result<Module> findTreeByModuleId(Integer moduleId) throws JSONException {
         checkResult = CheckId(moduleId);
         if(checkResult!=null){  //id不能为空，数据也不能为空
             return checkResult;

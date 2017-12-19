@@ -53,17 +53,10 @@ public class ModuleController {
         return moduleService.findModuleById(id);
     }
 
-
-    /* 根据项目ID查询下级模块及接口信息 */
-    @GetMapping(value = "/module/findModuleTreeByProjectId/{id}")
-    public Result<Module> findModuleTreeByProjectId(@PathVariable("id") Integer id) throws Exception {
-        return moduleService.findModuleTreeByProjectId(id);
-    }
-
-    /* 根据模块ID查询下级模块及接口信息 */
-    @GetMapping(value = "/module/findTreeById/{moduleId}")
-    public Result<Module> findTreeById(@PathVariable("moduleId") Integer moduleId) throws Exception {
-        return moduleService.findChildrenByParentId(moduleId);
+    /* 按照name查询模块 */
+    @GetMapping(value = "/module/findListByName/{name}")
+    public Result<Module> findModuleListByName(@PathVariable("name") String name) throws Exception {
+        return moduleService.findModuleListByName(name);
     }
 
     /* 根据项目ID查询直属模块 */
@@ -72,10 +65,16 @@ public class ModuleController {
         return moduleService.findByProjectId(projectId);
     }
 
-    /* 按照name查询模块 */
-    @GetMapping(value = "/module/findListByName/{name}")
-    public Result<Module> findModuleListByName(@PathVariable("name") String name) throws Exception {
-        return moduleService.findModuleListByName(name);
+    /* 根据模块ID查询下级模块及接口信息 */
+    @GetMapping(value = "/module/findTreeByModuleId/{moduleId}")
+    public Result<Module> findTreeByModuleId(@PathVariable("moduleId") Integer moduleId) throws Exception {
+        return moduleService.findTreeByModuleId(moduleId);
+    }
+
+    /* 根据项目ID查询下级模块及接口信息 */
+    @GetMapping(value = "/module/findTreeByProjectId/{projectId}")
+    public Result<Module> findTreeByProjectId(@PathVariable("projectId") Integer projectId) throws Exception {
+        return moduleService.findTreeByProjectId(projectId);
     }
 
 }
