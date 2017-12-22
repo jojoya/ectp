@@ -7,6 +7,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -76,14 +77,14 @@ public class HttpAPIService {
     }
 
     /**
-     * 带参数的post请求
+     * 带From参数的post请求
      *
      * @param url
      * @param map
      * @return
      * @throws Exception
      */
-    public HttpResult doPost(String url, Map<String, Object> map) throws Exception {
+    public HttpResult doPostFrom(String url, Map<String, Object> map) throws Exception {
         // 声明httpPost请求
         HttpPost httpPost = new HttpPost(url);
         // 加入配置信息
@@ -109,6 +110,37 @@ public class HttpAPIService {
     }
 
     /**
+     * 带Json参数的post请求
+     *
+     * @param url
+     * @param jsonStr
+     * @return
+     * @throws Exception
+     */
+    public HttpResult doPostJson(String url, String jsonStr) throws Exception {
+        // 声明httpPost请求
+        HttpPost httpPost = new HttpPost(url);
+        // 加入配置信息
+        httpPost.setConfig(config);
+
+        // 判断jsonStr是否为空，不为空则封装成Json参数
+        if (jsonStr != null) {
+            // 构造Json对象
+            StringEntity entity = new StringEntity(jsonStr,"utf-8");
+            entity.setContentEncoding("UTF-8");
+            entity.setContentType("application/json");
+
+            // 把表单放到post里
+            httpPost.setEntity(entity);
+        }
+
+        // 发起请求
+        CloseableHttpResponse response = this.httpClient.execute(httpPost);
+        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
+                response.getEntity(), "UTF-8"));
+    }
+
+    /**
      * 不带参数post请求
      *
      * @param url
@@ -116,6 +148,13 @@ public class HttpAPIService {
      * @throws Exception
      */
     public HttpResult doPost(String url) throws Exception {
-        return this.doPost(url, null);
+        return this.doPostFrom(url, null);
     }
+
+
+/*    public static void main(String[] args) throws Exception {
+        HttpAPIService service = new HttpAPIService();
+        String result = service.doPostJson("http://localhost:8080/dev/module/add/",);
+        System.out.println(result);
+    }*/
 }
