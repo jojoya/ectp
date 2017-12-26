@@ -1,20 +1,24 @@
 package com.workec.ectp.http;
 
+import org.apache.http.HttpRequest;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -130,7 +134,7 @@ public class HttpAPIService {
             entity.setContentEncoding("UTF-8");
             entity.setContentType("application/json");
 
-            // 把表单放到post里
+            // 把Json放到post里
             httpPost.setEntity(entity);
         }
 
@@ -151,10 +155,67 @@ public class HttpAPIService {
         return this.doPostFrom(url, null);
     }
 
+    /**
+     * 场景post请求及参数调用
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public HttpResult doPost() throws Exception{
+        // String method = "POST";
+
+        //初始化url
+        String url = "https://open.workec.com/auth/accesstoken";
+        //设置URL
+        /*Map<String, Object> mapUrl =new HashMap<>();
+        URIBuilder uriBuilder = new URIBuilder(url);
+        if (mapUrl != null) {
+            // 遍历map,拼接请求参数
+            for (Map.Entry<String, Object> entry : mapUrl.entrySet()) {
+                uriBuilder.setParameter(entry.getKey(), entry.getValue().toString());
+            }
+            url = uriBuilder.build().toString();
+        }*/
+
+        System.out.println("url:"+url);
+        // 声明httpPost请求
+        HttpPost httpPost = new HttpPost(url);
+        // 加入配置信息
+        httpPost.setConfig(config);
+
+        // 设置headers
+        /*httpPost.setHeader("Authorization","");
+        httpPost.setHeader("CORP-ID","4855250");*/
+
+        //设置body
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("appId","200307256498061312");
+        jsonObject.put("appSecret","m1lSYLQOcKh08KxmjaN");
+        String body = jsonObject.toString();
+        System.out.println("body:"+body);
+
+        // 判断body是否为空，不为空则封装成Json参数
+        if (body != null) {
+            // 构造Json对象
+            StringEntity entity = new StringEntity(body,"utf-8");
+            entity.setContentEncoding("UTF-8");
+            entity.setContentType("application/json");
+
+            // 把Json放到post里
+            httpPost.setEntity(entity);
+        }
+
+        // 发起请求
+        CloseableHttpResponse response = this.httpClient.execute(httpPost);
+        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
+                response.getEntity(), "UTF-8"));
+
+    }
 
 /*    public static void main(String[] args) throws Exception {
         HttpAPIService service = new HttpAPIService();
-        String result = service.doPostJson("http://localhost:8080/dev/module/add/",);
+        String result = service.doPost().toString();
         System.out.println(result);
     }*/
 }

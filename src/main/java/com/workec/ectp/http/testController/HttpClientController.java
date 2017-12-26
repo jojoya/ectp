@@ -37,15 +37,29 @@ public class HttpClientController {
         //url校验：请求协议为空（ClientProtocolException）、地址找不到（UnknownHostException）
         String url = httpRequestInfo.getUrl();
         JSONObject jsonParam  = httpRequestInfo.getBody();
-        StringEntity entity= new StringEntity(jsonParam.toString(),"utf-8");
+        String jsonParam_str = jsonParam.toString();
+        System.out.println("jsonParam_str:"+jsonParam_str);
+
+        StringEntity entity= new StringEntity(jsonParam_str,"utf-8");
         String body = entity.toString();
 
 //        String body = httpRequestInfo.getBody().toString();
-        System.out.println("body" + body);
+        System.out.println("url:" + url);
+        System.out.println("body:" + body);
 
         HttpResult httpResult = httpAPIService.doPostJson(url,body);
 
+        System.out.println("responseCode:"+httpResult.getCode()+"/n"+"responseBody:"+httpResult.getBody());
+
         return /*"doGet:"+strGet + */httpResult.getCode()+"/n"+httpResult.getBody();
+    }
+
+    @RequestMapping("/doPOST")
+    public  String doPOST() throws Exception {
+
+        HttpResult httpResult = httpAPIService.doPost();
+
+        return /* httpResult.getCode()+"\n"+*/httpResult.getBody();
     }
 
 }
