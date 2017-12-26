@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: pro
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://10.0.108.70:3306/db_ectp??useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=true

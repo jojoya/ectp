@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
@@ -55,6 +56,8 @@ public class HttpClientControllerTest {
     public void doPOST() throws Exception {
         String expectedResult = "{\"errCode\":200,\"errMsg\":\"OK\",\"data\":{\"accessToken\"";
         String uri = "/doPOST";
+
+        //ConnectTimeoutException
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON))
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
@@ -68,9 +71,16 @@ public class HttpClientControllerTest {
 //        Assert.assertTrue("数据一致", expectedResult.equals(content));
 //        Assert.assertFalse("数据不一致", !expectedResult.equals(content));
 
-        String regex_notcontainStr = "^(?!.*(accessToken)).*$";// 不包含特定字符串的表达式
+        String regexStr = "\"accessToken\":\"(.*?)\",\"expiresIn\"";// 不包含特定字符串的表达式
 
-        System.out.println(StringMatchRule(content, regex_notcontainStr));
+        Pattern pattern = Pattern.compile(regexStr);
+        Matcher macher = pattern.matcher(content);
+        while(macher.find()){
+            System.out.println("macher："+macher.group(0).trim());
+            System.out.println("accessToken："+macher.group(1).trim());
+        }
+
+//        System.out.println(StringMatchRule(content, regexStr));
     }
 
     public static boolean StringMatchRule(String souce, String regex) {
