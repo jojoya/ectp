@@ -1,5 +1,7 @@
 package com.workec.ectp.http;
 
+import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Component
@@ -168,7 +172,7 @@ public class HttpAPIService {
         //初始化url
         String url = "https://open.workec.com/auth/accesstoken";
         //设置URL
-        /*Map<String, Object> mapUrl =new HashMap<>();
+        Map<String, Object> mapUrl =new HashMap<>();
         URIBuilder uriBuilder = new URIBuilder(url);
         if (mapUrl != null) {
             // 遍历map,拼接请求参数
@@ -176,7 +180,7 @@ public class HttpAPIService {
                 uriBuilder.setParameter(entry.getKey(), entry.getValue().toString());
             }
             url = uriBuilder.build().toString();
-        }*/
+        }
 
         System.out.println("url:"+url);
         // 声明httpPost请求
@@ -185,13 +189,116 @@ public class HttpAPIService {
         httpPost.setConfig(config);
 
         // 设置headers
-        /*httpPost.setHeader("Authorization","");
-        httpPost.setHeader("CORP-ID","4855250");*/
+        httpPost.setHeader("Authorization","");
+        httpPost.setHeader("CORP-ID","4855250");
 
         //设置body
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("appId","200307256498061312");
         jsonObject.put("appSecret","m1lSYLQOcKh08KxmjaN");
+        String body = jsonObject.toString();
+        System.out.println("body:"+body);
+
+        // 判断body是否为空，不为空则封装成Json参数
+        if (body != null) {
+            // 构造Json对象
+            StringEntity entity = new StringEntity(body,"utf-8");
+            entity.setContentEncoding("UTF-8");
+            entity.setContentType("application/json");
+
+            // 把Json放到post里
+            httpPost.setEntity(entity);
+        }
+
+        // 发起请求
+        CloseableHttpResponse response = this.httpClient.execute(httpPost);
+        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
+                response.getEntity(), "UTF-8"));
+
+    }
+
+    public HttpResult doPost1(String str) throws Exception{
+
+        //初始化url
+        String url = "https://open.workec.com/user/findUserInfoById";
+        //设置URL
+        Map<String, Object> mapUrl =new HashMap<>();
+        URIBuilder uriBuilder = new URIBuilder(url);
+        if (mapUrl != null) {
+            // 遍历map,拼接请求参数
+            for (Map.Entry<String, Object> entry : mapUrl.entrySet()) {
+                uriBuilder.setParameter(entry.getKey(), entry.getValue().toString());
+            }
+            url = uriBuilder.build().toString();
+        }
+
+        System.out.println("url:"+url);
+        // 声明httpPost请求
+        HttpPost httpPost = new HttpPost(url);
+        // 加入配置信息
+        httpPost.setConfig(config);
+
+        // 设置headers
+        JSONObject js = new JSONObject(str);
+        String accessToken = js.get("accessToken").toString();
+        String responseBody = js.get("responseBody").toString();
+        System.out.println("accessToken1:"+accessToken);
+        System.out.println("responseBody1:"+responseBody);
+
+        //获取带表达式的存储值
+        String db_value = "AAA_${Rsp:1:regex@\"accessToken\":\"(.*?)\",\"expiresIn\"}_XXX";
+        String matcher_value = null;
+
+        //识别动态参数的提取方式：正则
+        String checkRegular_regex =  "\\$\\{Rsp:(.*?):regex@(.*?)}";
+        System.out.println("checkRegular_regex:"+checkRegular_regex);
+
+        Pattern pattern = Pattern.compile(checkRegular_regex);
+        Matcher macherRegular = pattern.matcher(db_value);
+
+        while(macherRegular.find()){
+            String macher_regular = macherRegular.group(0).trim();
+            System.out.println("macher_regular："+macher_regular);
+
+            //提取正则表达式
+            int startLocation = macher_regular.indexOf("@")+1;  //从@标记符号后开始截取
+            int endLocation = macher_regular.length()-1;    //去掉结尾的}
+
+            System.out.println("startLocation:"+startLocation+",endLocation:"+endLocation);
+            String regex = macher_regular.substring(startLocation,endLocation);
+            System.out.println("regex:" + regex);
+
+            //正则匹配，提取动态参数的值
+            Pattern pattern_get_param = Pattern.compile(regex);
+            Matcher matcher_get_param = pattern_get_param.matcher(responseBody);
+
+            while (matcher_get_param.find()){
+                String matcher_result = matcher_get_param.group(0).trim();
+                System.out.println("matcher_result:" + matcher_result);
+                matcher_value = matcher_get_param.group(1).trim();
+                System.out.println("matcher_value:" + matcher_value);
+                //把参数值中的表达式，替换为真实值
+                db_value = db_value.replace(macher_regular,matcher_value);
+                System.out.println("db_value:"+db_value);
+            }
+        }
+
+
+        httpPost.setHeader("Authorization",matcher_value);
+        httpPost.setHeader("CORP-ID","4855250");
+
+        JSONObject jsonObject_header = new JSONObject();
+        Header[] requestHeaders= httpPost.getAllHeaders();
+        for (int i = 0; i < requestHeaders.length; i++) {
+            String key = requestHeaders[i].getName();
+            String value = requestHeaders[i].getValue();
+            jsonObject_header.put(key,value);
+        }
+        System.out.println("headers:" + jsonObject_header.toString());
+
+        //设置body
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("account","14422222222");
         String body = jsonObject.toString();
         System.out.println("body:"+body);
 

@@ -62,4 +62,12 @@ public class HttpClientController {
         return /* httpResult.getCode()+"\n"+*/httpResult.getBody();
     }
 
+    @RequestMapping("/doPOST1")
+    public  String doPOST1(@RequestBody String str) throws Exception {
+
+        HttpResult httpResult = httpAPIService.doPost1(str);
+
+        return /* httpResult.getCode()+"\n"+*/httpResult.getBody();
+    }
+
 }
