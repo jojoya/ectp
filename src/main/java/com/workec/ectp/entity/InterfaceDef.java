@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  */
 @Entity(name = "interface_main")
 @Data @NoArgsConstructor    //构造函数
-public class InterfaceMain extends TimeEntity{
+public class InterfaceDef extends TimeEntity{
     private static final long serialVersionUID = 1L;
 
     @Id

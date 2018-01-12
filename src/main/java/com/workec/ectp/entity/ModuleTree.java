@@ -1,6 +1,5 @@
 package com.workec.ectp.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
@@ -10,18 +9,19 @@ import java.util.List;
 @Data public class ModuleTree {
 
 //    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer id;
+    private int id;
     private String label;
-    private List<ModuleTree> moduleList;
-    private List interfaceList;
+    private int type;
+    private List<ModuleTree> children;
 
     @Override
     public String toString() {
 
-        String moduleListInfo = moduleList!=null?(", \"moduleList\":" + moduleList.toString()):(", \"moduleList\":" + null);
+        String moduleListInfo = children!=null?(", \"children\":" + children.toString()):(", \"children\":" + null);
         return "{" +
                 "\"id\":" + id +
-                ", \"label\":\"" + label + '\"' +
+                ", \"label\":\"" + label +
+                ", \"type\":\"" + type +
                 moduleListInfo +
                 '}';
 

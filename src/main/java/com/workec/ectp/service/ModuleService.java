@@ -34,7 +34,7 @@ public interface ModuleService {
     Result findByProjectId(Integer projectId) throws JSONException;
 
     /* 根据projectID查询下级模块树 */
-    Result<Module> findTreeByProjectId(Integer id) throws JSONException;
+//    Result<Module> findTreeByProjectId(Integer id) throws JSONException;
 
     /* 根据ModuleId查询直属子节点信息 */
     Result<Module> findTreeByModuleId(Integer moduleId) throws JSONException;
