@@ -7,6 +7,8 @@ import com.workec.ectp.exception.ModuleFreedomException;
 import com.workec.ectp.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -50,6 +52,14 @@ public class ExceptionHandle {
             return ResultUtil.error(
                     BaseResultEnum.REQUEST_CONTENT_TYPE_NOT_SUPPORT.getCode(),
                     BaseResultEnum.REQUEST_CONTENT_TYPE_NOT_SUPPORT.getMessage());
+        }else if(e instanceof EmptyResultDataAccessException){
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_NOT_EXIST.getCode(),
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
+        }else if(e instanceof DataIntegrityViolationException){
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_MISSING.getCode(),
+                    BaseResultEnum.DATA_MISSING.getMessage());
         }else{
             logger.error("【系统异常】{}",e);
             return ResultUtil.error(

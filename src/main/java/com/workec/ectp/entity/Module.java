@@ -10,24 +10,20 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "module")
-@Data @NoArgsConstructor //构造函数
+@Entity @NoArgsConstructor //实例不设置构造函数
+@Data
 public class Module extends TimeEntity{
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "label",length=50,nullable = false)
     @NotBlank(message = "模块名称不能为空")
     @Size(max = 50, message = "模块名称长度不能超过50")
     private String label;
 
-    @Column(name = "parent_id",length=50,nullable = false)
     private int parentId;
 
     @Override

@@ -1,10 +1,11 @@
 package com.workec.ectp.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+import org.json.JSONObject;
 
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+import java.util.HashMap;
+import java.util.Map;
+
 @Data
 public class Result<T>{
 
@@ -15,15 +16,15 @@ public class Result<T>{
     private String msg;
 
     /* 具体内容 */
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     public String toString() {
 
-        return "{" +
-                "\"code\":" + code +
-                ", \"msg\":\"" + msg + '\"' +
-                ", \"data\":" + data.toString() +
-                '}';
+        Map map = new HashMap();
+        map.put("code",code);
+        map.put("msg",msg);
+        map.put("data",(data==""||data==null)?null:data.toString());
+
+        return new JSONObject(map).toString();
     }
 }

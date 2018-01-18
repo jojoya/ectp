@@ -10,31 +10,27 @@ import javax.validation.constraints.Size;
 /**
  * Created by user on 2017/11/27.
  */
-@Entity(name = "interface_main")
-@Data @NoArgsConstructor    //构造函数
-public class InterfaceDef extends TimeEntity{
+@Entity
+@Data
+//@NoArgsConstructor    //构造函数
+public class InterfaceDef{
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id",nullable = false)
-    private Integer id;
+    private int id;
 
-    @NotBlank(message = "方法名不能为空")
-    @Size(max = 200, message = "方法名长度不能超过200")
-    @Column(name = "value",nullable = false,length=200)
-    private String value;
+    @Column(nullable = false)
+    private int moduleId;
 
-    @Column(name = "request_method",nullable = false)
-    private Integer requestMethod;
+    @NotBlank(message = "接口名不能为空")
+    @Size(max = 255, message = "接口名长度不能超过255")
+    private String label;
 
-    @Column(name = "description")
+    private int reqMethod;//1 get,2 post,3 put,4 delete,5 dispatch
+    private int reqProtocol;//1 http,2 https
+    private int domainId;
+    private String url;
     private String description;
-
-    @Column(name = "domain_id",nullable = false)
-    private Integer domainId;
-
-    @Column(name = "module_id",nullable = false)
-    private Integer moduleId;
 
 }

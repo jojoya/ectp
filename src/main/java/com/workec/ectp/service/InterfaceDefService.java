@@ -14,9 +14,6 @@ public interface InterfaceDefService {
     /*查询列表*/
     Result<InterfaceDef> getList() throws Exception;
 
-    /*添加*/
-    Result<InterfaceDef> addInterfaceMain(@Valid InterfaceDef interfaceDef, BindingResult bindingResult) throws Exception;
-
     /*修改*/
     Result<InterfaceDef> updateById(@Valid InterfaceDef interfaceDef, BindingResult bindingResult);
 

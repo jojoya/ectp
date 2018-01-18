@@ -1,18 +1,15 @@
 package com.workec.ectp.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-
 import java.util.List;
 
-@JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
-@Data public class ModuleTree {
+@Data
+public class Tree {
 
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int id;
     private String label;
     private int type;
-    private List<ModuleTree> children;
+    private List<Tree> children;
 
     @Override
     public String toString() {

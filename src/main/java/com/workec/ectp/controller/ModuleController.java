@@ -23,30 +23,6 @@ public class ModuleController {
         return moduleService.getModuleList();
     }
 
-    /* 添加模块 */
-//    @PostMapping(value = "/module/add")
-//    public Result<Module> addModule(@Valid Module module, BindingResult bindingResult){
-//        return moduleService.addModule(module,bindingResult);
-//    }
-
-    /* 添加模块 */
-    @PostMapping(value = "/module/add")
-    public Result<Module> addModule(@Valid @RequestBody Module module , BindingResult bindingResult){
-        return moduleService.addModule(module,bindingResult);
-    }
-
-    /* 修改模块 */
-    @PatchMapping(value = "/module/update")
-    public Result<Module> updateModule(@Valid @RequestBody Module module, BindingResult bindingResult){
-        return moduleService.updateModule(module,bindingResult);
-    }
-
-    /* 删除模块 */
-    @DeleteMapping(value = "/module/delete/{id}")
-    public Result<Module> deleteModuleById(@PathVariable("id") Integer id) throws Exception {
-            return moduleService.deleteModuleById(id);
-}
-
     /* 按照id查询模块 */
     @GetMapping(value = "/module/findById/{id}")
     public Result<Module> findModuleById(@PathVariable("id") Integer id) throws Exception {
@@ -64,17 +40,5 @@ public class ModuleController {
     public Result<List> findByProjectId(@PathVariable("projectId") Integer projectId) throws Exception {
         return moduleService.findByProjectId(projectId);
     }
-
-    /* 根据【模块ID】查询下级模块及接口信息 */
-    @GetMapping(value = "/module/findTreeByModuleId/{moduleId}")
-    public Result<Module> findTreeByModuleId(@PathVariable("moduleId") Integer moduleId) throws Exception {
-        return moduleService.findTreeByModuleId(moduleId);
-    }
-
-    /* 根据【项目ID】查询下级模块及接口信息 */
-  /*  @GetMapping(value = "/module/findTreeByProjectId/{projectId}")
-    public Result<Module> findTreeByProjectId(@PathVariable("projectId") Integer projectId) throws Exception {
-        return moduleService.findTreeByProjectId(projectId);
-    }*/
 
 }

@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Data @NoArgsConstructor //构造函数
-public class ProjectModuleRelation {
+public class ProjectModuleRelation  implements java.io.Serializable{
 
     private static final long serialVersionUID = 1L;
 

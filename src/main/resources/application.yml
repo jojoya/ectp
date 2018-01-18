@@ -12,12 +12,14 @@ spring:
 
   jpa:
     hibernate:
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: update
     show-sql: true
     database: mysql
   application:
     name: ectp
-
 
 http:
   #最大连接数
@@ -32,3 +34,5 @@ http:
   socketTimeout : 10000
   #提交请求前测试连接是否可用
   staleConnectionCheckEnabled : true
+
+

@@ -22,40 +22,8 @@ public class InterfaceDefServiceImpl implements InterfaceDefService {
 
     /*查询列表*/
     public Result<InterfaceDef> getList() throws Exception {
-
         return ResultUtil.success(interfaceDefDao.findAll());
     }
-
-
-
-    /*添加*/
-    public Result<InterfaceDef> addInterfaceMain(@Valid InterfaceDef interfaceDef, BindingResult bindingResult) throws Exception{
-
-        //检验字段值
-        if (bindingResult.hasErrors()) {
-            return ResultUtil.error(
-                    BaseResultEnum.PARAMETER_INVALID.getCode(),
-                    bindingResult.getFieldError().getDefaultMessage());
-        }
-        //名称去空格，不允许重复
-        String value = interfaceDef.getValue().trim();
-        Integer moduleId = interfaceDef.getModuleId();
-        List<InterfaceDef> list = interfaceDefDao.findByModuleIdAndValue(moduleId,value);
-        if(list.size()>0){
-            return ResultUtil.error(
-                    BaseResultEnum.DATA_EXIST.getCode(),
-                    BaseResultEnum.DATA_EXIST.getMessage());
-        }
-        //添加
-        interfaceDef.setModuleId(interfaceDef.getModuleId());
-        interfaceDef.setValue(interfaceDef.getValue());
-        interfaceDef.setDomainId(interfaceDef.getDomainId());
-        interfaceDef.setRequestMethod(interfaceDef.getRequestMethod());
-        interfaceDef.setDescription(interfaceDef.getDescription());
-
-        return ResultUtil.success(interfaceDefDao.save(interfaceDef));
-    }
-
 
     /*修改*/
     public Result<InterfaceDef> updateById(@Valid InterfaceDef interfaceDef, BindingResult bindingResult) {
@@ -71,15 +39,17 @@ public class InterfaceDefServiceImpl implements InterfaceDefService {
         }
         interfaceDef.setId(interfaceDef.getId());
         interfaceDef.setModuleId(interfaceDef.getModuleId());
-        interfaceDef.setValue(interfaceDef.getValue());
+        interfaceDef.setLabel(interfaceDef.getLabel());
+        interfaceDef.setReqMethod(interfaceDef.getReqMethod());
+        interfaceDef.setReqProtocol(interfaceDef.getReqProtocol());
         interfaceDef.setDomainId(interfaceDef.getDomainId());
-        interfaceDef.setRequestMethod(interfaceDef.getRequestMethod());
+        interfaceDef.setUrl(interfaceDef.getUrl());
         interfaceDef.setDescription(interfaceDef.getDescription());
 
         return ResultUtil.success(interfaceDefDao.save(interfaceDef));
     }
 
-    /*删除域名*/
+    /*删除*/
     public Result<InterfaceDef> deleteById(Integer id) throws Exception{
         if (!interfaceDefDao.exists(id)){
             return ResultUtil.error(

@@ -5,13 +5,16 @@ package com.workec.ectp.enums;
  */
 public enum BaseResultEnum {
     UNKNOW_ERROR(-1,"未知错误！"),
+
     PARAMETER_IS_NULL(400,"参数不能为空"),
-    PARAMETER_TYPE_MISMACH(401,"参数类型不匹配"),
-    PARAMETER_INVALID(404,"参数验证不通过"),
-    DATA_NOT_EXIST(402,"操作的数据不存在"),
-    DATA_EXIST(403,"数据已存在,不允许重复"),
-    REQUEST_METHOD_NOT_SUPPORT(405,"请求方法不支持"),
-    REQUEST_CONTENT_TYPE_NOT_SUPPORT(406,"Content-Type格式不支持"),
+    PARAMETER_TYPE_MISMACH(40005,"参数类型不匹配"),
+    PARAMETER_INVALID(40004,"参数验证不通过"),
+    DATA_NOT_EXIST(40003,"操作的数据不存在"),
+    DATA_EXIST(40002,"数据已存在,不允许重复"),
+    DATA_MISSING(40001,"数据不完整"),
+
+    REQUEST_METHOD_NOT_SUPPORT(40901,"请求方法不支持"),
+    REQUEST_CONTENT_TYPE_NOT_SUPPORT(40902,"Content-Type格式不支持"),
     SUCCESS(100,"成功"),
     ;
 

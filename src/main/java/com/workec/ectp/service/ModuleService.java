@@ -15,15 +15,6 @@ public interface ModuleService {
     /* 查询列表 */
     Result<Module> getModuleList() throws Exception;
 
-    /* 添加 */
-    Result<Module> addModule(@Valid Module module, BindingResult bindingResult);
-
-    /* 修改 */
-    Result<Module> updateModule(@Valid Module module, BindingResult bindingResult);
-
-    /* 删除 */
-    Result<Module> deleteModuleById(Integer id);
-
     /* 按照id查询 */
     Result<Module> findModuleById(Integer id);
 
@@ -32,12 +23,5 @@ public interface ModuleService {
 
     /* 根据projectID获取直属子节点列表 */
     Result findByProjectId(Integer projectId) throws JSONException;
-
-    /* 根据projectID查询下级模块树 */
-//    Result<Module> findTreeByProjectId(Integer id) throws JSONException;
-
-    /* 根据ModuleId查询直属子节点信息 */
-    Result<Module> findTreeByModuleId(Integer moduleId) throws JSONException;
-
 
 }

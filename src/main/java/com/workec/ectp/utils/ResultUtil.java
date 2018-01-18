@@ -9,7 +9,6 @@ public class ResultUtil {
         Result result = new Result();
         result.setCode(BaseResultEnum.SUCCESS.getCode());
         result.setMsg(BaseResultEnum.SUCCESS.getMessage());
-        result.setData(null);
         result.setData(data);
         return result;
     }
