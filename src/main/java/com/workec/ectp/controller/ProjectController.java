@@ -1,8 +1,10 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.Project;
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.DO.Project;
+import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.service.ProjectService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +18,14 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
-    /* 查询项目列表 */
+    @ApiOperation(value="查询项目列表", notes="查询所有项目")
     @GetMapping(value = "/project/getList")
     public Result<Project> getProjectList() throws Exception {
         return projectService.getProjectList();
     }
 
-    /* 按照id查询项目 */
+    @ApiOperation(value="按照id查询项目", notes="按照id查询项目")
+    @ApiImplicitParam(name = "id", value = "项目ID", required = true, dataType = "Int",paramType = "path")
     @GetMapping(value = "/project/findById/{id}")
     public Result<Project> findProjectById(@PathVariable("id") Integer id) throws Exception {
         return projectService.findById(id);

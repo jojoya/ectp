@@ -1,13 +1,14 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.DO;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-public abstract class TimeEntity implements java.io.Serializable{
+public abstract class TimeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

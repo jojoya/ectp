@@ -1,7 +1,7 @@
 package com.workec.ectp.dao;
 
 
-import com.workec.ectp.entity.ProjectModuleRelation;
+import com.workec.ectp.entity.DO.ProjectModuleRelation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

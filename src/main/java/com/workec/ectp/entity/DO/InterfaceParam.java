@@ -1,16 +1,16 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.DO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * Created by user on 2018/1/16.
@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Data
 @NoArgsConstructor    //构造函数
-public class InterfaceParam  implements java.io.Serializable{
+public class InterfaceParam  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,6 @@
 package com.workec.ectp.http.testController;
 
-import com.workec.ectp.entity.HttpRequestInfo;
+import com.workec.ectp.entity.dto.HttpRequestInfo;
 import com.workec.ectp.http.HttpAPIService;
 import com.workec.ectp.http.HttpResult;
 import org.apache.http.entity.StringEntity;

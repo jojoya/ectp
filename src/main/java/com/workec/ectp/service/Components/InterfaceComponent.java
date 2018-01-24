@@ -2,15 +2,10 @@ package com.workec.ectp.service.Components;
 
 import com.workec.ectp.dao.InterfaceDefDao;
 import com.workec.ectp.dao.InterfaceParamDao;
-import com.workec.ectp.entity.InterfaceDef;
-import com.workec.ectp.entity.InterfaceParam;
-import com.workec.ectp.entity.Result;
-import com.workec.ectp.enums.BaseResultEnum;
-import com.workec.ectp.service.InterfaceDefService;
-import com.workec.ectp.utils.ResultUtil;
+import com.workec.ectp.entity.DO.InterfaceDef;
+import com.workec.ectp.entity.DO.InterfaceParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;

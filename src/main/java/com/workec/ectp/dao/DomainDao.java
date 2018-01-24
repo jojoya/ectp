@@ -1,7 +1,7 @@
 package com.workec.ectp.dao;
 
 
-import com.workec.ectp.entity.Domain;
+import com.workec.ectp.entity.DO.Domain;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

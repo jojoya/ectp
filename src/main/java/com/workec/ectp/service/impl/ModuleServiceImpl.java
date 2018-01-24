@@ -1,18 +1,15 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.InterfaceDefDao;
 import com.workec.ectp.dao.ModuleDao;
-import com.workec.ectp.dao.ProjectModuleRelationDao;
-import com.workec.ectp.entity.*;
+import com.workec.ectp.entity.DO.Module;
+import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.ModuleService;
 import com.workec.ectp.utils.ResultUtil;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,12 +79,11 @@ public class ModuleServiceImpl implements ModuleService {
         if (id == null || id.equals("")) {
             return ResultUtil.error(
                     BaseResultEnum.PARAMETER_IS_NULL.getCode(),
-                    BaseResultEnum.PARAMETER_IS_NULL.getMessage(), "[id]");
-
-        }else if (id.equals(moduleDao.findOne(id).getId())) {
+                    BaseResultEnum.PARAMETER_IS_NULL.getMessage());
+        }else if (!moduleDao.exists(id)) {
             return ResultUtil.error(
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),
-                    BaseResultEnum.DATA_NOT_EXIST.getMessage(),"[id]");
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
         }
         return null;
     }

@@ -1,4 +1,4 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.DO;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * Created by user on 2017/11/22.
  */
 @Entity
 @Data @NoArgsConstructor //构造函数
-public class ProjectModuleRelation  implements java.io.Serializable{
+public class Project  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,10 +24,17 @@ public class ProjectModuleRelation  implements java.io.Serializable{
     @GeneratedValue
     private int id;
 
-    @Column(name = "project_id",nullable = false)
-    private int projectId;
+    @Column(length=20,nullable = false)
+    @NotBlank(message = "项目名称不能为空")
+    @Size(max = 20, message = "项目名称长度不能超过20")
+    private String value;
 
-    @Column(name = "module_id",nullable = false)
-    private int moduleId;
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + id +
+                ",\"value\":\"" + value + '\"' +
+                '}';
+    }
 
 }

@@ -1,8 +1,8 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.InterfaceDefDao;
-import com.workec.ectp.entity.InterfaceDef;
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.DO.InterfaceDef;
+import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.InterfaceDefService;
 import com.workec.ectp.utils.ResultUtil;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Service

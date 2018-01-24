@@ -1,5 +1,7 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.dto;
 
+import com.workec.ectp.entity.DO.InterfaceDef;
+import com.workec.ectp.entity.DO.InterfaceParam;
 import lombok.Data;
 
 import java.util.List;

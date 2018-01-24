@@ -1,12 +1,11 @@
 package com.workec.ectp.dao;
 
 
-import com.workec.ectp.entity.InterfaceDef;
+import com.workec.ectp.entity.DO.InterfaceDef;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface InterfaceDefDao extends JpaRepository<InterfaceDef,Integer> {

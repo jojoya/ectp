@@ -1,11 +1,11 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.DO;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * Created by user on 2017/11/27.
@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Data
 //@NoArgsConstructor    //构造函数
-public class InterfaceDef{
+public class InterfaceDef implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -1,4 +1,4 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.DO;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity(name = "domain")
 @Data @NoArgsConstructor //构造函数
-public class Domain extends TimeEntity{
+public class Domain extends TimeEntity {
 
     private static final long serialVersionUID = 1L;
 

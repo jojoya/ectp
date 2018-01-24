@@ -1,7 +1,7 @@
 package com.workec.ectp.handle;
 
 
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.exception.ModuleFreedomException;
 import com.workec.ectp.utils.ResultUtil;

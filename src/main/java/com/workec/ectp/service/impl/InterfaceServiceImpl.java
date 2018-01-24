@@ -2,7 +2,10 @@ package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.InterfaceDefDao;
 import com.workec.ectp.dao.InterfaceParamDao;
-import com.workec.ectp.entity.*;
+import com.workec.ectp.entity.DO.InterfaceDef;
+import com.workec.ectp.entity.DO.InterfaceParam;
+import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.dto.Interface;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.Components.InterfaceComponent;
 import com.workec.ectp.service.InterfaceService;
@@ -14,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 @Service

@@ -1,4 +1,4 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.dto;
 
 import lombok.Data;
 import java.util.List;

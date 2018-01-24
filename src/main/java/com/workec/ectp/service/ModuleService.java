@@ -1,11 +1,8 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.Module;
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.DO.Module;
+import com.workec.ectp.entity.dto.Result;
 import org.json.JSONException;
-import org.springframework.validation.BindingResult;
-
-import javax.validation.Valid;
 
 /**
  * Created by user on 2018/1/10.

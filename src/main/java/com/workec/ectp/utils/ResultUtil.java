@@ -1,6 +1,6 @@
 package com.workec.ectp.utils;
 
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 
 public class ResultUtil {

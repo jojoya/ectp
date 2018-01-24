@@ -1,7 +1,7 @@
 package com.workec.ectp.dao;
 
 
-import com.workec.ectp.entity.Module;
+import com.workec.ectp.entity.DO.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,8 +1,8 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.ProjectDao;
-import com.workec.ectp.entity.Project;
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.DO.Project;
+import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.service.ProjectService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;

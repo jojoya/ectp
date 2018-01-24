@@ -9,7 +9,7 @@ public enum BaseResultEnum {
     PARAMETER_IS_NULL(400,"参数不能为空"),
     PARAMETER_TYPE_MISMACH(40005,"参数类型不匹配"),
     PARAMETER_INVALID(40004,"参数验证不通过"),
-    DATA_NOT_EXIST(40003,"操作的数据不存在"),
+    DATA_NOT_EXIST(40003,"数据不存在"),
     DATA_EXIST(40002,"数据已存在,不允许重复"),
     DATA_MISSING(40001,"数据不完整"),
 

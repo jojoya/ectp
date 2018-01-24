@@ -1,6 +1,6 @@
 package com.workec.ectp.dao;
 
-import com.workec.ectp.entity.InterfaceParam;
+import com.workec.ectp.entity.DO.InterfaceParam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,18 +1,17 @@
-package com.workec.ectp.entity;
+package com.workec.ectp.entity.DO;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity @NoArgsConstructor //实例不设置构造函数
 @Data
-public class Module extends TimeEntity{
+public class Module extends TimeEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,7 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.Domain;
-import com.workec.ectp.entity.Result;
+import com.workec.ectp.entity.DO.Domain;
+import com.workec.ectp.entity.dto.Result;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
