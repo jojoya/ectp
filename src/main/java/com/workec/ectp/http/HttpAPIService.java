@@ -79,6 +79,7 @@ public class HttpAPIService {
             }
         }
 
+
         // 调用不带参数的get请求
         return this.doGet(uriBuilder.build().toString());
 
