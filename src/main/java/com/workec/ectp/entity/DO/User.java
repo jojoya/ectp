@@ -29,7 +29,7 @@ public class User implements Serializable {
 
     @Column(length=20,nullable = false)
     @NotBlank(message = "帐号不能为空")
-    @Size(max = 20, message = "帐号长度不能超过20")
+    @Size(min=3,max = 20, message = "帐号长度3~20")
     private String account;
 
     @Column(length=8,nullable = false)
