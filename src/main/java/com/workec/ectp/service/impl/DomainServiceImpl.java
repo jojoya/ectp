@@ -35,15 +35,15 @@ public class DomainServiceImpl implements DomainService {
                     bindingResult.getFieldError().getDefaultMessage());
         }
         //名称去空格，不允许重复
-        String value = domain.getValue().trim();
-        List<Domain> list = domainDao.findByValue(value);
+        String value = domain.getName().trim();
+        List<Domain> list = domainDao.findByName(value);
         if(list.size()>0){
             return ResultUtil.error(
                     BaseResultEnum.DATA_EXIST.getCode(),
                     BaseResultEnum.DATA_EXIST.getMessage());
         }
         //添加
-        domain.setValue(domain.getValue());
+        domain.setName(domain.getName());
 
         return ResultUtil.success(domainDao.save(domain));
     }
@@ -59,7 +59,7 @@ public class DomainServiceImpl implements DomainService {
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),
                     BaseResultEnum.DATA_NOT_EXIST.getMessage());
         }
-        domain.setValue(domain.getValue());
+        domain.setName(domain.getName());
 
         return ResultUtil.success(domainDao.save(domain));
     }

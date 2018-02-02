@@ -1,5 +1,8 @@
 package com.workec.ectp.entity.DO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -13,6 +16,9 @@ import java.io.Serializable;
 @Entity
 @Data
 //@NoArgsConstructor    //构造函数
+@JsonInclude(JsonInclude.Include.ALWAYS)    //字段为空也进行序列化
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })     //反序列化指定序列化器
+//@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 public class InterfaceDef implements Serializable{
     private static final long serialVersionUID = 1L;
 

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -60,6 +61,10 @@ public class ExceptionHandle {
             return ResultUtil.error(
                     BaseResultEnum.DATA_MISSING.getCode(),
                     BaseResultEnum.DATA_MISSING.getMessage());
+        }else if(e instanceof InvalidDataAccessApiUsageException){
+            return ResultUtil.error(
+                    BaseResultEnum.INVALID_DATA_ACCESS.getCode(),
+                    BaseResultEnum.INVALID_DATA_ACCESS.getMessage());
         }else{
             logger.error("【系统异常】{}",e);
             return ResultUtil.error(

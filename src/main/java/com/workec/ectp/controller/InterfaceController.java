@@ -2,6 +2,7 @@ package com.workec.ectp.controller;
 
 import com.workec.ectp.entity.dto.Interface;
 import com.workec.ectp.entity.DO.InterfaceDef;
+import com.workec.ectp.entity.dto.ParamIdList;
 import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.service.InterfaceDefService;
 import com.workec.ectp.service.InterfaceService;
@@ -58,7 +59,7 @@ public class InterfaceController {
 
 
     @ApiOperation(value="修改接口及参数信息", notes="修改接口及参数信息")
-    @ApiImplicitParam(name = "interface", value = "接口及参数详细实体", required = true, dataType = "Interface")
+    @ApiImplicitParam(name = "itf", value = "接口及参数详细实体", required = true, dataType = "Interface")
     @PostMapping(value = "/interface/save")
     public Result<Interface> updateInterface(@Valid @RequestBody Interface itf, BindingResult bindingResult){
         return interfaceService.updateInterface(itf,bindingResult);
@@ -74,10 +75,10 @@ public class InterfaceController {
 
 
     @ApiOperation(value="批量删除接口参数", notes="按照参数id集合删除参数，id中间用英文逗号隔开")
-    @ApiImplicitParam(name = "map", value = "参数集合ids，id中间用英文逗号隔开", required = true, dataType = "json",paramType = "Json")
+    @ApiImplicitParam(name = "paramIdList", value = "参数集合ids，id中间用英文逗号隔开", required = true, dataType = "ParamIdList")
     @PostMapping(value = "/interface/param/delete")
-    public Result getInterface(@RequestBody Map<String,String> map){
-        return interfaceService.deleteParams(map.get("ids"));
+    public Result getInterface(@RequestBody ParamIdList paramIdList){
+        return interfaceService.deleteParams(paramIdList);
     }
 
 }

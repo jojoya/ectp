@@ -11,10 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-@Entity(name = "domain")
+@Entity
 @Data
 @NoArgsConstructor //构造函数
-public class Domain extends TimeEntity {
+public class ApplicationEnvironmentDetail extends TimeEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,18 +22,28 @@ public class Domain extends TimeEntity {
     @GeneratedValue
     private int id;
 
-    @Column(length=50,nullable = false)
+    @Column(length=32,nullable = false)
     @NotBlank(message = "名称不能为空")
-    @Size(max = 50, message = "名称长度不能超过50")
-    @JsonProperty(value = "value")
+    @Size(max = 32, message = "名称长度不能超过32")
+    @JsonProperty(value = "label")
     private String name;
+
+    @Column(nullable = false)
+    @NotBlank(message = "evn_Id不能为空")
+    private int evnId;
+
+    @Column(nullable = false)
+    @NotBlank(message = "domain_Id不能为空")
+    private int domainId;
+
 
     @Override
     public String toString() {
-        return "{" +
-                "\"id\":" + id +
-                ",\"name\":\"" + name + '\"' +
+        return "ApplicationEnvironmentDetail{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", evnId=" + evnId +
+                ", domainId=" + domainId +
                 '}';
     }
-
 }

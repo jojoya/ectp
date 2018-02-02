@@ -4,12 +4,14 @@ import com.workec.ectp.dao.InterfaceDefDao;
 import com.workec.ectp.dao.InterfaceParamDao;
 import com.workec.ectp.entity.DO.InterfaceDef;
 import com.workec.ectp.entity.DO.InterfaceParam;
+import com.workec.ectp.entity.dto.ParamIdList;
 import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.entity.dto.Interface;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.Components.InterfaceComponent;
 import com.workec.ectp.service.InterfaceService;
 import com.workec.ectp.utils.ResultUtil;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -94,16 +96,14 @@ public class InterfaceServiceImpl implements InterfaceService {
         result.setPath(path);
         result.setBody(body);
 
+        System.out.println("service》》》》》》》"+result);
         return ResultUtil.success(result);
     }
 
     @Override
-    public Result deleteParams(String ids) {
-        System.out.println("ids="+ids);
-        String [] idStr = ids.split(",");
-        for (String id:idStr) {
-            System.out.println("id="+id);
-            interfaceParamDao.delete(Integer.parseInt(id));
+    public Result deleteParams(ParamIdList paramIdList) {
+        for (Integer id:paramIdList.getIds()) {
+            interfaceParamDao.delete(id);
         }
         return ResultUtil.success();
     }

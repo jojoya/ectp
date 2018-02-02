@@ -3,6 +3,7 @@ package com.workec.ectp.service.impl;
 import com.workec.ectp.dao.UserDao;
 import com.workec.ectp.entity.DO.User;
 import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.dto.UserLoginInfo;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.UserService;
 import com.workec.ectp.utils.ResultUtil;
@@ -20,8 +21,33 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    /*登录*/
     @Override
+    public Result<User> login(UserLoginInfo userLoginInfo, BindingResult bindingResult) {
+        //检验字段值
+        if (bindingResult.hasErrors()) {
+            return ResultUtil.error(
+                    BaseResultEnum.PARAMETER_INVALID.getCode(),
+                    bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        List<User> list = userDao.findByAccountAndPassword(userLoginInfo.getAccount().trim(), userLoginInfo.getPassword());
+        System.out.println("list:"+list.size());
+        if(list.size()==1) {
+            return ResultUtil.success(list.get(0));
+        }else if(list.size()>1){
+            return ResultUtil.error(
+                    BaseResultEnum.USER_DUPLICATION.getCode(),
+                    BaseResultEnum.USER_DUPLICATION.getMessage());
+        }else {
+            return ResultUtil.error(
+                    BaseResultEnum.USER_ERROR.getCode(),
+                    BaseResultEnum.USER_ERROR.getMessage());
+        }
+    }
+
     /*添加*/
+    @Override
     public Result<User> addUser(@Valid User user, BindingResult bindingResult) {
 
         //检验字段值

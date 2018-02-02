@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface DomainDao extends JpaRepository<Domain,Integer> {
 
-      List<Domain> findByValue(String value);
+      List<Domain> findByName(String name);
 
 }

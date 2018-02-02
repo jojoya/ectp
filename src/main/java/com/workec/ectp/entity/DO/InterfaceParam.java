@@ -1,7 +1,9 @@
 package com.workec.ectp.entity.DO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +35,7 @@ public class InterfaceParam  implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int location;   //0Header 1Path 2Body
+
     private int format;     //0Json 1Form
     private String remark;
 
