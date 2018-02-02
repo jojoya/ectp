@@ -1,6 +1,8 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.entity.DO.ApplicationEnvironment;
+import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.dto.InitAPPEnvDetail;
 import com.workec.ectp.entity.dto.Result;
 
 /**
@@ -8,6 +10,9 @@ import com.workec.ectp.entity.dto.Result;
  */
 public interface ApplicationEnvironmentService {
 
+    /*获取应用环境列表*/
     Result<ApplicationEnvironment> getList();
 
+    /*初始化应用环境参数*/
+    Result<ApplicationEnvironmentDetail> initDetail(InitAPPEnvDetail detail);
 }

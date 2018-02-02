@@ -5,45 +5,43 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@Data
-@NoArgsConstructor //构造函数
+@IdClass(AppEnvAndDomainPK.class)
+//@NoArgsConstructor //构造函数
 public class ApplicationEnvironmentDetail extends TimeEntity {
 
-    private static final long serialVersionUID = 1L;
+    @NotBlank(message = "ip不能为空")
+    @Size(min=1, max=16, message = "IP长度1~16")
+    @JsonProperty(value = "ip")
+    private String ip;
 
-    @Id
-    @GeneratedValue
-    private int id;
+    @EmbeddedId
+    private AppEnvAndDomainPK pk;
 
-    @Column(length=32,nullable = false)
-    @NotBlank(message = "名称不能为空")
-    @Size(max = 32, message = "名称长度不能超过32")
-    @JsonProperty(value = "label")
-    private String name;
+    public String getIp() {
+        return ip;
+    }
 
-    @Column(nullable = false)
-    @NotBlank(message = "evn_Id不能为空")
-    private int evnId;
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-    @Column(nullable = false)
-    @NotBlank(message = "domain_Id不能为空")
-    private int domainId;
+    public AppEnvAndDomainPK getPk() {
+        return pk;
+    }
 
+    public void setPk(AppEnvAndDomainPK pk) {
+        this.pk = pk;
+    }
 
     @Override
     public String toString() {
         return "ApplicationEnvironmentDetail{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", evnId=" + evnId +
-                ", domainId=" + domainId +
+                "ip='" + ip + '\'' +
+                ", pk=" + pk +
                 '}';
     }
 }
