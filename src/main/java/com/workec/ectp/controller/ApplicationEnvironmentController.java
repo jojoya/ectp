@@ -1,18 +1,14 @@
 package com.workec.ectp.controller;
 
 import com.workec.ectp.entity.DO.ApplicationEnvironment;
-import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
-import com.workec.ectp.entity.DO.DataEnvironment;
-import com.workec.ectp.entity.dto.InitAPPEnvDetail;
 import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.service.ApplicationEnvironmentService;
-import com.workec.ectp.service.DataEnvironmentService;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController()
@@ -29,8 +25,9 @@ public class ApplicationEnvironmentController {
 
 
     @ApiOperation(value="初始化参数配置", notes="初始化参数配置")
-    @GetMapping(value = "/appenv/list")
-    public Result<ApplicationEnvironmentDetail> initDetail(InitAPPEnvDetail initAPPEnvDetail){
-        return applicationEnvironmentService.initDetail(initAPPEnvDetail);
+    @ApiImplicitParam(name = "environment", value = "应用环境和IP", required = true, dataType = "ApplicationEnvironment")
+    @PostMapping(value = "/appenv/initDetail")
+    public Result initDetail(@Valid @RequestBody ApplicationEnvironment environment){
+        return applicationEnvironmentService.initDetail(environment);
     }
 }

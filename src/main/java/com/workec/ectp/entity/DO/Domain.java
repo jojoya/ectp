@@ -30,10 +30,9 @@ public class Domain extends TimeEntity {
 
     @Override
     public String toString() {
-        return "{" +
-                "\"id\":" + id +
-                ",\"name\":\"" + name + '\"' +
+        return "Domain{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
-
 }

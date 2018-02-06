@@ -9,8 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@IdClass(AppEnvAndDomainPK.class)
-//@NoArgsConstructor //构造函数
+//@Data
+@NoArgsConstructor //构造函数
 public class ApplicationEnvironmentDetail extends TimeEntity {
 
     @NotBlank(message = "ip不能为空")
@@ -29,10 +29,12 @@ public class ApplicationEnvironmentDetail extends TimeEntity {
         this.ip = ip;
     }
 
+    @EmbeddedId
     public AppEnvAndDomainPK getPk() {
         return pk;
     }
 
+    @EmbeddedId
     public void setPk(AppEnvAndDomainPK pk) {
         this.pk = pk;
     }

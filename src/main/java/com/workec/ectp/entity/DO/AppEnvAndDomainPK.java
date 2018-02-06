@@ -1,9 +1,11 @@
 package com.workec.ectp.entity.DO;
 
+import lombok.Data;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-
+@Data
 @Embeddable
 public class AppEnvAndDomainPK implements Serializable {
 
@@ -18,22 +20,6 @@ public class AppEnvAndDomainPK implements Serializable {
 
     public AppEnvAndDomainPK(int evnId, int domainId) {
         this.evnId = evnId;
-        this.domainId = domainId;
-    }
-
-    public int getEvnId() {
-        return evnId;
-    }
-
-    public void setEvnId(int evnId) {
-        this.evnId = evnId;
-    }
-
-    public int getDomainId() {
-        return domainId;
-    }
-
-    public void setDomainId(int domainId) {
         this.domainId = domainId;
     }
 

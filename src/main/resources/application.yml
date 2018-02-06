@@ -17,6 +17,11 @@ spring:
       ddl-auto: update
     show-sql: true
     database: mysql
+    properties:
+      hibernate:
+        format_sql: true
+        use-sql-comments: true
+
   application:
     name: ectp
 

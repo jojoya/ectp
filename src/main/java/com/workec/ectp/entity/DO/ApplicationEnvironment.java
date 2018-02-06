@@ -1,5 +1,6 @@
 package com.workec.ectp.entity.DO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,13 @@ public class ApplicationEnvironment extends TimeEntity {
     private String name;
 
     @Column(length=50,nullable = false)
-    @NotBlank(message = "dbId不能为空")
+//    @NotBlank(message = "dbId不能为空")
     private int dbId;
+
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    private String ip;
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    private String remark;
 
     @Override
     public String toString() {
@@ -38,6 +44,8 @@ public class ApplicationEnvironment extends TimeEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dbId=" + dbId +
+                ", ip='" + ip + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }
