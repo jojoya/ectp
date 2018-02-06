@@ -40,16 +40,20 @@ public class ApplicationEnvironmentComponent {
     }
 
     /*更新应用环境IP*/
-    public void updateApplicationEnvironmentIp(int appEnvId,String ip) {
+    public void updateApplicationEnvironmentIp(ApplicationEnvironment environment) {
 
 //        environmentDao.updateIp(appEnvId,ip);
+        int appEnvId = environment.getId();
+        String ip = environment.getIp();
+        String remark = environment.getRemark();
+
         ApplicationEnvironment getInfo = environmentDao.getOne(appEnvId);
         ApplicationEnvironment putInfo = new ApplicationEnvironment();
         putInfo.setIp(ip);
-        putInfo.setDbId(getInfo.getDbId());
         putInfo.setId(appEnvId);
+        putInfo.setDbId(getInfo.getDbId());
         putInfo.setName(getInfo.getName());
-        putInfo.setRemark(getInfo.getRemark());
+        putInfo.setRemark(remark);
         environmentDao.save(putInfo);
 
     }

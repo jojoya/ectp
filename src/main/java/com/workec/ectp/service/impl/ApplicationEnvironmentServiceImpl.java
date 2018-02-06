@@ -11,6 +11,7 @@ import com.workec.ectp.service.Components.ApplicationEnvironmentComponent;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -41,7 +42,14 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
     }
 
     @Override
-    public Result<ApplicationEnvironmentDetail> initDetail(ApplicationEnvironment environment) {
+    public Result<ApplicationEnvironmentDetail> initDetail(ApplicationEnvironment environment,BindingResult bindingResult) {
+
+        //检验字段值
+        if (bindingResult.hasErrors()) {
+            return ResultUtil.error(
+                    BaseResultEnum.PARAMETER_INVALID.getCode(),
+                    bindingResult.getFieldError().getDefaultMessage());
+        }
 
         int id = environment.getId();
         String ip = environment.getIp();
@@ -52,13 +60,13 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
             applicationEnvironmentComponent.saveApplicationEnvironmentDetail(id,ip);
 
             /*更新应用环境IP*/
-            applicationEnvironmentComponent.updateApplicationEnvironmentIp(id,ip);
+            applicationEnvironmentComponent.updateApplicationEnvironmentIp(environment);
 
+            return ResultUtil.success();
         }else{
             return ResultUtil.error(BaseResultEnum.PARAMETER_INVALID.getCode(),
                     BaseResultEnum.PARAMETER_INVALID.getMessage());
         }
 
-        return ResultUtil.success(environmentDetailDao.findByEnvId(id));
     }
 }

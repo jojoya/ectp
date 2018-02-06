@@ -26,7 +26,7 @@ public class ApplicationEnvironment extends TimeEntity {
     @Column(length=32,nullable = false)
     @NotBlank(message = "名称不能为空")
     @Size(max = 32, message = "名称长度不能超过32")
-    @JsonProperty(value = "label")
+    @JsonProperty(value = "value")
     private String name;
 
     @Column(length=50,nullable = false)
