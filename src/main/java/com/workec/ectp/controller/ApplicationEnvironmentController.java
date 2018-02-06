@@ -1,6 +1,7 @@
 package com.workec.ectp.controller;
 
 import com.workec.ectp.entity.DO.ApplicationEnvironment;
+import com.workec.ectp.entity.dto.AppEnvDetailInfo;
 import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.service.ApplicationEnvironmentService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,5 +31,12 @@ public class ApplicationEnvironmentController {
     @PostMapping(value = "/appenv/initDetail")
     public Result initDetail(@Valid @RequestBody ApplicationEnvironment environment, BindingResult bindingResult){
         return applicationEnvironmentService.initDetail(environment,bindingResult);
+    }
+
+    @ApiOperation(value="更新参数", notes="更新参数")
+    @ApiImplicitParam(name = "appEnvDetailInfo", value = "参数信息和IP", required = true, dataType = "AppEnvDetailInfo")
+    @PostMapping(value = "/appenv/updateDetail")
+    public Result updateDetail(@Valid @RequestBody AppEnvDetailInfo appEnvDetailInfo){
+        return applicationEnvironmentService.updateDetail(appEnvDetailInfo);
     }
 }

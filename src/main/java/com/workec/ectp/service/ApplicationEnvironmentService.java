@@ -2,6 +2,7 @@ package com.workec.ectp.service;
 
 import com.workec.ectp.entity.DO.ApplicationEnvironment;
 import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.dto.AppEnvDetailInfo;
 import com.workec.ectp.entity.dto.Result;
 import org.springframework.validation.BindingResult;
 
@@ -15,4 +16,7 @@ public interface ApplicationEnvironmentService {
 
     /*初始化应用环境参数*/
     Result<ApplicationEnvironmentDetail> initDetail(ApplicationEnvironment environment,BindingResult bindingResult);
+
+    /*更新明细*/
+    Result<ApplicationEnvironmentDetail> updateDetail(AppEnvDetailInfo appEnvDetailInfo);
 }

@@ -2,8 +2,10 @@ package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.ApplicationEnvironmentDao;
 import com.workec.ectp.dao.ApplicationEnvironmentDetailDao;
+import com.workec.ectp.entity.DO.AppEnvAndDomainPK;
 import com.workec.ectp.entity.DO.ApplicationEnvironment;
 import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.dto.AppEnvDetailInfo;
 import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.ApplicationEnvironmentService;
@@ -68,5 +70,19 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
                     BaseResultEnum.PARAMETER_INVALID.getMessage());
         }
 
+    }
+
+
+    @Override
+    public Result<ApplicationEnvironmentDetail> updateDetail(AppEnvDetailInfo appEnvDetailInfo) {
+        ApplicationEnvironmentDetail detail = new ApplicationEnvironmentDetail();
+
+        AppEnvAndDomainPK pk = new AppEnvAndDomainPK();
+        pk.setDomainId(appEnvDetailInfo.getDomainId());
+        pk.setEvnId(appEnvDetailInfo.getEnvId());
+        detail.setPk(pk);
+        detail.setIp(appEnvDetailInfo.getIp());
+
+        return ResultUtil.success(environmentDetailDao.save(detail));
     }
 }
