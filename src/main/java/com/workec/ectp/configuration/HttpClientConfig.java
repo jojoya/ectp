@@ -1,4 +1,4 @@
-package com.workec.ectp.http;
+package com.workec.ectp.configuration;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class HttpClient {
+public class HttpClientConfig {
 
     @Value("${http.maxTotal}")
     private Integer maxTotal;

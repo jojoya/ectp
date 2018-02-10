@@ -1,4 +1,4 @@
-package com.workec.ectp.service.Components;
+package com.workec.ectp.components;
 
 import com.workec.ectp.dao.ApplicationEnvironmentDao;
 import com.workec.ectp.dao.ApplicationEnvironmentDetailDao;

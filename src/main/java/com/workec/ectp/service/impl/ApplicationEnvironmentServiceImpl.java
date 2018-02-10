@@ -9,7 +9,7 @@ import com.workec.ectp.entity.dto.AppEnvDetailInfo;
 import com.workec.ectp.entity.dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.ApplicationEnvironmentService;
-import com.workec.ectp.service.Components.ApplicationEnvironmentComponent;
+import com.workec.ectp.components.ApplicationEnvironmentComponent;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

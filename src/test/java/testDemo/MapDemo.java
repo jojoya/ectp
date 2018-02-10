@@ -14,6 +14,7 @@ public class MapDemo {
         Map map = new HashMap();
         map.put("id",1);
         map.put("name","jojoya");
+        map.put("name","jojoya");
 
         Iterator entries = map.entrySet().iterator();
 

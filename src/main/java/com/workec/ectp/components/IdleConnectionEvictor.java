@@ -1,4 +1,4 @@
-package com.workec.ectp.http;
+package com.workec.ectp.components;
 
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;

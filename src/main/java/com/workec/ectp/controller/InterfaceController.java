@@ -1,9 +1,8 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.dto.Interface;
+import com.workec.ectp.entity.dto.*;
 import com.workec.ectp.entity.DO.InterfaceDef;
-import com.workec.ectp.entity.dto.ParamIdList;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.service.HttpService;
 import com.workec.ectp.service.InterfaceDefService;
 import com.workec.ectp.service.InterfaceService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,6 +24,16 @@ public class InterfaceController {
 
     @Autowired
     InterfaceDefService interfaceDefService;
+
+    @Autowired
+    HttpService httpService;
+
+    @ApiOperation(value="http接口调试", notes="http接口调试")
+    @ApiImplicitParam(name = "httpDebugInformation", value = "调试信息", required = true, dataType = "HttpDebugInformation")
+    @PostMapping(value = "/interface/debug")
+    public Result<HttpResult> doDebug(@Valid @RequestBody HttpDebugInformation httpDebugInformation , BindingResult bindingResult) throws Exception{
+        return httpService.doDebug(httpDebugInformation,bindingResult);
+    }
 
 
     @ApiOperation(value="查询接口def列表", notes="查询所有接口")
