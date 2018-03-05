@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-@Entity(name = "domain")
+@Entity(name = "t_domain")
 @Data
 @NoArgsConstructor //构造函数
 public class Domain extends TimeEntity {

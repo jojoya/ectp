@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -141,7 +142,8 @@ public class HttpAPIComponent {
     private static String pathBuilder(String url,Map<String, Object> path){
         String pathResult = null;
         try {
-            URIBuilder uriBuilder = new URIBuilder(url);
+            URI uri = new URI(url);
+            URIBuilder uriBuilder = new URIBuilder(uri);
             if (path != null) {
                 // 遍历map,拼接url参数
                 for (Map.Entry<String, Object> entry : path.entrySet()) {
