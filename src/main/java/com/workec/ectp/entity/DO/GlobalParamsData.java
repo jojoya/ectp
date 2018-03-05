@@ -26,7 +26,7 @@ public class GlobalParamsData implements Serializable {
     private int userId;
 
     @Column(length = 64)
-    private int dbEnvId;
+    private int dbEnvId;    //1测试 2开发 3现网
 
     @Column(length = 64)
     private int globalParamId;

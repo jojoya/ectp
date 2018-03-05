@@ -182,11 +182,12 @@ public class HttpAPIComponent {
     private static void bodyFormBuilder(HttpPost httpPost, Map<String, Object> bodys){
         // 判断map是否为空，不为空则进行遍历，封装from表单对象
         if (bodys != null) {
-            List<NameValuePair> list = new ArrayList<NameValuePair>();
+            List<NameValuePair> list = new ArrayList();
             for (Map.Entry<String, Object> entry : bodys.entrySet()) {
                 list.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
             }
 
+            System.out.println("NameValuePairList:"+list);
             try {
                 UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(list, "UTF-8");    // 构造form表单对象
                 httpPost.setEntity(urlEncodedFormEntity);   // 把表单放到post里
@@ -240,16 +241,17 @@ public class HttpAPIComponent {
         headerBuilder(httpGet,headers);
 
         // 发起请求
-        CloseableHttpResponse response = null;
+        HttpResult result = null;
         try {
-            response = httpClient.execute(httpGet);
+            CloseableHttpResponse response = httpClient.execute(httpGet);
+            result =  getResultResponse(response);
             response.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         //返回结果
-        return getResultResponse(response);
+        return result;
 
     }
 
@@ -283,16 +285,17 @@ public class HttpAPIComponent {
         bodyFormBuilder(httpPost, bodys);
 
         // 发起请求
-        CloseableHttpResponse response = null;
+        HttpResult result = null;
         try {
-            response = httpClient.execute(httpPost);
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            result = getResultResponse(response);
             response.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         //返回结果
-        return getResultResponse(response);
+        return result;
 
     }
 
@@ -326,16 +329,16 @@ public class HttpAPIComponent {
         bodyJsonBuilder(httpPost,body);
 
         // 发起请求
-        CloseableHttpResponse response = null;
+        HttpResult result = null;
         try {
-            response = httpClient.execute(httpPost);
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            result = getResultResponse(response);
             response.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         //返回结果
-        return getResultResponse(response);
+        return result;
     }
 
 

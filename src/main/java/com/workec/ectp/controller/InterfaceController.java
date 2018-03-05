@@ -1,7 +1,7 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.dto.*;
 import com.workec.ectp.entity.DO.InterfaceDef;
+import com.workec.ectp.entity.dto.*;
 import com.workec.ectp.service.HttpService;
 import com.workec.ectp.service.InterfaceDefService;
 import com.workec.ectp.service.InterfaceService;
@@ -12,8 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.Map;
 
 @CrossOrigin
 @RestController()

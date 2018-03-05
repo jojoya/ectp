@@ -34,7 +34,6 @@ public class InterfaceServiceImpl implements InterfaceService {
     /*修改接口信息*/
     public Result<Interface> updateInterface(@Valid Interface itf, BindingResult bindingResult) {
 
-        System.out.println(itf);
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
@@ -95,7 +94,6 @@ public class InterfaceServiceImpl implements InterfaceService {
         result.setPath(path);
         result.setBody(body);
 
-        System.out.println("service》》》》》》》"+result);
         return ResultUtil.success(result);
     }
 
@@ -106,15 +104,5 @@ public class InterfaceServiceImpl implements InterfaceService {
         }
         return ResultUtil.success();
     }
-
-
-//    public Result<InterfaceParam> updateInterfaceParam(@Valid InterfaceParam param, BindingResult bindingResult){
-//
-//        InterfaceParam resultParam = interfaceComponent.saveParam(param,bindingResult);
-//        return ResultUtil.success(resultParam);
-//
-//    }
-
-
 
 }

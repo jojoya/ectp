@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
         }
 
         List<User> list = userDao.findByAccountAndPassword(userLoginInfo.getAccount().trim(), userLoginInfo.getPassword());
-        System.out.println("list:"+list.size());
         if(list.size()==1) {
             return ResultUtil.success(list.get(0));
         }else if(list.size()>1){

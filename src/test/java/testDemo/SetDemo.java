@@ -1,6 +1,5 @@
 package testDemo;
 
-import org.hibernate.annotations.SQLUpdate;
 import org.junit.Test;
 
 import java.util.*;

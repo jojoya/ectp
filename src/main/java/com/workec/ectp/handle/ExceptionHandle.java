@@ -61,10 +61,10 @@ public class ExceptionHandle {
             return ResultUtil.error(
                     BaseResultEnum.DATA_MISSING.getCode(),
                     BaseResultEnum.DATA_MISSING.getMessage());
-        }else if(e instanceof InvalidDataAccessApiUsageException){
+        /*}else if(e instanceof InvalidDataAccessApiUsageException){
             return ResultUtil.error(
                     BaseResultEnum.INVALID_DATA_ACCESS.getCode(),
-                    BaseResultEnum.INVALID_DATA_ACCESS.getMessage());
+                    BaseResultEnum.INVALID_DATA_ACCESS.getMessage());*/
         }else{
             logger.error("【系统异常】{}",e);
             return ResultUtil.error(
