@@ -32,7 +32,8 @@ public class ApplicationEnvironmentComponent {
             ApplicationEnvironmentDetail detail = new ApplicationEnvironmentDetail();
             List<Domain> domains = domainDao.findAll();
             for (Domain domain:domains) {
-                detail.setPk(new AppEnvAndDomainPK(appEnvId,domain.getId()));
+                detail.setDomainId(domain.getId());
+                detail.setEvnId(appEnvId);
                 detail.setIp(ip);
                 environmentDetailDao.save(detail);
             }
@@ -42,7 +43,6 @@ public class ApplicationEnvironmentComponent {
     /*更新应用环境IP*/
     public void updateApplicationEnvironmentIp(ApplicationEnvironment environment) {
 
-//        environmentDao.updateIp(appEnvId,ip);
         int appEnvId = environment.getId();
         String ip = environment.getIp();
         String remark = environment.getRemark();

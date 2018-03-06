@@ -13,7 +13,7 @@ import java.util.List;
  * Created by user on 2018/3/5.
  */
 @Repository
-public class IGlobalParamsDataDaoImpl implements IGlobalParamsDataDao {
+public class GlobalParamsDataDaoImpl implements IGlobalParamsDataDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

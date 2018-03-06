@@ -1,7 +1,7 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.jpa.GlobalParamsDataDao;
-import com.workec.ectp.dao.jdbc.Impl.IGlobalParamsDataDaoImpl;
+import com.workec.ectp.dao.jdbc.Impl.GlobalParamsDataDaoImpl;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
 import com.workec.ectp.entity.Do.GlobalParamsData;
 import com.workec.ectp.entity.Dto.Result;
@@ -22,7 +22,7 @@ public class GlobalParamsDataServiceImpl implements GlobalParamsDataService {
     @Autowired
     private GlobalParamsDataDao globalParamsDataDao;
     @Autowired
-    IGlobalParamsDataDaoImpl iGlobalParamsDataDao;
+    GlobalParamsDataDaoImpl iGlobalParamsDataDao;
 
     @Override
     public Result<GlobalParamsData> save(GlobalParamsData globalParamsData, BindingResult bindingResult) {

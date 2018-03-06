@@ -1,18 +1,16 @@
 package com.workec.ectp.entity.Bo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class AppEnvDetailInfo implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@JsonInclude(JsonInclude.Include.ALWAYS)
+public class AppEnvDetailInfo {
 
     private Integer envId;
-
     private Integer domainId;
-
+    private String domainName;
     private String ip;
-
 
 }

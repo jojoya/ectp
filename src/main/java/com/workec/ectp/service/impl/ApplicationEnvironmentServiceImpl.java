@@ -1,5 +1,6 @@
 package com.workec.ectp.service.impl;
 
+import com.workec.ectp.dao.jdbc.Impl.AppEnvDataDaoImpl;
 import com.workec.ectp.dao.jpa.ApplicationEnvironmentDao;
 import com.workec.ectp.dao.jpa.ApplicationEnvironmentDetailDao;
 import com.workec.ectp.entity.Do.AppEnvAndDomainPK;
@@ -30,6 +31,12 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
     @Autowired
     private ApplicationEnvironmentComponent applicationEnvironmentComponent;
 
+    @Autowired
+    private AppEnvDataDaoImpl appEnvDataDao;
+
+
+
+    /*获取应用环境列表*/
     @Override
     public Result<ApplicationEnvironment> getList() {
 
@@ -42,6 +49,9 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
             return ResultUtil.success();
         }
     }
+
+
+
 
     @Override
     public Result<ApplicationEnvironmentDetail> initDetail(ApplicationEnvironment environment,BindingResult bindingResult) {
@@ -73,14 +83,23 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
     }
 
 
+
+    /*根据应用环境ID获取配置详情*/
+    @Override
+    public Result<List<AppEnvDetailInfo>> findByEnvId(Integer envId){
+        List<AppEnvDetailInfo> list = appEnvDataDao.findByEnvId(envId);
+        System.out.println(list);
+        return ResultUtil.success(list);
+    }
+
+
+
     @Override
     public Result<ApplicationEnvironmentDetail> updateDetail(AppEnvDetailInfo appEnvDetailInfo) {
-        ApplicationEnvironmentDetail detail = new ApplicationEnvironmentDetail();
 
-        AppEnvAndDomainPK pk = new AppEnvAndDomainPK();
-        pk.setDomainId(appEnvDetailInfo.getDomainId());
-        pk.setEvnId(appEnvDetailInfo.getEnvId());
-        detail.setPk(pk);
+        ApplicationEnvironmentDetail detail = new ApplicationEnvironmentDetail();
+        detail.setDomainId(appEnvDetailInfo.getDomainId());
+        detail.setEvnId(appEnvDetailInfo.getEnvId());
         detail.setIp(appEnvDetailInfo.getIp());
 
         return ResultUtil.success(environmentDetailDao.save(detail));

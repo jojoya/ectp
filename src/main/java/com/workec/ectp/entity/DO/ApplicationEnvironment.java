@@ -30,7 +30,6 @@ public class ApplicationEnvironment extends TimeEntity {
     private String name;
 
     @Column(length=50,nullable = false)
-//    @NotBlank(message = "dbId不能为空")
     private int dbId;
 
     @JsonInclude(JsonInclude.Include.ALWAYS)
