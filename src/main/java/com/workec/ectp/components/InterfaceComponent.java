@@ -1,9 +1,9 @@
 package com.workec.ectp.components;
 
-import com.workec.ectp.dao.InterfaceDefDao;
-import com.workec.ectp.dao.InterfaceParamDao;
-import com.workec.ectp.entity.DO.InterfaceDef;
-import com.workec.ectp.entity.DO.InterfaceParam;
+import com.workec.ectp.dao.jpa.InterfaceDefDao;
+import com.workec.ectp.dao.jpa.InterfaceParamDao;
+import com.workec.ectp.entity.Do.InterfaceDef;
+import com.workec.ectp.entity.Do.InterfaceParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;

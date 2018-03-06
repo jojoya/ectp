@@ -1,8 +1,8 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DO.ApplicationEnvironment;
-import com.workec.ectp.entity.dto.AppEnvDetailInfo;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.ApplicationEnvironment;
+import com.workec.ectp.entity.Bo.AppEnvDetailInfo;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.ApplicationEnvironmentService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

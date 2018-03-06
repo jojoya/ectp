@@ -1,8 +1,8 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.dto.Leaf;
-import com.workec.ectp.entity.dto.Tree;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Bo.Leaf;
+import com.workec.ectp.entity.Bo.Tree;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.TreeService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

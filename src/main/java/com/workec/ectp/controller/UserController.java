@@ -1,8 +1,8 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DO.User;
-import com.workec.ectp.entity.dto.Result;
-import com.workec.ectp.entity.dto.UserLoginInfo;
+import com.workec.ectp.entity.Do.User;
+import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Bo.UserLoginInfo;
 import com.workec.ectp.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

@@ -1,6 +1,6 @@
 package com.workec.ectp.components;
 
-import com.workec.ectp.entity.dto.HttpResult;
+import com.workec.ectp.entity.Bo.HttpResult;
 import com.workec.ectp.utils.HttpResultUtil;
 import com.workec.ectp.utils.ToolsUtil;
 import org.apache.http.Header;

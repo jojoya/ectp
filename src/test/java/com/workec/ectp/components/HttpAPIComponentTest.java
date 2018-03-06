@@ -1,6 +1,6 @@
 package com.workec.ectp.components;
 
-import com.workec.ectp.entity.dto.HttpResult;
+import com.workec.ectp.entity.Bo.HttpResult;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

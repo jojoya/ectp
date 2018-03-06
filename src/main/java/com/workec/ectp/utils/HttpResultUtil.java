@@ -1,8 +1,6 @@
 package com.workec.ectp.utils;
 
-import com.workec.ectp.entity.dto.HttpResult;
-import com.workec.ectp.entity.dto.Result;
-import com.workec.ectp.enums.BaseResultEnum;
+import com.workec.ectp.entity.Bo.HttpResult;
 
 import java.util.Map;
 

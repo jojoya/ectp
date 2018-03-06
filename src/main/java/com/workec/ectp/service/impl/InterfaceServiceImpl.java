@@ -1,12 +1,12 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.InterfaceDefDao;
-import com.workec.ectp.dao.InterfaceParamDao;
-import com.workec.ectp.entity.DO.InterfaceDef;
-import com.workec.ectp.entity.DO.InterfaceParam;
-import com.workec.ectp.entity.dto.ParamIdList;
-import com.workec.ectp.entity.dto.Result;
-import com.workec.ectp.entity.dto.Interface;
+import com.workec.ectp.dao.jpa.InterfaceDefDao;
+import com.workec.ectp.dao.jpa.InterfaceParamDao;
+import com.workec.ectp.entity.Do.InterfaceDef;
+import com.workec.ectp.entity.Do.InterfaceParam;
+import com.workec.ectp.entity.Bo.ParamIdList;
+import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Bo.Interface;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.components.InterfaceComponent;
 import com.workec.ectp.service.InterfaceService;

@@ -1,6 +1,6 @@
 package com.workec.ectp.aspect;
 
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Dto.Result;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;

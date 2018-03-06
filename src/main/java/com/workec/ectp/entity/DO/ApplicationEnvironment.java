@@ -1,4 +1,4 @@
-package com.workec.ectp.entity.DO;
+package com.workec.ectp.entity.Do;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

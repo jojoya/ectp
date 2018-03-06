@@ -1,11 +1,9 @@
-package com.workec.ectp.dao;
+package com.workec.ectp.dao.jpa;
 
-import com.workec.ectp.entity.DO.AppEnvAndDomainPK;
-import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
-import io.swagger.models.auth.In;
+import com.workec.ectp.entity.Do.AppEnvAndDomainPK;
+import com.workec.ectp.entity.Do.ApplicationEnvironmentDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 

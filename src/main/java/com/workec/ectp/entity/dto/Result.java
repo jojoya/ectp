@@ -1,4 +1,4 @@
-package com.workec.ectp.entity.dto;
+package com.workec.ectp.entity.Dto;
 
 import lombok.Data;
 import org.json.JSONObject;

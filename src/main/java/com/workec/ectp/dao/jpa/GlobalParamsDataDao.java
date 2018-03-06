@@ -1,15 +1,8 @@
-package com.workec.ectp.dao;
+package com.workec.ectp.dao.jpa;
 
 
-import com.workec.ectp.entity.DO.GlobalParamsData;
-import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
+import com.workec.ectp.entity.Do.GlobalParamsData;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Map;
 
 public interface GlobalParamsDataDao extends JpaRepository<GlobalParamsData,Integer> {
 

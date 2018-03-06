@@ -1,8 +1,8 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.dto.HttpDebugInformation;
-import com.workec.ectp.entity.dto.HttpResult;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Bo.HttpDebugInformation;
+import com.workec.ectp.entity.Bo.HttpResult;
+import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
 
 /**

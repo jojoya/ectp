@@ -1,7 +1,7 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DO.Project;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.Project;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.ProjectService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

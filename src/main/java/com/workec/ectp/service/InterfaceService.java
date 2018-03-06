@@ -1,8 +1,8 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.dto.Interface;
-import com.workec.ectp.entity.dto.ParamIdList;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Bo.Interface;
+import com.workec.ectp.entity.Bo.ParamIdList;
+import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;

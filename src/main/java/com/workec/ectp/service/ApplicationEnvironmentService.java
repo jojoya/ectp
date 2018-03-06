@@ -1,9 +1,9 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.DO.ApplicationEnvironment;
-import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
-import com.workec.ectp.entity.dto.AppEnvDetailInfo;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.ApplicationEnvironment;
+import com.workec.ectp.entity.Do.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.Bo.AppEnvDetailInfo;
+import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
 
 /**

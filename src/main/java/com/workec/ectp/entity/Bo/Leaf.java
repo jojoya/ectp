@@ -1,4 +1,4 @@
-package com.workec.ectp.entity.dto;
+package com.workec.ectp.entity.Bo;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;

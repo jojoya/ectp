@@ -1,6 +1,6 @@
-package com.workec.ectp.dao.JdbcTemplates.Impl;
+package com.workec.ectp.dao.jdbc.Impl;
 
-import com.workec.ectp.dao.JdbcTemplates.IGlobalParamsDataDao;
+import com.workec.ectp.dao.jdbc.IGlobalParamsDataDao;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

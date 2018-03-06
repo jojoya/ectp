@@ -1,9 +1,9 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.UserDao;
-import com.workec.ectp.entity.DO.User;
-import com.workec.ectp.entity.dto.Result;
-import com.workec.ectp.entity.dto.UserLoginInfo;
+import com.workec.ectp.dao.jpa.UserDao;
+import com.workec.ectp.entity.Do.User;
+import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Bo.UserLoginInfo;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.UserService;
 import com.workec.ectp.utils.ResultUtil;

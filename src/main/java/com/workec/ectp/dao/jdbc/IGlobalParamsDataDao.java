@@ -1,4 +1,4 @@
-package com.workec.ectp.dao.JdbcTemplates;
+package com.workec.ectp.dao.jdbc;
 
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
 

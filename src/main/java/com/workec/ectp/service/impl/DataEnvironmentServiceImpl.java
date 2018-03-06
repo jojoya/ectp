@@ -1,8 +1,8 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.DataEnvironmentDao;
-import com.workec.ectp.entity.DO.DataEnvironment;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.dao.jpa.DataEnvironmentDao;
+import com.workec.ectp.entity.Do.DataEnvironment;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.DataEnvironmentService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;

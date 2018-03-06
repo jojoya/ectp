@@ -1,12 +1,10 @@
-package com.workec.ectp.entity.dto;
+package com.workec.ectp.entity.Bo;
 
 import com.workec.ectp.entity.Bo.KeyValuePair;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
-import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by user on 2018/2/10.

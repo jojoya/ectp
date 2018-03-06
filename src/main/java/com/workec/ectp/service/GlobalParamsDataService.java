@@ -1,8 +1,8 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
-import com.workec.ectp.entity.DO.GlobalParamsData;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.GlobalParamsData;
+import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;

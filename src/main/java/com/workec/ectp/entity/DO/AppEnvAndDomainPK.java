@@ -1,4 +1,4 @@
-package com.workec.ectp.entity.DO;
+package com.workec.ectp.entity.Do;
 
 import lombok.Data;
 

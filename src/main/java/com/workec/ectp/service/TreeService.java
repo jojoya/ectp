@@ -1,8 +1,8 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.dto.Leaf;
-import com.workec.ectp.entity.dto.Result;
-import com.workec.ectp.entity.dto.Tree;
+import com.workec.ectp.entity.Bo.Leaf;
+import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Bo.Tree;
 import org.json.JSONException;
 import org.springframework.validation.BindingResult;
 

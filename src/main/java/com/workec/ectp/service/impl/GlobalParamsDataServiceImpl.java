@@ -1,10 +1,10 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.GlobalParamsDataDao;
-import com.workec.ectp.dao.JdbcTemplates.Impl.IGlobalParamsDataDaoImpl;
+import com.workec.ectp.dao.jpa.GlobalParamsDataDao;
+import com.workec.ectp.dao.jdbc.Impl.IGlobalParamsDataDaoImpl;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
-import com.workec.ectp.entity.DO.GlobalParamsData;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.GlobalParamsData;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.GlobalParamsDataService;
 import com.workec.ectp.utils.ResultUtil;

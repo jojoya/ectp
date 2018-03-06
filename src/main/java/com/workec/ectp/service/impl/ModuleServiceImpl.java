@@ -1,8 +1,8 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.ModuleDao;
-import com.workec.ectp.entity.DO.Module;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.dao.jpa.ModuleDao;
+import com.workec.ectp.entity.Do.Module;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.ModuleService;
 import com.workec.ectp.utils.ResultUtil;

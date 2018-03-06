@@ -1,7 +1,7 @@
 package com.workec.ectp.handle;
 
 
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.exception.ModuleFreedomException;
 import com.workec.ectp.utils.ResultUtil;
@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

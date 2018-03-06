@@ -1,7 +1,7 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.DO.Project;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.Project;
+import com.workec.ectp.entity.Dto.Result;
 
 /**
  * Created by user on 2018/1/10.

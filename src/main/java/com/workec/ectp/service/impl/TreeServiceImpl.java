@@ -1,14 +1,14 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.InterfaceDefDao;
-import com.workec.ectp.dao.ModuleDao;
-import com.workec.ectp.dao.ProjectModuleRelationDao;
-import com.workec.ectp.entity.DO.InterfaceDef;
-import com.workec.ectp.entity.DO.Module;
-import com.workec.ectp.entity.DO.ProjectModuleRelation;
-import com.workec.ectp.entity.dto.Result;
-import com.workec.ectp.entity.dto.Leaf;
-import com.workec.ectp.entity.dto.Tree;
+import com.workec.ectp.dao.jpa.InterfaceDefDao;
+import com.workec.ectp.dao.jpa.ModuleDao;
+import com.workec.ectp.dao.jpa.ProjectModuleRelationDao;
+import com.workec.ectp.entity.Do.InterfaceDef;
+import com.workec.ectp.entity.Do.Module;
+import com.workec.ectp.entity.Do.ProjectModuleRelation;
+import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Bo.Leaf;
+import com.workec.ectp.entity.Bo.Tree;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.TreeService;
 import com.workec.ectp.utils.ResultUtil;

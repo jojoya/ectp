@@ -1,14 +1,13 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.entity.Bo.KeyValuePair;
-import com.workec.ectp.entity.dto.HttpDebugInformation;
-import com.workec.ectp.entity.dto.HttpResult;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Bo.HttpDebugInformation;
+import com.workec.ectp.entity.Bo.HttpResult;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.components.HttpAPIComponent;
 import com.workec.ectp.service.HttpService;
 import com.workec.ectp.utils.ResultUtil;
-import com.workec.ectp.utils.ToolsUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,12 @@
 package com.workec.ectp.service.impl;
 
-import com.workec.ectp.dao.ApplicationEnvironmentDao;
-import com.workec.ectp.dao.ApplicationEnvironmentDetailDao;
-import com.workec.ectp.entity.DO.AppEnvAndDomainPK;
-import com.workec.ectp.entity.DO.ApplicationEnvironment;
-import com.workec.ectp.entity.DO.ApplicationEnvironmentDetail;
-import com.workec.ectp.entity.dto.AppEnvDetailInfo;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.dao.jpa.ApplicationEnvironmentDao;
+import com.workec.ectp.dao.jpa.ApplicationEnvironmentDetailDao;
+import com.workec.ectp.entity.Do.AppEnvAndDomainPK;
+import com.workec.ectp.entity.Do.ApplicationEnvironment;
+import com.workec.ectp.entity.Do.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.Bo.AppEnvDetailInfo;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.ApplicationEnvironmentService;
 import com.workec.ectp.components.ApplicationEnvironmentComponent;

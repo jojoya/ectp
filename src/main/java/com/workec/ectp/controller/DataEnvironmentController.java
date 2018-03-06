@@ -1,7 +1,7 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DO.DataEnvironment;
-import com.workec.ectp.entity.dto.Result;
+import com.workec.ectp.entity.Do.DataEnvironment;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.DataEnvironmentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
