@@ -62,13 +62,14 @@ public class HttpServiceImpl implements HttpService {
                         bodyMap.put(object.get("paramName").toString(),object.get("value"));
                     }
                 }
+/*
                 System.out.println("url:"+url);
                 System.out.println("pathMap:"+pathMap);
                 System.out.println("headerMap:"+headerMap);
                 System.out.println("bodyMap:"+bodyMap);
+*/
 
                 httpResult = httpAPIComponent.doPostForm(url, pathMap, headerMap, bodyMap);
-//                System.out.println("httpResult:"+httpResult);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,7 +78,6 @@ public class HttpServiceImpl implements HttpService {
         }else if(method==3){
             //postJson请求
             String bodyStr = httpDebugInformation.getBodys().toString();
-            System.out.println("bodyStr>>>"+bodyStr);
             httpResult = httpAPIComponent.doPostJson(url, pathMap, headerMap, bodyStr);
             return ResultUtil.success(httpResult);
         }else{

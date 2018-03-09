@@ -21,6 +21,7 @@ public class GlobalParamsDataServiceImpl implements GlobalParamsDataService {
 
     @Autowired
     private GlobalParamsDataDao globalParamsDataDao;
+
     @Autowired
     GlobalParamsDataDaoImpl iGlobalParamsDataDao;
 
@@ -33,7 +34,24 @@ public class GlobalParamsDataServiceImpl implements GlobalParamsDataService {
                     bindingResult.getFieldError().getDefaultMessage());
         }
 
-        return ResultUtil.success(globalParamsDataDao.save(globalParamsData));
+        Integer id = globalParamsData.getId();
+        Integer dbEnvId = globalParamsData.getDbEnvId();
+        Integer userId = globalParamsData.getUserId();
+        Integer globalParamId = globalParamsData.getGlobalParamId();
+        String paramValue = globalParamsData.getParamValue();
+
+        List<GlobalParamsData> list = globalParamsDataDao.findByUserIdAndDbEnvIdAndGlobalParamId(userId,dbEnvId,globalParamId);
+
+        //如果数据已存在，就修改
+        if(id!=null && id!=0 && list!=null && list.size()>0) {
+            GlobalParamsData updateInfo = list.get(0);
+            updateInfo.setParamValue(paramValue);
+            return ResultUtil.success(globalParamsDataDao.save(updateInfo));
+        }else{
+            //如果数据不存在，就新增
+            return ResultUtil.success(globalParamsDataDao.save(globalParamsData));
+        }
+
     }
 
 

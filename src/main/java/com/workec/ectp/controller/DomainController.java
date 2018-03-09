@@ -43,15 +43,13 @@ public class DomainController {
 
 
     @ApiOperation(value="删除域名", notes="根据域名id删除域名")
-    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Int",paramType = "path")
-    @PostMapping(value = "/domain/delete/{id}")
+    @GetMapping(value = "/domain/delete/{id}")
     public Result<Domain> deleteDomainById(@PathVariable("id") Integer id) throws Exception {
         return domainService.deleteById(id);
     }
 
 
     @ApiOperation(value="查询域名", notes="根据域名id查询域名")
-    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Int",paramType = "path")
     @GetMapping(value = "/domain/findById/{id}")
     public Result<Domain> findDomainById(@PathVariable("id") Integer id) throws Exception {
         return domainService.findById(id);

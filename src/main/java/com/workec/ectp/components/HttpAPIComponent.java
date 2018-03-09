@@ -40,45 +40,6 @@ public class HttpAPIComponent {
     private RequestConfig config;
 
 
-    /**
-     * 不带参数的get请求，如果状态码为200，则返回body，如果不为200，则返回null
-     *
-     * @param url
-     * @return
-     * @throws Exception
-     */
-    public HttpResult doGet(String url){
-        //组装url
-        String urlPath = null;
-        if(url!=null){
-            urlPath = url;
-        }else{
-            return HttpResultUtil.setHttpResult(999,"url不能为空");
-        }
-
-        // 声明 http get 请求
-        HttpGet httpGet = new HttpGet(urlPath);
-        httpGet.setConfig(config);
-
-        // 发起请求
-        CloseableHttpResponse response = null;
-        try {
-            response = httpClient.execute(httpGet);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                response.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //返回结果
-        return getResultResponse(response);
-    }
-
-
     /*
     * 组装返回信息:HTML、Json格式
     * */
@@ -221,6 +182,8 @@ public class HttpAPIComponent {
      * 带参数的get请求，如果状态码为200，则返回body，如果不为200，则返回null
      *
      * @param url
+     * @param paths
+     * @param headers
      * @return
      * @throws Exception
      */

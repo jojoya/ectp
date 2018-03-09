@@ -37,8 +37,8 @@ public class ApplicationEnvironmentController {
 
 
     @ApiOperation(value="根据应用环境ID获取配置详情", notes="根据应用环境ID获取配置详情")
-    @PostMapping(value = "/appenv/findByEnvId/{envId}")
-    public Result<List<AppEnvDetailInfo>> findByEnvId(Integer envId){
+    @GetMapping(value = "/appenv/findByEnvId/{envId}")
+    public Result<List<AppEnvDetailInfo>> findByEnvId(@PathVariable("envId") Integer envId){
         return applicationEnvironmentService.findByEnvId(envId);
     }
 

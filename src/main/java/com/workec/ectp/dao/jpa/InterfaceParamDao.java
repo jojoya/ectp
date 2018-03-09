@@ -13,4 +13,6 @@ public interface InterfaceParamDao extends JpaRepository<InterfaceParam,Integer>
 
     @Query(value = "SELECT * FROM interface_param WHERE interface_def_id=?1 AND location=?2", nativeQuery = true)
     List<InterfaceParam> findByInterfaceDefIdAndLocation(Integer interfaceDefId,Integer location);
+
+    List<InterfaceParam> findByInterfaceIdAndLocation(Integer interfaceId,Integer location);
 }
