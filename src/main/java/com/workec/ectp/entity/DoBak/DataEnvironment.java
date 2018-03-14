@@ -1,6 +1,5 @@
-package com.workec.ectp.entity.Do;
+package com.workec.ectp.entity.DoBak;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
+/**
+ * Created by user on 2018/2/1.
+ */
+
 @Entity
 @Data
 @NoArgsConstructor //构造函数
-public class ApplicationEnvironment extends TimeEntity {
+public class DataEnvironment extends TimeEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,22 +32,11 @@ public class ApplicationEnvironment extends TimeEntity {
     @JsonProperty(value = "value")
     private String name;
 
-    @Column(length=50,nullable = false)
-    private int dbId;
-
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private String ip;
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private String remark;
-
     @Override
     public String toString() {
-        return "ApplicationEnvironment{" +
+        return "DataEnvironment{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", dbId=" + dbId +
-                ", ip='" + ip + '\'' +
-                ", remark='" + remark + '\'' +
                 '}';
     }
 }

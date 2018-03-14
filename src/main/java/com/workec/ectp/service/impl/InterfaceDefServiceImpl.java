@@ -1,7 +1,7 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.jpa.InterfaceDefDao;
-import com.workec.ectp.entity.Do.InterfaceDef;
+import com.workec.ectp.entity.DoBak.InterfaceDef;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.InterfaceDefService;

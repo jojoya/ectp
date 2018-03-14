@@ -1,8 +1,7 @@
 package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.workec.ectp.entity.Do.CallInterface;
-import com.workec.ectp.enums.CallInterfaceLocation;
+import com.workec.ectp.entity.DoBak.CallInterface;
 import lombok.Data;
 
 import java.util.List;

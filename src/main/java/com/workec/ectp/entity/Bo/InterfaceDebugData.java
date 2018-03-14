@@ -2,8 +2,8 @@ package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.workec.ectp.entity.Do.InterfaceDef;
-import com.workec.ectp.entity.Do.InterfaceParam;
+import com.workec.ectp.entity.DoBak.InterfaceDef;
+import com.workec.ectp.entity.DoBak.InterfaceParam;
 import lombok.Data;
 
 import java.io.Serializable;

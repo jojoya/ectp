@@ -1,6 +1,6 @@
 package com.workec.ectp.dao.jpa;
 
-import com.workec.ectp.entity.Do.CallInterface;
+import com.workec.ectp.entity.DoBak.CallInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by user on 2018/3/9.

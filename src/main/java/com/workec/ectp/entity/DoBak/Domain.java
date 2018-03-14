@@ -1,4 +1,4 @@
-package com.workec.ectp.entity.Do;
+package com.workec.ectp.entity.DoBak;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -11,14 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-/**
- * Created by user on 2018/2/1.
- */
-
-@Entity
+@Entity(name = "t_domain")
 @Data
 @NoArgsConstructor //构造函数
-public class DataEnvironment extends TimeEntity {
+public class Domain extends TimeEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,15 +22,15 @@ public class DataEnvironment extends TimeEntity {
     @GeneratedValue
     private int id;
 
-    @Column(length=32,nullable = false)
+    @Column(length=50,nullable = false)
     @NotBlank(message = "名称不能为空")
-    @Size(max = 32, message = "名称长度不能超过32")
+    @Size(max = 50, message = "名称长度不能超过50")
     @JsonProperty(value = "value")
     private String name;
 
     @Override
     public String toString() {
-        return "DataEnvironment{" +
+        return "Domain{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

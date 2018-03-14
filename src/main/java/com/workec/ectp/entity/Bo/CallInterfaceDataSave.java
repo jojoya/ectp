@@ -1,6 +1,6 @@
 package com.workec.ectp.entity.Bo;
 
-import com.workec.ectp.entity.Do.CallInterface;
+import com.workec.ectp.entity.DoBak.CallInterface;
 import lombok.Data;
 
 import java.util.List;

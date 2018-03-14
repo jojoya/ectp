@@ -1,7 +1,7 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.Do.GlobalParams;
-import com.workec.ectp.entity.Do.GlobalParamsData;
+import com.workec.ectp.entity.DoBak.GlobalParams;
+import com.workec.ectp.entity.DoBak.GlobalParamsData;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.GlobalParamsDataService;

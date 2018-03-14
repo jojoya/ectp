@@ -4,9 +4,8 @@ import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
 import com.workec.ectp.entity.Bo.GroupedCallInterface;
-import com.workec.ectp.entity.Do.CallInterface;
-import com.workec.ectp.entity.Do.CallInterfaceData;
-import com.workec.ectp.entity.Do.Case;
+import com.workec.ectp.entity.DoBak.CallInterfaceData;
+import com.workec.ectp.entity.DoBak.Case;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.CallInterfaceService;
 import com.workec.ectp.service.CaseService;
@@ -14,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin

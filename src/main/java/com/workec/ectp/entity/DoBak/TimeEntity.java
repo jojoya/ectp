@@ -1,4 +1,4 @@
-package com.workec.ectp.entity.Do;
+package com.workec.ectp.entity.DoBak;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

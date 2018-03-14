@@ -4,7 +4,7 @@ import com.workec.ectp.entity.Bo.HttpDebugInformation;
 import com.workec.ectp.entity.Bo.HttpResult;
 import com.workec.ectp.entity.Bo.InterfaceDebugData;
 import com.workec.ectp.entity.Bo.ParamIdList;
-import com.workec.ectp.entity.Do.InterfaceDef;
+import com.workec.ectp.entity.DoBak.InterfaceDef;
 import com.workec.ectp.entity.Dto.*;
 import com.workec.ectp.service.HttpService;
 import com.workec.ectp.service.InterfaceDefService;

@@ -3,10 +3,9 @@ package com.workec.ectp.components;
 import com.workec.ectp.dao.jpa.ApplicationEnvironmentDao;
 import com.workec.ectp.dao.jpa.ApplicationEnvironmentDetailDao;
 import com.workec.ectp.dao.jpa.DomainDao;
-import com.workec.ectp.entity.Do.AppEnvAndDomainPK;
-import com.workec.ectp.entity.Do.ApplicationEnvironment;
-import com.workec.ectp.entity.Do.ApplicationEnvironmentDetail;
-import com.workec.ectp.entity.Do.Domain;
+import com.workec.ectp.entity.DoBak.ApplicationEnvironment;
+import com.workec.ectp.entity.DoBak.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.DoBak.Domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

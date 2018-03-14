@@ -1,8 +1,6 @@
 package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.workec.ectp.entity.Do.InterfaceDef;
-import com.workec.ectp.entity.Do.InterfaceParam;
 import lombok.Data;
 
 import java.util.List;

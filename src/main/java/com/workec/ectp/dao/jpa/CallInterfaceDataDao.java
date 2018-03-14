@@ -1,6 +1,6 @@
 package com.workec.ectp.dao.jpa;
 
-import com.workec.ectp.entity.Do.CallInterfaceData;
+import com.workec.ectp.entity.DoBak.CallInterfaceData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

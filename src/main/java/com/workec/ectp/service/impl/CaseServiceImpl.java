@@ -4,13 +4,9 @@ import com.workec.ectp.components.CaseComponent;
 import com.workec.ectp.dao.jpa.CaseDao;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
-import com.workec.ectp.entity.Bo.InterfaceDebugData;
-import com.workec.ectp.entity.Do.Case;
-import com.workec.ectp.entity.Do.InterfaceDef;
-import com.workec.ectp.entity.Do.InterfaceParam;
+import com.workec.ectp.entity.DoBak.Case;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
-import com.workec.ectp.enums.InterfaceParamLocation;
 import com.workec.ectp.service.CaseService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CaseServiceImpl implements CaseService {
