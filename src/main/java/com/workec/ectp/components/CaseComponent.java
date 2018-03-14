@@ -156,7 +156,27 @@ private List<InterfaceInitData> initCallInterfaceList(List<CallInterface> list){
 }
 
 
+private String getUrl(InterfaceDef interfaceDef){
 
+    int reqProtocol = interfaceDef.getReqProtocol();
+    String domain = domainDao.findOne(interfaceDef.getDomainId()).getName();
+    /** 环境切换转换+++ **/
+
+    StringBuilder sb = new StringBuilder();
+
+    if(reqProtocol==1){
+        sb.append("http://");
+    }else if(reqProtocol==2){
+        sb.append("https://");
+    }
+
+    sb.append(domain);
+    sb.append("/");
+    sb.append(interfaceDef.getUrl());
+
+    return sb.toString();
+
+}
 
 
 /**
@@ -178,26 +198,8 @@ public InterfaceInitData initCallInterface(CallInterface callInterface){
     //获取接口信息
     InterfaceDef interfaceDef = interfaceDefDao.findOne(interfaceId);
 
-
-
     //组装url
-    int reqProtocol = interfaceDef.getReqProtocol();
-    String domain = domainDao.findOne(interfaceDef.getDomainId()).getName();
-    /** 环境切换转换+++ **/
-
-    StringBuilder sb = new StringBuilder();
-
-    if(reqProtocol==1){
-        sb.append("http://");
-    }else if(reqProtocol==2){
-        sb.append("https://");
-    }
-
-    sb.append(domain);
-    sb.append("/");
-    sb.append(interfaceDef.getUrl());
-    url = sb.toString();
-
+    url = this.getUrl(interfaceDef);
 
 
     //请求头
@@ -295,6 +297,19 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         //获取def
         InterfaceDef resultDef = interfaceDefDao.findOne(interfaceId);
 
+        //请求方法
+        String reqMethod = "";
+        if(resultDef.getReqMethod()==1){
+            reqMethod = "GET";
+        }else if(resultDef.getReqMethod()==2){
+            reqMethod = "POST";
+        }
+
+        String interfaceName = resultDef.getLabel();
+
+        //访问地址
+        String accessAddress = this.getUrl(resultDef);
+
         //获取params
         List<InterfaceParam> header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
         List<InterfaceParam> path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
@@ -303,7 +318,10 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         //组装结果
         CallInterfaceInfo result = new CallInterfaceInfo();
         result.setCallInterfaceId(callInterfaceId);
-        result.setDef(resultDef);
+        result.setInterfaceId(interfaceId);
+        result.setInterfaceName(interfaceName);
+        result.setReqMethod(reqMethod);
+        result.setAccessAddress(accessAddress);
         result.setHeader(header);
         result.setPath(path);
         result.setBody(body);

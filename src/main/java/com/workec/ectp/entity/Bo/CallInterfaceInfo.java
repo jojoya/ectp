@@ -3,7 +3,6 @@ package com.workec.ectp.entity.Bo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Do.InterfaceParam;
-import com.workec.ectp.enums.InterfaceParamLocation;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +16,10 @@ import java.util.List;
 public class CallInterfaceInfo {
 
     private Integer callInterfaceId;
-    private InterfaceDef def;
+    private Integer interfaceId;
+    private String interfaceName;
+    private String reqMethod;
+    private String accessAddress;
     private List<InterfaceParam> header;
     private List<InterfaceParam> path;
     private List<InterfaceParam> body;

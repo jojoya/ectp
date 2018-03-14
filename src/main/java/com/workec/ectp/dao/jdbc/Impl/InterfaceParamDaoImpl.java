@@ -27,7 +27,7 @@ public class InterfaceParamDaoImpl implements IInterfaceParamDao {
                                 "(SELECT * FROM interface_param a WHERE a.interface_def_id = ? and a.location = ?)t1 \n" +
                                 "LEFT JOIN \n" +
                                 "(SELECT * FROM call_interface_data b WHERE b.call_interface_id = ? )t2 \n" +
-                                "ON t1.id=t2.params_key_id",
+                                "ON t1.id=t2.param_key_id",
                 new Object[]{interfaceId,location,callInterfaceId},
                 new BeanPropertyRowMapper(InterfaceParam.class));
         if(list!=null && list.size()>0){
