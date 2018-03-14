@@ -2,13 +2,14 @@ package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.jpa.InterfaceDefDao;
 import com.workec.ectp.dao.jpa.InterfaceParamDao;
+import com.workec.ectp.entity.Bo.InterfaceDebugData;
 import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Do.InterfaceParam;
 import com.workec.ectp.entity.Bo.ParamIdList;
 import com.workec.ectp.entity.Dto.Result;
-import com.workec.ectp.entity.Bo.Interface;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.components.InterfaceComponent;
+import com.workec.ectp.enums.InterfaceParamLocation;
 import com.workec.ectp.service.InterfaceService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class InterfaceServiceImpl implements InterfaceService {
 
 
     /*修改接口信息*/
-    public Result<Interface> updateInterface(@Valid Interface itf, BindingResult bindingResult) {
+    public Result<InterfaceDebugData> updateInterface(@Valid InterfaceDebugData itf, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(
@@ -56,7 +57,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         List<InterfaceParam> result_body = body_param==null?null:saveParams(defId, body_param, bindingResult);
 
         //组装结果interface
-        Interface result = new Interface();
+        InterfaceDebugData result = new InterfaceDebugData();
         result.setDef(resultDef);
         result.setHeader(result_header);
         result.setPath(result_path);
@@ -69,26 +70,33 @@ public class InterfaceServiceImpl implements InterfaceService {
     private List<InterfaceParam> saveParams(Integer defId,List<InterfaceParam> params,BindingResult bindingResult){
         List<InterfaceParam> resultParams = new ArrayList();
         for (InterfaceParam param:params) {
-            param.setInterfaceDefId(defId);  //替换接口id
-            InterfaceParam resultParam = interfaceComponent.saveParam(param,bindingResult);
-            resultParams.add(resultParam);
+            //替换接口id
+            param.setInterfaceDefId(defId);
+            if(param.getFormat()==1 && param.getLocation()==2 && (param.getParamName()==null||param.getParamName()=="")){
+                //校验form参数名为空，不保存或修改
+            }else if(param.getFormat()==0 && param.getLocation()==2 && param.getParamName()!=null&& param.getParamName()!=""){
+                //校验json参数名不为空，不保存或修改
+            }else{
+                InterfaceParam resultParam = interfaceComponent.saveParam(param,bindingResult);
+                resultParams.add(resultParam);
+            }
         }
         return resultParams;
     }
 
     /* 查询接口信息 */
-    public Result<Interface> getInterface(Integer id){
+    public Result<InterfaceDebugData> getInterface(Integer id){
 
         //获取def
         InterfaceDef resultDef = interfaceDefDao.findOne(id);
 
         //获取params
-        List<InterfaceParam> header = interfaceParamDao.findByInterfaceDefIdAndLocation(id,0);
-        List<InterfaceParam> path = interfaceParamDao.findByInterfaceDefIdAndLocation(id,1);
-        List<InterfaceParam> body = interfaceParamDao.findByInterfaceDefIdAndLocation(id,2);
+        List<InterfaceParam> header = interfaceParamDao.findByInterfaceDefIdAndLocation(id, InterfaceParamLocation.HEADER.getCode());
+        List<InterfaceParam> path = interfaceParamDao.findByInterfaceDefIdAndLocation(id,InterfaceParamLocation.PATH.getCode());
+        List<InterfaceParam> body = interfaceParamDao.findByInterfaceDefIdAndLocation(id,InterfaceParamLocation.BODY.getCode());
 
         //组装结果
-        Interface result = new Interface();
+        InterfaceDebugData result = new InterfaceDebugData();
         result.setDef(resultDef);
         result.setHeader(header);
         result.setPath(path);

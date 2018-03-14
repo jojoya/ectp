@@ -2,6 +2,7 @@ package com.workec.ectp.dao.jpa;
 
 import com.workec.ectp.entity.Do.CallInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -11,4 +12,13 @@ import java.util.List;
 public interface CallInterfaceDao  extends JpaRepository<CallInterface,Integer> {
 
     List<CallInterface> findByCaseIdAndLocationOrderByStepAsc(Integer interfaceId,Integer location);
+
+    @Query(value = "SELECT * FROM call_interface WHERE case_id=?1", nativeQuery = true)
+    List<CallInterface> getListByCaseId(int caseId);
+
+    @Query(value = "SELECT id FROM call_interface WHERE case_id=?1", nativeQuery = true)
+    List<Integer> getIdByCaseId(int caseId);
+
+    @Query(value = "SELECT interface_id FROM call_interface WHERE id=?1", nativeQuery = true)
+    Integer getCallInterfaceIdById(int id);
 }

@@ -1,11 +1,13 @@
 package com.workec.ectp.entity.Do;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
 @Entity(name = "call_interface_data")
 public class CallInterfaceData implements Serializable {
 
@@ -17,8 +19,8 @@ public class CallInterfaceData implements Serializable {
     @Column(name = "call_interface_id")
     private int callInterfaceId;
 
-    @Column(name = "params_key_id")
-    private int paramsKeyId;
+    @Column(name = "param_key_id")
+    private int paramKeyId;
 
     @Column(name = "params_value")
     private String paramsValue;

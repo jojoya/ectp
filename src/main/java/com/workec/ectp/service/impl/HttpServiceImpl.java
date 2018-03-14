@@ -62,12 +62,6 @@ public class HttpServiceImpl implements HttpService {
                         bodyMap.put(object.get("paramName").toString(),object.get("value"));
                     }
                 }
-/*
-                System.out.println("url:"+url);
-                System.out.println("pathMap:"+pathMap);
-                System.out.println("headerMap:"+headerMap);
-                System.out.println("bodyMap:"+bodyMap);
-*/
 
                 httpResult = httpAPIComponent.doPostForm(url, pathMap, headerMap, bodyMap);
 

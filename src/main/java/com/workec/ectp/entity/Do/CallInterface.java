@@ -33,4 +33,16 @@ public class CallInterface implements Serializable {
 
 
 
+
+    @Override
+    public String toString() {
+        return "CallInterface{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", caseId=" + caseId +
+                ", interfaceId=" + interfaceId +
+                ", location=" + location +
+                ", step=" + step +
+                '}';
+    }
 }

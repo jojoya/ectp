@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -105,10 +106,10 @@ public class HttpAPIComponent {
         try {
             URI uri = new URI(url);
             URIBuilder uriBuilder = new URIBuilder(uri);
-            if (path != null) {
+            if (path != null && path.size()>0) {
                 // 遍历map,拼接url参数
                 for (Map.Entry<String, Object> entry : path.entrySet()) {
-                    uriBuilder.setParameter(entry.getKey(), entry.getValue().toString());
+                    uriBuilder.setParameter(entry.getKey(), entry.getValue()!=null?entry.getValue().toString():"");
                 }
             }
             pathResult = uriBuilder.build().toString();
@@ -116,6 +117,7 @@ public class HttpAPIComponent {
         }catch (URISyntaxException e){
             e.printStackTrace();
         }
+
         return pathResult;
     }
 
@@ -133,7 +135,7 @@ public class HttpAPIComponent {
             HttpPost httpPost = (HttpPost)object;
             // 遍历map,拼接请求headers
             for (Map.Entry<String, Object> entry : headers.entrySet()) {
-                httpPost.setHeader(entry.getKey(), entry.getValue().toString());
+                httpPost.setHeader(entry.getKey(), entry.getValue()!=null?entry.getValue().toString():"");
             }
         }
     }
@@ -144,13 +146,12 @@ public class HttpAPIComponent {
     * */
     private static void bodyFormBuilder(HttpPost httpPost, Map<String, Object> bodys){
         // 判断map是否为空，不为空则进行遍历，封装from表单对象
-        if (bodys != null) {
+        if (bodys != null && bodys.size()>0) {
             List<NameValuePair> list = new ArrayList();
             for (Map.Entry<String, Object> entry : bodys.entrySet()) {
-                list.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
+                list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()!=null?entry.getValue().toString():""));
             }
 
-            System.out.println("NameValuePairList:"+list);
             try {
                 UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(list, "UTF-8");    // 构造form表单对象
                 httpPost.setEntity(urlEncodedFormEntity);   // 把表单放到post里

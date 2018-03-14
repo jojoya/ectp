@@ -1,8 +1,7 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.Bo.Interface;
+import com.workec.ectp.entity.Bo.InterfaceDebugData;
 import com.workec.ectp.entity.Bo.ParamIdList;
-import com.workec.ectp.entity.Do.InterfaceParam;
 import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
 
@@ -14,9 +13,9 @@ import javax.validation.Valid;
 public interface InterfaceService {
 
     /*修改*/
-    Result<Interface> updateInterface(@Valid Interface itf, BindingResult bindingResult);
+    Result<InterfaceDebugData> updateInterface(@Valid InterfaceDebugData itf, BindingResult bindingResult);
 
-    Result<Interface> getInterface(Integer id);
+    Result<InterfaceDebugData> getInterface(Integer id);
 
     Result deleteParams(ParamIdList paramIdList);
 

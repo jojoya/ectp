@@ -1,8 +1,16 @@
 package com.workec.ectp.service.impl;
 
+import com.workec.ectp.components.CaseComponent;
 import com.workec.ectp.dao.jpa.CaseDao;
+import com.workec.ectp.entity.Bo.CallInterfaceInfo;
+import com.workec.ectp.entity.Bo.CaseExecuteResult;
+import com.workec.ectp.entity.Bo.InterfaceDebugData;
 import com.workec.ectp.entity.Do.Case;
+import com.workec.ectp.entity.Do.InterfaceDef;
+import com.workec.ectp.entity.Do.InterfaceParam;
 import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.enums.BaseResultEnum;
+import com.workec.ectp.enums.InterfaceParamLocation;
 import com.workec.ectp.service.CaseService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CaseServiceImpl implements CaseService {
@@ -17,8 +26,14 @@ public class CaseServiceImpl implements CaseService {
     @Autowired
     private CaseDao caseDao;
 
+    @Autowired
+    CaseComponent caseComponent;
+
+
+
+
     @Override
-    public Result<Case> getListByInterfaceId(Integer interfaceId) {
+    public Result<List<Case>> getListByInterfaceId(Integer interfaceId) {
         List<Case> caseList = caseDao.getListByInterfaceId(interfaceId);
         return ResultUtil.success(caseList);
     }
@@ -32,9 +47,8 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
-    public Result<Case> deleteCaseById(Integer id){
-        caseDao.delete(id);
-        if(!caseDao.exists(id)) {
+    public Result deleteCaseById(Integer id){
+        if(caseComponent.deleteCaseById(id)) {
             return ResultUtil.success();
         }else {
             return ResultUtil.error(1,"删除失败");
@@ -42,4 +56,32 @@ public class CaseServiceImpl implements CaseService {
     }
 
 
+    /**
+     * 根据用例id执行用例
+     * */
+    @Override
+    public Result<CaseExecuteResult> executeById(Integer caseId){
+        if(caseDao.exists(caseId)) {
+            return ResultUtil.success(caseComponent.executeByCaseId(caseId));
+        }else {
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_NOT_EXIST.getCode(),
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
+        }
+    }
+
+    /**
+     * 根调用id获取调用数据详情
+     * */
+    @Override
+    public Result<CallInterfaceInfo> getCallInterfaceInfo(Integer callInterfaceId) {
+        if(caseComponent.existsCallInterfaceId(callInterfaceId)) {
+            return ResultUtil.success(caseComponent.getCallInterfaceInfo(callInterfaceId));
+        }else {
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_NOT_EXIST.getCode(),
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
+        }
+
+    }
 }

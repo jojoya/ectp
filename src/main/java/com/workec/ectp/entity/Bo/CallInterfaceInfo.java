@@ -1,28 +1,25 @@
 package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Do.InterfaceParam;
+import com.workec.ectp.enums.InterfaceParamLocation;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by user on 2018/1/17.
+ * Created by user on 2018/3/13.
  */
+
 @Data
-public class Interface implements Serializable{
+@JsonInclude(JsonInclude.Include.ALWAYS)
+public class CallInterfaceInfo {
 
-    @JsonInclude(Include.ALWAYS)
+    private Integer callInterfaceId;
     private InterfaceDef def;
-
-    @JsonInclude(Include.ALWAYS)
     private List<InterfaceParam> header;
-
-    @JsonInclude(Include.ALWAYS)
     private List<InterfaceParam> path;
+    private List<InterfaceParam> body;
 
-    @JsonInclude(Include.ALWAYS)
-    private List<InterfaceParam> body;}
+}

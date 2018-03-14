@@ -32,7 +32,7 @@ public class InterfaceDef implements Serializable{
     @Size(max = 255, message = "接口名长度不能超过255")
     private String label;
 
-    private int reqMethod;//1 get,2 post,3 put,4 delete,5 dispatch
+    private int reqMethod;//1 get,2 post
     private int reqProtocol;//1 http,2 https
     private int domainId;
     private String url;

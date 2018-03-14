@@ -1,7 +1,6 @@
 package com.workec.ectp.components;
 
 import com.workec.ectp.entity.Bo.HttpResult;
-import com.workec.ectp.entity.Bo.Interface;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

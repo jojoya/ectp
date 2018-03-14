@@ -2,7 +2,7 @@ package com.workec.ectp.controller;
 
 import com.workec.ectp.entity.Bo.HttpDebugInformation;
 import com.workec.ectp.entity.Bo.HttpResult;
-import com.workec.ectp.entity.Bo.Interface;
+import com.workec.ectp.entity.Bo.InterfaceDebugData;
 import com.workec.ectp.entity.Bo.ParamIdList;
 import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Dto.*;
@@ -70,9 +70,9 @@ public class InterfaceController {
 
 
     @ApiOperation(value="修改接口及参数信息", notes="修改接口及参数信息")
-    @ApiImplicitParam(name = "itf", value = "接口及参数详细实体", required = true, dataType = "Interface")
+    @ApiImplicitParam(name = "itf", value = "接口及参数详细实体", required = true, dataType = "InterfaceDebugData")
     @PostMapping(value = "/interface/save")
-    public Result<Interface> updateInterface(@Valid @RequestBody Interface itf, BindingResult bindingResult){
+    public Result<InterfaceDebugData> updateInterface(@Valid @RequestBody InterfaceDebugData itf, BindingResult bindingResult){
         return interfaceService.updateInterface(itf,bindingResult);
     }
 
@@ -80,7 +80,7 @@ public class InterfaceController {
     @ApiOperation(value="按照接口id查询接口及参数详情", notes="按照接口id查询接口及参数详情")
     @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Int",paramType = "path")
     @GetMapping(value = "/interface/info/{id}")
-    public Result<Interface> getInterface(@PathVariable("id") Integer id){
+    public Result<InterfaceDebugData> getInterface(@PathVariable("id") Integer id){
         return interfaceService.getInterface(id);
     }
 
