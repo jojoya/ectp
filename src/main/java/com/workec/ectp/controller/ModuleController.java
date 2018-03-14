@@ -1,6 +1,6 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DoBak.Module;
+import com.workec.ectp.entity.Do.Module;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.ModuleService;
 import io.swagger.annotations.ApiImplicitParam;

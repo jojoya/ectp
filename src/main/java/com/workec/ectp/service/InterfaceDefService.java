@@ -1,6 +1,6 @@
 package com.workec.ectp.service;
 
-import com.workec.ectp.entity.DoBak.InterfaceDef;
+import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
 

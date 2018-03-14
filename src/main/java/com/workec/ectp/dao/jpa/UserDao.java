@@ -1,7 +1,7 @@
 package com.workec.ectp.dao.jpa;
 
 
-import com.workec.ectp.entity.DoBak.User;
+import com.workec.ectp.entity.Do.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

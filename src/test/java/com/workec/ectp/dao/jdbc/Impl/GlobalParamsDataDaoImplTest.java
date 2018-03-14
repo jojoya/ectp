@@ -2,7 +2,7 @@ package com.workec.ectp.dao.jdbc.Impl;
 
 import com.workec.ectp.dao.jpa.GlobalParamsDataDao;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
-import com.workec.ectp.entity.DoBak.GlobalParamsData;
+import com.workec.ectp.entity.Do.GlobalParamsData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

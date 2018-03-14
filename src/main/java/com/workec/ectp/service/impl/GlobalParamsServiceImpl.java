@@ -1,7 +1,7 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.jpa.GlobalParamsDao;
-import com.workec.ectp.entity.DoBak.GlobalParams;
+import com.workec.ectp.entity.Do.GlobalParams;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.GlobalParamsService;

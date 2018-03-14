@@ -2,7 +2,7 @@ package com.workec.ectp.service;
 
 import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
 import com.workec.ectp.entity.Bo.GroupedCallInterface;
-import com.workec.ectp.entity.DoBak.CallInterfaceData;
+import com.workec.ectp.entity.Do.CallInterfaceData;
 import com.workec.ectp.entity.Dto.Result;
 
 public interface CallInterfaceService  {

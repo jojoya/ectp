@@ -4,7 +4,7 @@ import com.workec.ectp.components.CaseComponent;
 import com.workec.ectp.dao.jpa.CaseDao;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
-import com.workec.ectp.entity.DoBak.Case;
+import com.workec.ectp.entity.Do.Case;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.CaseService;

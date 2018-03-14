@@ -3,7 +3,7 @@ package com.workec.ectp.components;
 import com.workec.ectp.dao.jdbc.Impl.InterfaceParamDaoImpl;
 import com.workec.ectp.dao.jpa.*;
 import com.workec.ectp.entity.Bo.*;
-import com.workec.ectp.entity.DoBak.*;
+import com.workec.ectp.entity.Do.*;
 import com.workec.ectp.enums.CallInterfaceLocation;
 import com.workec.ectp.enums.InterfaceParamLocation;
 import com.workec.ectp.enums.ReqDataMethod;

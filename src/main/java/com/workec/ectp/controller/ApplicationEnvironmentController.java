@@ -1,6 +1,6 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DoBak.ApplicationEnvironment;
+import com.workec.ectp.entity.Do.ApplicationEnvironment;
 import com.workec.ectp.entity.Bo.AppEnvDetailInfo;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.ApplicationEnvironmentService;

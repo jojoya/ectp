@@ -1,6 +1,6 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.DoBak.User;
+import com.workec.ectp.entity.Do.User;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.entity.Bo.UserLoginInfo;
 import com.workec.ectp.service.UserService;

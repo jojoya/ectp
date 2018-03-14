@@ -1,6 +1,5 @@
-package com.workec.ectp.entity.DoBak;
+package com.workec.ectp.entity.Do;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name = "t_domain")
 @Data
 @NoArgsConstructor //构造函数
-public class ApplicationEnvironment extends TimeEntity {
+public class Domain extends TimeEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,28 +22,17 @@ public class ApplicationEnvironment extends TimeEntity {
     @GeneratedValue
     private int id;
 
-    @Column(length=32,nullable = false)
+    @Column(length=50,nullable = false)
     @NotBlank(message = "名称不能为空")
-    @Size(max = 32, message = "名称长度不能超过32")
+    @Size(max = 50, message = "名称长度不能超过50")
     @JsonProperty(value = "value")
     private String name;
 
-    @Column(length=50,nullable = false)
-    private int dbId;
-
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private String ip;
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private String remark;
-
     @Override
     public String toString() {
-        return "ApplicationEnvironment{" +
+        return "Domain{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", dbId=" + dbId +
-                ", ip='" + ip + '\'' +
-                ", remark='" + remark + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.dao.jpa.DomainDao;
-import com.workec.ectp.entity.DoBak.Domain;
+import com.workec.ectp.entity.Do.Domain;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.service.DomainService;

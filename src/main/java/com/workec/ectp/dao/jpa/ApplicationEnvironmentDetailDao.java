@@ -1,7 +1,7 @@
 package com.workec.ectp.dao.jpa;
 
-import com.workec.ectp.entity.DoBak.AppEnvAndDomainPK;
-import com.workec.ectp.entity.DoBak.ApplicationEnvironmentDetail;
+import com.workec.ectp.entity.Do.AppEnvAndDomainPK;
+import com.workec.ectp.entity.Do.ApplicationEnvironmentDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

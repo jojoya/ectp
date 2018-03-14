@@ -1,6 +1,6 @@
 package com.workec.ectp.dao.jpa;
 
-import com.workec.ectp.entity.DoBak.CallInterface;
+import com.workec.ectp.entity.Do.CallInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
