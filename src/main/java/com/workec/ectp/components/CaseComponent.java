@@ -311,9 +311,9 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         String accessAddress = this.getUrl(resultDef);
 
         //获取params
-        List<InterfaceParam> header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
-        List<InterfaceParam> path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
-        List<InterfaceParam> body = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.BODY.getCode());
+        List<InterfaceParamForCallInfo> header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
+        List<InterfaceParamForCallInfo> path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
+        List<InterfaceParamForCallInfo> body = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.BODY.getCode());
 
         //组装结果
         CallInterfaceInfo result = new CallInterfaceInfo();

@@ -20,8 +20,8 @@ public class CallInterfaceInfo {
     private String interfaceName;
     private String reqMethod;
     private String accessAddress;
-    private List<InterfaceParam> header;
-    private List<InterfaceParam> path;
-    private List<InterfaceParam> body;
+    private List<InterfaceParamForCallInfo> header;
+    private List<InterfaceParamForCallInfo> path;
+    private List<InterfaceParamForCallInfo> body;
 
 }

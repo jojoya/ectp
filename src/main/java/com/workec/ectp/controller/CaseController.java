@@ -3,6 +3,7 @@ package com.workec.ectp.controller;
 import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
+import com.workec.ectp.entity.Bo.GroupedCallInterface;
 import com.workec.ectp.entity.Do.CallInterface;
 import com.workec.ectp.entity.Do.CallInterfaceData;
 import com.workec.ectp.entity.Do.Case;
@@ -58,14 +59,14 @@ public class CaseController {
 
 
     @ApiOperation(value="获取单个步骤信息", notes="获取单个步骤信息")
-    @GetMapping(value = "/case/callInterface/info/{id}")
+    @GetMapping(value = "/case/step/info/{id}")
     public Result<CallInterfaceInfo> getCallInterface(@PathVariable("id") Integer id){
         return caseService.getCallInterfaceInfo(id);
     }
 
-    @ApiOperation(value = "查询单个用例下步骤列表", notes = "查询单个用例下步骤列表")
+    @ApiOperation(value = "查询单个用例下步骤列表", notes = "按照caseId查询步骤列表")
     @PostMapping(value = "/case/step/getList/{caseId}")
-    public Result<List<CallInterface>> getListByCaseId(@PathVariable Integer caseId) {
+    public Result<GroupedCallInterface> getListByCaseId(@PathVariable Integer caseId) {
         return callInterfaceService.getListByCaseId(caseId);
     }
 

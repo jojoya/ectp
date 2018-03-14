@@ -3,10 +3,12 @@ package com.workec.ectp.service.impl;
 import com.workec.ectp.components.CaseComponent;
 import com.workec.ectp.dao.jpa.CallInterfaceDao;
 import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
+import com.workec.ectp.entity.Bo.GroupedCallInterface;
 import com.workec.ectp.entity.Do.CallInterface;
 import com.workec.ectp.entity.Do.CallInterfaceData;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
+import com.workec.ectp.enums.CallInterfaceLocation;
 import com.workec.ectp.service.CallInterfaceService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,15 @@ public class CallIterfaceServiceImpl implements CallInterfaceService {
     private CaseComponent caseComponent;
 
     @Override
-    public Result<List<CallInterface>> getListByCaseId(Integer id){
-        return ResultUtil.success(callInterfaceDao.getListByCaseId(id));
+    public Result<GroupedCallInterface> getListByCaseId(Integer caseId){
+        List<CallInterface> pres = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.PREPOSITION.getCode());
+        List<CallInterface> test = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.TEST.getCode());
+        List<CallInterface> posts = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.POSTPOSITION.getCode());
+        GroupedCallInterface group = new GroupedCallInterface();
+        group.setPres(pres);
+        group.setTest(test);
+        group.setPosts(posts);
+        return ResultUtil.success(group);
     }
 
 
