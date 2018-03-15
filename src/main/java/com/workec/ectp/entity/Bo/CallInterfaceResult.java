@@ -11,7 +11,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public class CallInterfaceResult {
     private Integer callInterfaceId;
-    private InterfaceInitData reqInfo;
+    private InterfaceInitDataBackEnd reqInfo;
     private HttpResult result;
 
 

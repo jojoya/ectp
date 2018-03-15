@@ -1,6 +1,7 @@
 package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.workec.ectp.entity.Do.MiddleParam;
 import lombok.Data;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public class CallInterfaceInfo {
     private List<InterfaceParamForCallInfo> header;
     private List<InterfaceParamForCallInfo> path;
     private List<InterfaceParamForCallInfo> body;
+
+    private List<MiddleParam> middleParam;
 
 }

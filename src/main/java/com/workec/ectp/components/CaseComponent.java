@@ -45,8 +45,13 @@ public class CaseComponent {
     private CallInterfaceDataDao callInterfaceDataDao;
 
     @Autowired
+    private MiddleParamDao middleParamDao;
+
+    @Autowired
     private HttpAPIComponent httpAPIComponent;
 
+    @Autowired
+    private InterfaceComponent interfaceComponent;
 
 /**
 * 执行用例：根据caseId执行用例，并获取执行结果
@@ -55,9 +60,9 @@ public CaseExecuteResult executeByCaseId(Integer caseId){
 
     //初始化用例数据
     Map map = initCase(caseId);
-    List<InterfaceInitData> preCallsDataList= (List<InterfaceInitData>)map.get("beforeCallsDataList");
-    List<InterfaceInitData> testCallsData = (List<InterfaceInitData>)map.get("testCallsDataList");
-    List<InterfaceInitData> postCallsDataList =  (List<InterfaceInitData>)map.get("afterCallsDataList");
+    List<InterfaceInitDataBackEnd> preCallsDataList= (List<InterfaceInitDataBackEnd>)map.get("beforeCallsDataList");
+    List<InterfaceInitDataBackEnd> testCallsData = (List<InterfaceInitDataBackEnd>)map.get("testCallsDataList");
+    List<InterfaceInitDataBackEnd> postCallsDataList =  (List<InterfaceInitDataBackEnd>)map.get("afterCallsDataList");
 
     //获取每一步执行及结果数据
     List<CallInterfaceResult> preResults = getCallInterfaceResultList(preCallsDataList);
@@ -75,11 +80,11 @@ public CaseExecuteResult executeByCaseId(Integer caseId){
 
 
 
-private List<CallInterfaceResult> getCallInterfaceResultList(List<InterfaceInitData> callInterfaceDataList){
+private List<CallInterfaceResult> getCallInterfaceResultList(List<InterfaceInitDataBackEnd> callInterfaceDataList){
 
     List<CallInterfaceResult> list = new ArrayList<>();
 
-    for(InterfaceInitData initData:callInterfaceDataList){
+    for(InterfaceInitDataBackEnd initData:callInterfaceDataList){
         int callInterfaceId = initData.getCallInterfaceId();
         int reqMethod = initData.getReqMethod();
         String url = initData.getUrl();
@@ -113,7 +118,7 @@ private List<CallInterfaceResult> getCallInterfaceResultList(List<InterfaceInitD
 
 
  /**
- * 组装用例信息：根据caseId获取用例数据
+ * 后端组装用例信息：根据caseId获取用例数据
  */
 public Map initCase(Integer caseId){
 
@@ -127,13 +132,13 @@ public Map initCase(Integer caseId){
     List<CallInterface> afterCalls = callInterfaceDao.findByCaseIdAndLocationOrderByStepAsc(caseId,CallInterfaceLocation.POSTPOSITION.getCode());
 
     //组装前置接口调用的数据信息
-    List<InterfaceInitData> beforeCallsDataList = initCallInterfaceList(beforeCalls);
+    List<InterfaceInitDataBackEnd> beforeCallsDataList = initCallInterfaceList(beforeCalls);
 
     //组装测试接口调用的数据信息
-    List<InterfaceInitData> testCallsDataList = initCallInterfaceList(testCalls);
+    List<InterfaceInitDataBackEnd> testCallsDataList = initCallInterfaceList(testCalls);
 
     //组装后置接口调用的数据信息
-    List<InterfaceInitData> afterCallsDataList = initCallInterfaceList(afterCalls);
+    List<InterfaceInitDataBackEnd> afterCallsDataList = initCallInterfaceList(afterCalls);
 
     Map map = new HashMap();
     map.put("beforeCallsDataList",beforeCallsDataList);
@@ -143,44 +148,23 @@ public Map initCase(Integer caseId){
 }
 
 //把用例步骤列表 转换为 可执行的用例数据列表
-private List<InterfaceInitData> initCallInterfaceList(List<CallInterface> list){
-    List<InterfaceInitData> resultList = new ArrayList<>();
+private List<InterfaceInitDataBackEnd> initCallInterfaceList(List<CallInterface> list){
+    List<InterfaceInitDataBackEnd> resultList = new ArrayList<>();
     //逐个用例组装
     for (CallInterface callInterface:list) {
-        InterfaceInitData initData = initCallInterface(callInterface);
+        InterfaceInitDataBackEnd initData = initCallInterface(callInterface);
         resultList.add(initData);
     }
     return resultList;
 }
 
 
-private String getUrl(InterfaceDef interfaceDef){
-
-    int reqProtocol = interfaceDef.getReqProtocol();
-    String domain = domainDao.findOne(interfaceDef.getDomainId()).getName();
-    /** 环境切换转换+++ **/
-
-    StringBuilder sb = new StringBuilder();
-
-    if(reqProtocol==1){
-        sb.append("http://");
-    }else if(reqProtocol==2){
-        sb.append("https://");
-    }
-
-    sb.append(domain);
-    sb.append("/");
-    sb.append(interfaceDef.getUrl());
-
-    return sb.toString();
-
-}
 
 
 /**
  * 组装步骤信息:根据InterfaceId获取请求数据
  */
-public InterfaceInitData initCallInterface(CallInterface callInterface){
+public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
 
     Integer reqMethod;
     String url;
@@ -197,7 +181,7 @@ public InterfaceInitData initCallInterface(CallInterface callInterface){
     InterfaceDef interfaceDef = interfaceDefDao.findOne(interfaceId);
 
     //组装url
-    url = this.getUrl(interfaceDef);
+    url = interfaceComponent.getUrl(interfaceDef);
 
 
     //请求头
@@ -249,7 +233,7 @@ public InterfaceInitData initCallInterface(CallInterface callInterface){
     }
 
     //返回结果
-    InterfaceInitData initData = new InterfaceInitData();
+    InterfaceInitDataBackEnd initData = new InterfaceInitDataBackEnd();
     initData.setCallInterfaceId(callInterfaceId);
     initData.setReqMethod(reqMethod);
     initData.setUrl(url);
@@ -292,37 +276,23 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         CallInterface callInterface = callInterfaceDao.findOne(callInterfaceId);
         int interfaceId = callInterface.getInterfaceId();
 
-        //获取def
-        InterfaceDef resultDef = interfaceDefDao.findOne(interfaceId);
+        //组装接口信息
+        InterfaceInitDataFrontEnd interfaceStructure = interfaceComponent.getInterfaceStructure(callInterfaceId,interfaceId);
 
-        //请求方法
-        String reqMethod = "";
-        if(resultDef.getReqMethod()==1){
-            reqMethod = "GET";
-        }else if(resultDef.getReqMethod()==2){
-            reqMethod = "POST";
-        }
-
-        String interfaceName = resultDef.getLabel();
-
-        //访问地址
-        String accessAddress = this.getUrl(resultDef);
-
-        //获取params
-        List<InterfaceParamForCallInfo> header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
-        List<InterfaceParamForCallInfo> path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
-        List<InterfaceParamForCallInfo> body = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.BODY.getCode());
+        //中间参数
+        List<MiddleParam> middleParams = middleParamDao.findByCallInterfaceId(callInterfaceId);
 
         //组装结果
         CallInterfaceInfo result = new CallInterfaceInfo();
         result.setCallInterfaceId(callInterfaceId);
         result.setInterfaceId(interfaceId);
-        result.setInterfaceName(interfaceName);
-        result.setReqMethod(reqMethod);
-        result.setAccessAddress(accessAddress);
-        result.setHeader(header);
-        result.setPath(path);
-        result.setBody(body);
+        result.setInterfaceName(interfaceStructure.getInterfaceName());
+        result.setReqMethod(interfaceStructure.getReqMethod());
+        result.setAccessAddress(interfaceStructure.getAccessAddress());
+        result.setHeader(interfaceStructure.getHeader());
+        result.setPath(interfaceStructure.getPath());
+        result.setBody(interfaceStructure.getBody());
+        result.setMiddleParam(middleParams);
 
         return result;
     }
@@ -372,17 +342,38 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
 
         //保存步骤
         CallInterface callInterface = cifds.getCallInterface();
+        //a.如果已存在准测试接口的步骤数据，不再新增
+        if(callInterface.getId()==0&&callInterface.getLocation()==CallInterfaceLocation.TEST.getCode()){
+            List<CallInterface> tests = callInterfaceDao.findByCaseIdAndLocationOrderByStepAsc(callInterface.getCaseId(),callInterface.getLocation());
+            if(tests!=null&&tests.size()>0){
+                return null;
+            }
+        }
+        //b.新增、修改
         CallInterface callInterfaceReslult = callInterfaceDao.save(callInterface);
+
 
         //保存参数值
         int callInterfaceId =callInterfaceReslult.getId();
-        List<CallInterfaceParamData> paramlist =cifds.getParamData();
+        List<CallInterfaceData> paramlist =cifds.getParamData();
         for(int i =0;i< paramlist.size();i++){
-            CallInterfaceData callInterfaceData = new CallInterfaceData();
+            CallInterfaceData callInterfaceData = paramlist.get(i);
+//            callInterfaceData = paramlist.get(i);
+            System.out.println("++++++++++++++++++++++++"+callInterfaceData);
             callInterfaceData.setCallInterfaceId(callInterfaceId);
-            callInterfaceData.setParamKeyId(paramlist.get(i).getParamId());
-            callInterfaceData.setParamsValue(paramlist.get(i).getValue());
+//            callInterfaceData.setId(paramlist.get(i).getId());
+//            callInterfaceData.setParamKeyId(paramlist.get(i).getParamKeyId());
+//            callInterfaceData.setParamsValue(paramlist.get(i).getParamsValue());
+            System.out.println("========================"+callInterfaceData);
             callInterfaceDataDao.save(callInterfaceData);
+        }
+
+        //保存中间变量
+        List<MiddleParam> middleParamList = cifds.getMiddleParams();
+        if(middleParamList!=null&&middleParamList.size()>0){
+            for (int j =0;j <middleParamList.size();j++){
+                middleParamDao.save(middleParamList.get(j));
+            }
         }
 
         this.getCallInterfaceInfo(callInterfaceId);
@@ -404,4 +395,8 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         callInterfaceDao.delete(id);
     }
 
+
+    public Case getCase(Integer caseId){
+        return caseDao.findOne(caseId);
+    }
 }

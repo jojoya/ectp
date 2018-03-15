@@ -1,11 +1,15 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.components.CaseComponent;
+import com.workec.ectp.components.InterfaceComponent;
 import com.workec.ectp.dao.jpa.CallInterfaceDao;
+import com.workec.ectp.dao.jpa.CaseDao;
 import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
 import com.workec.ectp.entity.Bo.GroupedCallInterface;
+import com.workec.ectp.entity.Bo.InterfaceInitDataFrontEnd;
 import com.workec.ectp.entity.Do.CallInterface;
 import com.workec.ectp.entity.Do.CallInterfaceData;
+import com.workec.ectp.entity.Do.Case;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
 import com.workec.ectp.enums.CallInterfaceLocation;
@@ -25,15 +29,31 @@ public class CallIterfaceServiceImpl implements CallInterfaceService {
     @Autowired
     private CaseComponent caseComponent;
 
+    @Autowired
+    private InterfaceComponent interfaceComponent;
+
+
     @Override
     public Result<GroupedCallInterface> getListByCaseId(Integer caseId){
         List<CallInterface> pres = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.PREPOSITION.getCode());
         List<CallInterface> test = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.TEST.getCode());
         List<CallInterface> posts = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.POSTPOSITION.getCode());
+        InterfaceInitDataFrontEnd testInfo;
+
+        Case cs = caseComponent.getCase(caseId);
+        int interfaceId = cs.getInterfaceId();
+        int callInterfaceId = 0;
+        if(test.size()>0){
+            callInterfaceId = test.get(0).getId();
+        }
+        testInfo = interfaceComponent.getInterfaceStructure(callInterfaceId,interfaceId);
+
         GroupedCallInterface group = new GroupedCallInterface();
         group.setPres(pres);
         group.setTest(test);
+        group.setTestInfo(testInfo);
         group.setPosts(posts);
+
         return ResultUtil.success(group);
     }
 

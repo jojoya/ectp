@@ -21,7 +21,7 @@ public class Case implements Serializable{
     private int type;
 
     @Column(name = "interface_id")
-    private String interfaceId;
+    private Integer interfaceId;
 
     @Column(name = "description")
     private String description;

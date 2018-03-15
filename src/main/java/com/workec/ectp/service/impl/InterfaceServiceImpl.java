@@ -3,6 +3,7 @@ package com.workec.ectp.service.impl;
 import com.workec.ectp.dao.jpa.InterfaceDefDao;
 import com.workec.ectp.dao.jpa.InterfaceParamDao;
 import com.workec.ectp.entity.Bo.InterfaceDebugData;
+import com.workec.ectp.entity.Bo.InterfaceInitDataFrontEnd;
 import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Do.InterfaceParam;
 import com.workec.ectp.entity.Bo.ParamIdList;
@@ -113,4 +114,14 @@ public class InterfaceServiceImpl implements InterfaceService {
         return ResultUtil.success();
     }
 
+
+    @Override
+    public Result<InterfaceInitDataFrontEnd> getInterfaceStructure(Integer interfaceId) {
+        if(!interfaceDefDao.exists(interfaceId)){
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_NOT_EXIST.getCode(),
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
+        }
+        return ResultUtil.success(interfaceComponent.getInterfaceStructure(0,interfaceId));
+    }
 }

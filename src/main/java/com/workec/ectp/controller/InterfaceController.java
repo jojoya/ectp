@@ -1,9 +1,6 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.Bo.HttpDebugInformation;
-import com.workec.ectp.entity.Bo.HttpResult;
-import com.workec.ectp.entity.Bo.InterfaceDebugData;
-import com.workec.ectp.entity.Bo.ParamIdList;
+import com.workec.ectp.entity.Bo.*;
 import com.workec.ectp.entity.Do.InterfaceDef;
 import com.workec.ectp.entity.Dto.*;
 import com.workec.ectp.service.HttpService;
@@ -77,11 +74,17 @@ public class InterfaceController {
     }
 
 
-    @ApiOperation(value="按照接口id查询接口及参数详情", notes="按照接口id查询接口及参数详情")
-    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Int",paramType = "path")
+    @ApiOperation(value="按照接口id查询接口定义信息", notes="包含接口、参数和参数值，参数值来源于定义数据")
     @GetMapping(value = "/interface/info/{id}")
-    public Result<InterfaceDebugData> getInterface(@PathVariable("id") Integer id){
+    public Result<InterfaceDebugData> getInterfaceFromDef(@PathVariable("id") Integer id){
         return interfaceService.getInterface(id);
+    }
+
+
+    @ApiOperation(value="按照接口id查询接口调用信息", notes="包含接口、参数和参数值，参数值来源于调用数据")
+    @GetMapping(value = "/interface/callInfo/{interfaceId}")
+    public Result<InterfaceInitDataFrontEnd> getInterfaceStructure(@PathVariable("interfaceId") Integer interfaceId){
+        return interfaceService.getInterfaceStructure(interfaceId);
     }
 
 

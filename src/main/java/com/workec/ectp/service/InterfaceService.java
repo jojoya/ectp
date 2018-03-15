@@ -1,6 +1,7 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.entity.Bo.InterfaceDebugData;
+import com.workec.ectp.entity.Bo.InterfaceInitDataFrontEnd;
 import com.workec.ectp.entity.Bo.ParamIdList;
 import com.workec.ectp.entity.Dto.Result;
 import org.springframework.validation.BindingResult;
@@ -19,4 +20,5 @@ public interface InterfaceService {
 
     Result deleteParams(ParamIdList paramIdList);
 
+    Result<InterfaceInitDataFrontEnd> getInterfaceStructure(Integer interfaceId);
 }

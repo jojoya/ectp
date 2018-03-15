@@ -8,7 +8,7 @@ import java.util.Map;
  * Created by user on 2018/3/12.
  */
 @Data
-public class InterfaceInitData {
+public class InterfaceInitDataBackEnd {
 
     private Integer callInterfaceId;
 
@@ -20,7 +20,7 @@ public class InterfaceInitData {
 
     @Override
     public String toString() {
-        return "InterfaceInitData{" +
+        return "InterfaceInitDataBackEnd{" +
                 "reqMethod=" + reqMethod +
                 ", url='" + url + '\'' +
                 ", path=" + path +

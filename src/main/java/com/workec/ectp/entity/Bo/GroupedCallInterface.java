@@ -16,5 +16,6 @@ public class GroupedCallInterface {
 
     private List<CallInterface> pres;
     private List<CallInterface> test;
+    private InterfaceInitDataFrontEnd testInfo;
     private List<CallInterface> posts;
 }
