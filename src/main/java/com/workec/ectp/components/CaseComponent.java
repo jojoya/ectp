@@ -358,13 +358,7 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         List<CallInterfaceData> paramlist =cifds.getParamData();
         for(int i =0;i< paramlist.size();i++){
             CallInterfaceData callInterfaceData = paramlist.get(i);
-//            callInterfaceData = paramlist.get(i);
-            System.out.println("++++++++++++++++++++++++"+callInterfaceData);
             callInterfaceData.setCallInterfaceId(callInterfaceId);
-//            callInterfaceData.setId(paramlist.get(i).getId());
-//            callInterfaceData.setParamKeyId(paramlist.get(i).getParamKeyId());
-//            callInterfaceData.setParamsValue(paramlist.get(i).getParamsValue());
-            System.out.println("========================"+callInterfaceData);
             callInterfaceDataDao.save(callInterfaceData);
         }
 
