@@ -57,7 +57,7 @@ public class CaseServiceImpl implements CaseService {
      * 根据用例id执行用例
      * */
     @Override
-    public Result<CaseExecuteResult> executeOneCase(ExecuteOneCaseInputParams params, BindingResult bindingResult){
+    public Result<CaseExecuteResult> executeOneCase(ExecuteOneCaseInputParams params){
 
         //检验字段值
         Integer caseId = params.getCaseId();

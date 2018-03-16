@@ -49,8 +49,8 @@ public class CaseController {
     @ApiOperation(value="执行单个用例", notes="按照单个用例id执行用例")
     @ApiImplicitParam(name = "params", value = "输入用户、测试环境以及要执行的用例信息", required = true, dataType = "ExecuteOneCaseInputParams")
     @PostMapping(value = "/case/executeOne")
-    public Result<CaseExecuteResult> executeById(@Valid @RequestBody ExecuteOneCaseInputParams params, BindingResult result){
-        return caseService.executeOneCase(params,result);
+    public Result<CaseExecuteResult> executeById(@RequestBody ExecuteOneCaseInputParams params){
+        return caseService.executeOneCase(params);
     }
 
 

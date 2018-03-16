@@ -21,7 +21,7 @@ public interface CaseService {
     Result<Case> deleteCaseById(Integer id);
 
     //根据用例id执行用例
-    Result<CaseExecuteResult> executeOneCase(ExecuteOneCaseInputParams params, BindingResult result);
+    Result<CaseExecuteResult> executeOneCase(ExecuteOneCaseInputParams params);
 
     //根调用id获取调用数据详情
     Result getCallInterfaceInfo(Integer caseId);
