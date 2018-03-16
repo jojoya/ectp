@@ -1,18 +1,18 @@
 package com.workec.ectp.controller;
 
-import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
-import com.workec.ectp.entity.Bo.CallInterfaceInfo;
-import com.workec.ectp.entity.Bo.CaseExecuteResult;
-import com.workec.ectp.entity.Bo.GroupedCallInterface;
+import com.workec.ectp.entity.Bo.*;
 import com.workec.ectp.entity.Do.CallInterfaceData;
 import com.workec.ectp.entity.Do.Case;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.service.CallInterfaceService;
 import com.workec.ectp.service.CaseService;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -47,9 +47,10 @@ public class CaseController {
     }
 
     @ApiOperation(value="执行单个用例", notes="按照单个用例id执行用例")
-    @GetMapping(value = "/case/execute/{id}")
-    public Result<CaseExecuteResult> executeById(@PathVariable("id") Integer id){
-        return caseService.executeById(id);
+    @ApiImplicitParam(name = "params", value = "输入用户、测试环境以及要执行的用例信息", required = true, dataType = "ExecuteOneCaseInputParams")
+    @PostMapping(value = "/case/executeOne")
+    public Result<CaseExecuteResult> executeById(@Valid @RequestBody ExecuteOneCaseInputParams params, BindingResult result){
+        return caseService.executeOneCase(params,result);
     }
 
 

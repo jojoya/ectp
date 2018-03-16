@@ -1,8 +1,10 @@
 package com.workec.ectp.service;
 
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
+import com.workec.ectp.entity.Bo.ExecuteOneCaseInputParams;
 import com.workec.ectp.entity.Do.Case;
 import com.workec.ectp.entity.Dto.Result;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public interface CaseService {
     Result<Case> deleteCaseById(Integer id);
 
     //根据用例id执行用例
-    Result<CaseExecuteResult> executeById(Integer caseId);
+    Result<CaseExecuteResult> executeOneCase(ExecuteOneCaseInputParams params, BindingResult result);
 
     //根调用id获取调用数据详情
     Result getCallInterfaceInfo(Integer caseId);

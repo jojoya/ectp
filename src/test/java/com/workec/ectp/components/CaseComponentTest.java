@@ -39,7 +39,7 @@ public class CaseComponentTest {
         System.out.println("开始："+fm.format(System.currentTimeMillis()));
         System.out.println("开始："+System.currentTimeMillis());
 
-        caseComponent.executeByCaseId(47);
+        caseComponent.executeOneCase(47,0,0);
 
         System.out.println("结束："+ System.currentTimeMillis());
         System.out.println("结束："+ fm.format(System.currentTimeMillis()));

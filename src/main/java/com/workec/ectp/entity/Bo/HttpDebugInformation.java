@@ -19,4 +19,7 @@ public class HttpDebugInformation {
     private List<KeyValuePair> paths;
     private List<KeyValuePair> headers;
     private Object bodys;
+
+    private Integer applicationEnvironmentId;
+    private Integer executeUserId;
 }

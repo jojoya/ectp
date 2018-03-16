@@ -13,13 +13,8 @@ public interface CallInterfaceDataDao extends JpaRepository<CallInterfaceData,In
 
     CallInterfaceData findByCallInterfaceIdAndParamKeyId(Integer callInterfaceId, Integer paramKeyId);
 
-    @Query(value = "SELECT * FROM call_interface_data WHERE id=?1", nativeQuery = true)
-    List<CallInterfaceData> getListByCaseDataId(int id);
-
     @Query(value = "SELECT id FROM call_interface_data WHERE call_interface_id=?1", nativeQuery = true)
     List<Integer> getIdByCallInterfaceId(int callInterfaceId);
 
-    @Query(value = "SELECT params_key_id,params_value FROM call_interface_data WHERE id=?1", nativeQuery = true)
-    List<CallInterfaceData> getParamsAndParamsValueById(int id);
 
 }

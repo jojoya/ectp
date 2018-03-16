@@ -13,8 +13,11 @@ public class MapDemo {
 
         Map map = new HashMap();
         map.put("id",1);
+        map.put(2,2);
         map.put("name","jojoya");
         map.put("name","jojoya");
+
+        System.out.println("id:"+map.get(3));
 
         Iterator entries = map.entrySet().iterator();
 

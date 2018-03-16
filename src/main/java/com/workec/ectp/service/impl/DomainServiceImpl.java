@@ -34,6 +34,7 @@ public class DomainServiceImpl implements DomainService {
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
+
         //名称去空格，不允许重复
         String value = domain.getName().trim();
         List<Domain> list = domainDao.findByName(value);

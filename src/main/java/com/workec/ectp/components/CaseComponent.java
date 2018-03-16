@@ -56,7 +56,7 @@ public class CaseComponent {
 /**
 * 执行用例：根据caseId执行用例，并获取执行结果
 */
-public CaseExecuteResult executeByCaseId(Integer caseId){
+public CaseExecuteResult executeOneCase(Integer caseId,Integer applicationEnvironmentId,Integer executeUserId){
 
     //初始化用例数据
     Map map = initCase(caseId);

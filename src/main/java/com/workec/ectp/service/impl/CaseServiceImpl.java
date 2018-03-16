@@ -4,6 +4,7 @@ import com.workec.ectp.components.CaseComponent;
 import com.workec.ectp.dao.jpa.CaseDao;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
+import com.workec.ectp.entity.Bo.ExecuteOneCaseInputParams;
 import com.workec.ectp.entity.Do.Case;
 import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.enums.BaseResultEnum;
@@ -11,6 +12,7 @@ import com.workec.ectp.service.CaseService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 
 import java.util.List;
@@ -55,9 +57,23 @@ public class CaseServiceImpl implements CaseService {
      * 根据用例id执行用例
      * */
     @Override
-    public Result<CaseExecuteResult> executeById(Integer caseId){
+    public Result<CaseExecuteResult> executeOneCase(ExecuteOneCaseInputParams params, BindingResult bindingResult){
+
+        //检验字段值
+        Integer caseId = params.getCaseId();
+        Integer applicationEnvironmentId = params.getApplicationEnvironmentId();
+        Integer executeUserId = params.getExecuteUserId();
+
+        if (caseId==0||applicationEnvironmentId==0||executeUserId==0) {
+            return ResultUtil.error(
+                    BaseResultEnum.PARAMETER_INVALID.getCode(),
+                    BaseResultEnum.PARAMETER_INVALID.getMessage());
+        }
+
+
+
         if(caseDao.exists(caseId)) {
-            return ResultUtil.success(caseComponent.executeByCaseId(caseId));
+            return ResultUtil.success(caseComponent.executeOneCase(caseId,applicationEnvironmentId,executeUserId));
         }else {
             return ResultUtil.error(
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),

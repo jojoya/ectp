@@ -209,6 +209,7 @@ public class HttpAPIComponent {
         // 发起请求
         HttpResult result = null;
         try {
+            System.out.println("urlPath:"+urlPath);
             CloseableHttpResponse response = httpClient.execute(httpGet);
             result =  getResultResponse(response);
             response.close();
