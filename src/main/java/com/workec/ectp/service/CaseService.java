@@ -1,5 +1,6 @@
 package com.workec.ectp.service;
 
+import com.workec.ectp.entity.Bo.CallInterfaceAndMiddleValues;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
 import com.workec.ectp.entity.Bo.ExecuteOneCaseInputParams;
 import com.workec.ectp.entity.Do.Case;
@@ -26,4 +27,7 @@ public interface CaseService {
     //根调用id获取调用数据详情
     Result getCallInterfaceInfo(Integer caseId);
 
-    }
+    //获取中间变量列表
+    Result<List<CallInterfaceAndMiddleValues>> getCallInterfaceAndMiddleValuesByCaseId(Integer caseId);
+
+}

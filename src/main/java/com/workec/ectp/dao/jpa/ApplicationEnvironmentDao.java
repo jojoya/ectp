@@ -8,7 +8,4 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ApplicationEnvironmentDao extends JpaRepository<ApplicationEnvironment,Integer> {
 
-    @Modifying
-    @Query(value = "UPDATE application_environment SET ip=?2 WHERE id=?1", nativeQuery = true)
-    Integer updateIp(int id, String ip);
 }

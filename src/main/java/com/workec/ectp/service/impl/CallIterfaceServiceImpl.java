@@ -38,7 +38,7 @@ public class CallIterfaceServiceImpl implements CallInterfaceService {
         List<CallInterface> pres = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.PREPOSITION.getCode());
         List<CallInterface> test = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.TEST.getCode());
         List<CallInterface> posts = callInterfaceDao.getListByCaseIdAndLocation(caseId,CallInterfaceLocation.POSTPOSITION.getCode());
-        InterfaceInitDataFrontEnd testInfo;
+        InterfaceInitDataFrontEnd testInfo = null;
 
         Case cs = caseComponent.getCase(caseId);
         int interfaceId = cs.getInterfaceId();
@@ -46,7 +46,8 @@ public class CallIterfaceServiceImpl implements CallInterfaceService {
         if(test.size()>0){
             callInterfaceId = test.get(0).getId();
         }
-        testInfo = interfaceComponent.getInterfaceStructure(callInterfaceId,interfaceId);
+
+        testInfo = interfaceComponent.getInterfaceStructure(callInterfaceId, interfaceId);
 
         GroupedCallInterface group = new GroupedCallInterface();
         group.setPres(pres);

@@ -18,6 +18,9 @@ public class InterfaceParamDaoImpl implements IInterfaceParamDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
+
+    //获取params，从调用信息里面取值（callInterfaceId=null）
     @Override
     public List<InterfaceParamForCallInfo> findByCallInterfaceIdAndInterfaceIdAndLocation(Integer callInterfaceId, Integer interfaceId, Integer location) {
         List<InterfaceParamForCallInfo> list = jdbcTemplate.query
@@ -36,5 +39,22 @@ public class InterfaceParamDaoImpl implements IInterfaceParamDao {
         }
     }
 
+
+
+    //获取params，从定义里面取值（callInterfaceId!=null）
+    @Override
+    public List<InterfaceParamForCallInfo> findByInterfaceIdAndLocation(Integer interfaceId, Integer location) {
+        List<InterfaceParamForCallInfo> list = jdbcTemplate.query
+                ("SELECT a.id as paramId,a.param_name as paramName,0 as valueId,a.value,a.format,a.remark \n" +
+                                "FROM\n" +
+                                "interface_param a WHERE a.interface_def_id = ? and a.location = ?",
+                        new Object[]{interfaceId,location},
+                        new BeanPropertyRowMapper(InterfaceParamForCallInfo.class));
+        if(list!=null && list.size()>0){
+            return list;
+        }else{
+            return null;
+        }
+    }
 
 }

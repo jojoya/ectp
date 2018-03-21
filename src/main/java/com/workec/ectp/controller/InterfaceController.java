@@ -51,15 +51,13 @@ public class InterfaceController {
 
 
     @ApiOperation(value="删除接口def", notes="根据接口defid删除接口def")
-    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Int",paramType = "path")
-    @PostMapping(value = "/interface/def/delete/{id}")
+    @GetMapping(value = "/interface/def/delete/{id}")
     public Result<InterfaceDef> deleteDefById(@PathVariable("id") Integer id) throws Exception {
         return interfaceDefService.deleteById(id);
     }
 
 
     @ApiOperation(value="按照id查询接口def", notes="按照id查询接口def")
-    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Int",paramType = "path")
     @GetMapping(value = "/interface/def/findById/{id}")
     public Result<InterfaceDef> findInterfaceDefById(@PathVariable("id") Integer id) throws Exception {
         return interfaceDefService.findById(id);

@@ -1,5 +1,6 @@
 package com.workec.ectp.dao.jpa;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.workec.ectp.entity.Do.CallInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;

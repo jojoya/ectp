@@ -1,5 +1,6 @@
 package com.workec.ectp.service.impl;
 
+import com.workec.ectp.components.DataCacheComponent;
 import com.workec.ectp.dao.jpa.GlobalParamsDataDao;
 import com.workec.ectp.dao.jdbc.Impl.GlobalParamsDataDaoImpl;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
@@ -23,16 +24,20 @@ public class GlobalParamsDataServiceImpl implements GlobalParamsDataService {
     private GlobalParamsDataDao globalParamsDataDao;
 
     @Autowired
-    GlobalParamsDataDaoImpl iGlobalParamsDataDao;
+    private DataCacheComponent dataCacheComponent;
+
+    @Autowired
+    private GlobalParamsDataDaoImpl iGlobalParamsDataDao;
 
     @Override
     public Result<GlobalParamsData> save(GlobalParamsData globalParamsData, BindingResult bindingResult) {
-        //检验字段值
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(
                     BaseResultEnum.PARAMETER_INVALID.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
+
+        GlobalParamsData data;
 
         Integer id = globalParamsData.getId();
         Integer dbEnvId = globalParamsData.getDbEnvId();
@@ -46,11 +51,16 @@ public class GlobalParamsDataServiceImpl implements GlobalParamsDataService {
         if(id!=null && id!=0 && list!=null && list.size()>0) {
             GlobalParamsData updateInfo = list.get(0);
             updateInfo.setParamValue(paramValue);
-            return ResultUtil.success(globalParamsDataDao.save(updateInfo));
+            data = globalParamsDataDao.save(updateInfo);
         }else{
             //如果数据不存在，就新增
-            return ResultUtil.success(globalParamsDataDao.save(globalParamsData));
+            data = globalParamsDataDao.save(globalParamsData);
         }
+
+        //更新缓存
+        dataCacheComponent.updateGlobalParamInfoByUserIdAndEnvId(userId,dbEnvId);
+
+        return ResultUtil.success(data);
 
     }
 

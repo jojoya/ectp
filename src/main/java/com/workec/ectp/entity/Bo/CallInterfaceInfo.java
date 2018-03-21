@@ -1,6 +1,7 @@
 package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.workec.ectp.entity.Do.CaseAssert;
 import com.workec.ectp.entity.Do.MiddleParam;
 import lombok.Data;
 
@@ -24,5 +25,6 @@ public class CallInterfaceInfo {
     private List<InterfaceParamForCallInfo> body;
 
     private List<MiddleParam> middleParam;
+    private List<CaseAssert> caseAsserts;
 
 }

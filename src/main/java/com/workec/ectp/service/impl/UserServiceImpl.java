@@ -1,5 +1,6 @@
 package com.workec.ectp.service.impl;
 
+import com.workec.ectp.components.DataCacheComponent;
 import com.workec.ectp.dao.jpa.UserDao;
 import com.workec.ectp.entity.Do.User;
 import com.workec.ectp.entity.Dto.Result;
@@ -20,6 +21,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private DataCacheComponent dataCacheComponent;
+
 
     /*登录*/
     @Override
@@ -70,7 +75,14 @@ public class UserServiceImpl implements UserService {
                     BaseResultEnum.DATA_EXIST.getMessage());
         }
 
-        return ResultUtil.success(userDao.save(user));
+        User saveResult = userDao.save(user);
+
+        //缓存用户的全局变量信息
+        if(saveResult!=null) {
+            dataCacheComponent.initGlobalParamInfo();
+        }
+
+        return ResultUtil.success(saveResult);
     }
 
 

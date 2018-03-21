@@ -3,6 +3,7 @@ package com.workec.ectp.dao.jdbc;
 import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by user on 2018/3/5.
@@ -10,4 +11,5 @@ import java.util.List;
 public interface IGlobalParamsDataDao {
 
     List<GlobalParamsDataInfo> findByUserAndEnv(Integer userId,Integer EnvId);
+
 }

@@ -1,6 +1,6 @@
 package com.workec.ectp.components;
 
-import com.workec.ectp.dao.jdbc.Impl.InterfaceParamDaoImpl;
+import com.workec.ectp.dao.jdbc.IMiddleParamDao;
 import com.workec.ectp.dao.jpa.*;
 import com.workec.ectp.entity.Bo.*;
 import com.workec.ectp.entity.Do.*;
@@ -36,12 +36,6 @@ public class CaseComponent {
     private InterfaceParamDao interfaceParamDao;
 
     @Autowired
-    private InterfaceParamDaoImpl interfaceParamDaoImpl;
-
-    @Autowired
-    private DomainDao domainDao;
-
-    @Autowired
     private CallInterfaceDataDao callInterfaceDataDao;
 
     @Autowired
@@ -52,6 +46,12 @@ public class CaseComponent {
 
     @Autowired
     private InterfaceComponent interfaceComponent;
+
+    @Autowired
+    private AssertDao assertDao;
+
+    @Autowired
+    private IMiddleParamDao iMiddleParamDao;
 
 /**
 * 执行用例：根据caseId执行用例，并获取执行结果
@@ -165,6 +165,7 @@ private List<InterfaceInitDataBackEnd> initCallInterfaceList(List<CallInterface>
  * 组装步骤信息:根据InterfaceId获取请求数据
  */
 public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
+    InterfaceInitDataBackEnd initData = new InterfaceInitDataBackEnd();
 
     Integer reqMethod;
     String url;
@@ -175,7 +176,9 @@ public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
     //调用信息提取
     int callInterfaceId = callInterface.getId();
     int interfaceId = callInterface.getInterfaceId();
-
+    if(!interfaceDefDao.exists(interfaceId)){
+        return initData;
+    }
 
     //获取接口信息
     InterfaceDef interfaceDef = interfaceDefDao.findOne(interfaceId);
@@ -233,7 +236,6 @@ public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
     }
 
     //返回结果
-    InterfaceInitDataBackEnd initData = new InterfaceInitDataBackEnd();
     initData.setCallInterfaceId(callInterfaceId);
     initData.setReqMethod(reqMethod);
     initData.setUrl(url);
@@ -282,6 +284,10 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         //中间参数
         List<MiddleParam> middleParams = middleParamDao.findByCallInterfaceId(callInterfaceId);
 
+        //检查点列表
+        List<CaseAssert> caseAsserts = assertDao.findAll(callInterfaceId);
+
+
         //组装结果
         CallInterfaceInfo result = new CallInterfaceInfo();
         result.setCallInterfaceId(callInterfaceId);
@@ -293,6 +299,7 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         result.setPath(interfaceStructure.getPath());
         result.setBody(interfaceStructure.getBody());
         result.setMiddleParam(middleParams);
+        result.setCaseAsserts(caseAsserts);
 
         return result;
     }
@@ -307,7 +314,7 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
      * 删除用例
      * */
     @Transactional
-    public Boolean deleteCaseById(Integer id) {
+    public void deleteCaseById(Integer id) {
 
         //获取用例步骤
         if(callInterfaceDao.getIdByCaseId(id) != null) {
@@ -325,11 +332,6 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
 
         caseDao.delete(id);
 
-        if(caseDao.exists(id)) {
-            return true;
-        }else {
-            return false;
-        }
     }
 
 
@@ -392,5 +394,15 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
 
     public Case getCase(Integer caseId){
         return caseDao.findOne(caseId);
+    }
+
+
+    /**
+     * 获取中间变量列表
+     * @param caseId
+     * @return
+     */
+    public List<CallInterfaceAndMiddleValues>getCallInterfaceAndMiddleValuesByCaseId(Integer caseId){
+        return iMiddleParamDao.getCallInterfaceAndMiddleValuesByCaseId(caseId);
     }
 }

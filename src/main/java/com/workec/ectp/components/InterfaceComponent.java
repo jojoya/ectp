@@ -55,6 +55,11 @@ public class InterfaceComponent {
     }
 
 
+
+
+    /**
+     * 查询接口的结构，如果有被调用就从调用信息里面取值（callInterfaceId=null），如果没有被调用就从定义里面取值（callInterfaceId!=null）
+     * */
     public InterfaceInitDataFrontEnd getInterfaceStructure(Integer callInterfaceId, Integer interfaceId){
         InterfaceInitDataFrontEnd dataFrontEnd = new InterfaceInitDataFrontEnd();
         if(!interfaceDefDao.exists(interfaceId)){
@@ -79,10 +84,19 @@ public class InterfaceComponent {
 
         callInterfaceId=callInterfaceId==null?0:callInterfaceId;
 
-        //获取params
-        List<InterfaceParamForCallInfo> header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
-        List<InterfaceParamForCallInfo> path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
-        List<InterfaceParamForCallInfo> body = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.BODY.getCode());
+        //获取params，如果有被调用就从调用信息里面取值（callInterfaceId=null），如果没有被调用就从定义里面取值（callInterfaceId!=null）
+        List<InterfaceParamForCallInfo> header = null;
+        List<InterfaceParamForCallInfo> path = null;
+        List<InterfaceParamForCallInfo> body = null;
+        if(callInterfaceId==null||callInterfaceId==0){
+            header = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId, InterfaceParamLocation.HEADER.getCode());
+            path = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId,InterfaceParamLocation.PATH.getCode());
+            body = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId,InterfaceParamLocation.BODY.getCode());
+        }else if(callInterfaceId!=null&&callInterfaceId!=0){
+            header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
+            path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
+            body = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.BODY.getCode());
+        }
 
         dataFrontEnd.setReqMethod(reqMethod);
         dataFrontEnd.setInterfaceName(interfaceName);
@@ -93,6 +107,9 @@ public class InterfaceComponent {
 
         return dataFrontEnd;
     }
+
+
+
 
     public String getUrl(InterfaceDef interfaceDef){
 

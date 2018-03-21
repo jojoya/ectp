@@ -2,6 +2,7 @@ package com.workec.ectp.service.impl;
 
 import com.workec.ectp.components.CaseComponent;
 import com.workec.ectp.dao.jpa.CaseDao;
+import com.workec.ectp.entity.Bo.CallInterfaceAndMiddleValues;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
 import com.workec.ectp.entity.Bo.CaseExecuteResult;
 import com.workec.ectp.entity.Bo.ExecuteOneCaseInputParams;
@@ -45,10 +46,17 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public Result deleteCaseById(Integer id){
-        if(caseComponent.deleteCaseById(id)) {
-            return ResultUtil.success();
-        }else {
-            return ResultUtil.error(1,"删除失败");
+        if(caseDao.exists(id)){
+            caseComponent.deleteCaseById(id);
+            if(!caseDao.exists(id)) {
+                return ResultUtil.success();
+            }else {
+                return ResultUtil.error(1,"删除失败");
+            }
+        }else{
+            return ResultUtil.error(
+                    BaseResultEnum.DATA_NOT_EXIST.getCode(),
+                    BaseResultEnum.DATA_NOT_EXIST.getMessage());
         }
     }
 
@@ -82,7 +90,7 @@ public class CaseServiceImpl implements CaseService {
     }
 
     /**
-     * 根调用id获取调用数据详情
+     * 根接口调用id获取调用数据详情
      * */
     @Override
     public Result<CallInterfaceInfo> getCallInterfaceInfo(Integer callInterfaceId) {
@@ -94,5 +102,11 @@ public class CaseServiceImpl implements CaseService {
                     BaseResultEnum.DATA_NOT_EXIST.getMessage());
         }
 
+    }
+
+
+    @Override
+    public Result<List<CallInterfaceAndMiddleValues>> getCallInterfaceAndMiddleValuesByCaseId(Integer caseId){
+        return ResultUtil.success(caseComponent.getCallInterfaceAndMiddleValuesByCaseId(caseId));
     }
 }

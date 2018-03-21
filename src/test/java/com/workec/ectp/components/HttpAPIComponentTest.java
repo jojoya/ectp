@@ -34,6 +34,7 @@ public class HttpAPIComponentTest {
         System.out.println("httpResult:"+httpResult);
     }
 
+/*
 
     @Test
     public void regexTestDemo01(){
@@ -111,6 +112,7 @@ public class HttpAPIComponentTest {
         System.out.println(sb.toString());
     }
 
+*/
 
 
     @Test

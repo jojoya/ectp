@@ -31,7 +31,7 @@ public class GlobalParamsController {
 
 
     @ApiOperation(value="保存全局参数", notes="保存全局参数")
-    @ApiImplicitParam(name = "globalParams", value = "保存全局参数", required = true, dataType = "GlobalParams")
+    @ApiImplicitParam(name = "globalParams", value = "保存全局参数", required = true, dataType = "GlobalCache")
     @PostMapping(value = "/globalParams/save")
     public Result<GlobalParams> save(@Valid @RequestBody GlobalParams globalParams, BindingResult bindingResult){
         return globalParamsService.save(globalParams,bindingResult);

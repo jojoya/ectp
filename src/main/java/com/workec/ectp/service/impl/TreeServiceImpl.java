@@ -54,7 +54,6 @@ public class TreeServiceImpl implements TreeService{
     /* 根据ModuleID查询子节点树 */
     public Result<Tree> findTreeByModuleId(Integer moduleId) throws JSONException {
         List<Tree> moduleList = new ArrayList<>();
-//        if(null!=moduleServiceimpl.CheckId(moduleId)) {  //service调用service有问题
         if(null!=moduleDao.findOne(moduleId)) {  //id不能为空，数据也不能为空
             moduleList.add(getModuleTree(moduleId));
         }

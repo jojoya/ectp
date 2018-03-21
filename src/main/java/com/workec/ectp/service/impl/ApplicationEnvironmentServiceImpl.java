@@ -1,5 +1,6 @@
 package com.workec.ectp.service.impl;
 
+import com.workec.ectp.components.DataCacheComponent;
 import com.workec.ectp.dao.jdbc.Impl.AppEnvDataDaoImpl;
 import com.workec.ectp.dao.jpa.ApplicationEnvironmentDao;
 import com.workec.ectp.dao.jpa.ApplicationEnvironmentDetailDao;
@@ -32,6 +33,9 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
 
     @Autowired
     private AppEnvDataDaoImpl appEnvDataDao;
+
+    @Autowired
+    private DataCacheComponent dataCacheComponent;
 
 
 
@@ -73,6 +77,9 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
             /*更新应用环境IP*/
             applicationEnvironmentComponent.updateApplicationEnvironmentIp(environment);
 
+            //更新应用环境缓存
+            dataCacheComponent.initAppEnvInfo();
+
             return ResultUtil.success();
         }else{
             return ResultUtil.error(BaseResultEnum.PARAMETER_INVALID.getCode(),
@@ -101,6 +108,13 @@ public class ApplicationEnvironmentServiceImpl implements ApplicationEnvironment
         detail.setEvnId(appEnvDetailInfo.getEnvId());
         detail.setIp(appEnvDetailInfo.getIp());
 
-        return ResultUtil.success(environmentDetailDao.save(detail));
+        ApplicationEnvironmentDetail detailResult = environmentDetailDao.save(detail);
+
+        //更新应用环境缓存
+        if(detailResult!=null) {
+            dataCacheComponent.initAppEnvInfo();
+        }
+
+        return ResultUtil.success(detailResult);
     }
 }
