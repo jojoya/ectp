@@ -66,4 +66,23 @@ public class ToolsUtil {
         return list;
     }
 
+    /*
+    * 把Map转换成List<"key:value">的header格式
+    * */
+    public static List mapToHeader(Map map) {
+        List list = new ArrayList();
+
+        Iterator entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+
+            Map.Entry entry = (Map.Entry) entries.next();
+            String key = String.valueOf(entry.getKey());
+            String value = String.valueOf(entry.getValue());
+
+            list.add(key+":"+value);
+        }
+
+        return list;
+    }
+
 }

@@ -10,7 +10,9 @@ import com.workec.ectp.entity.Bo.GlobalParamsDataInfo;
 import com.workec.ectp.entity.Do.ApplicationEnvironment;
 import com.workec.ectp.entity.Do.DataEnvironment;
 import com.workec.ectp.entity.Do.User;
+import com.workec.ectp.entity.Dto.Result;
 import com.workec.ectp.entity.Vo.GlobalCache;
+import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -70,8 +72,8 @@ public class DataCacheComponent {
     public void updateGlobalParamInfoByUserIdAndEnvId(Integer userId, Integer dbEnvId){
         Map<Integer,Object> mapUser = globalCache.getUserGlobalParamMap();
         Map<Integer,Object> dbEnvMap = (Map<Integer,Object>) mapUser.get(userId);
-        Map<String,Object> keyValueMap = getGlobalParamInfoByUserIdAndEnvId(userId,dbEnvId);
-        dbEnvMap.put(dbEnvId,keyValueMap);
+        Map<Integer,Object> idAndKeyValueMap = getGlobalParamInfoByUserIdAndEnvId(userId,dbEnvId);
+        dbEnvMap.put(dbEnvId,idAndKeyValueMap);
         mapUser.put(userId,dbEnvMap);
     }
 
@@ -96,14 +98,17 @@ public class DataCacheComponent {
     /**
      * 根据用户Id和数据环境Id查询全局变量信息
      * */
-    public Map<String,Object> getGlobalParamInfoByUserIdAndEnvId(Integer userId, Integer dbEnvId){
-        Map<String,Object> keyValueMap = new HashMap();
+    public Map<Integer,Object> getGlobalParamInfoByUserIdAndEnvId(Integer userId, Integer dbEnvId){
+        Map<Integer,Object> idAndKeyValueMap = new HashMap();
         List<GlobalParamsDataInfo> list = iGlobalParamsDataDao.findByUserAndEnv(userId,dbEnvId);
-        for (GlobalParamsDataInfo info:list) {
-            keyValueMap.put(info.getParamName(),info.getParamValue());
+        if(list!=null && list.size()>0) {
+            for (GlobalParamsDataInfo info : list) {
+                Map<String, String> keyValueMap = new HashMap<>();
+                keyValueMap.put(info.getParamName(), info.getParamValue());
+                idAndKeyValueMap.put(info.getParamId(), keyValueMap);
+            }
         }
-
-        return keyValueMap;
+        return idAndKeyValueMap;
     }
 
 
@@ -153,5 +158,31 @@ public class DataCacheComponent {
         return domainIpMap;
     }
 
+
+    public String getIpByDomainAndEnvId(Integer envId,String domain){
+        Map<Integer,Object> envMap = GlobalCache.getInstance().getAppEnvMap();
+        Map<String,String> mapDomain = (Map<String,String>)envMap.get(envId);
+
+        if(mapDomain!=null){
+            return mapDomain.get(domain);
+        }
+        return null;
+    }
+
+
+    public String getParamValueByUserIdAndEnvIdAndParamId(Integer userId,Integer appEnvId,Integer paramId){
+        String paramValue = null;
+
+        Map<Integer,Object> userMap = GlobalCache.getInstance().getUserGlobalParamMap();
+        Map<Integer,Object> envMap = (Map<Integer,Object>)userMap.get(userId);
+        if(envMap!=null) {
+            Map<Integer, Object> paramInfo = (Map<Integer, Object>) envMap.get(appEnvId);
+            if(paramInfo!=null) {
+                Map<String, String> keyValue = (Map<String, String>) paramInfo.get(paramId);
+                paramValue = keyValue.values().iterator().next();
+            }
+        }
+        return paramValue;
+    }
 
 }

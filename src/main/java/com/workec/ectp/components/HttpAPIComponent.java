@@ -4,46 +4,46 @@ import com.workec.ectp.entity.Bo.HttpResult;
 import com.workec.ectp.utils.HttpResultUtil;
 import com.workec.ectp.utils.ToolsUtil;
 import org.apache.http.Header;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Component
 public class HttpAPIComponent {
 
     @Autowired
-    private CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+//    private CloseableHttpClient httpClient = HttpClientUtil.createSSLClientDefault();
+//    private CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+    private CloseableHttpClient httpClient;
 
     @Autowired
     private RequestConfig config;
 
 
-    /*
-    * 组装返回信息:HTML、Json格式
-    * */
+
+    /**
+     *
+     * 组装返回信息:HTML、Json格式
+     *
+     */
     private static HttpResult getResultResponse(CloseableHttpResponse response){
 
         try {
@@ -56,7 +56,17 @@ public class HttpAPIComponent {
             Header headers[] = response.getAllHeaders();
             int i = 0;
             while (i < headers.length) {
-                headerObj.put(headers[i].getName(),headers[i].getValue());
+                Object key =headers[i].getName();
+                Object value = headers[i].getValue();
+                if(!headerObj.containsKey(key)){
+                    headerObj.put(key, value);
+                }else {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(headerObj.get(key));
+                    sb.append("; ");
+                    sb.append(value);
+                    headerObj.put(key, sb);
+                }
                 i++;
             }
 
@@ -71,6 +81,7 @@ public class HttpAPIComponent {
                 }else if(contentMimeType.equals(ContentType.APPLICATION_JSON.getMimeType())){         //根据返回数据类型转换：Content-Type:application/json
                     JSONObject body = new JSONObject(EntityUtils.toString(response.getEntity(), "UTF-8"));
                     Map<String, Object> objMap = ToolsUtil.transferMap(body);
+//                    HttpResult httpResult = HttpResultUtil.setHttpResult(statusCode,reasonPhrase,headerObj, body);
                     HttpResult httpResult = HttpResultUtil.setHttpResult(statusCode,reasonPhrase,headerObj, objMap);
                     return httpResult;
                 }else {
@@ -98,10 +109,15 @@ public class HttpAPIComponent {
     }
 
 
-    /*
-    * 组装path：把url与参数拼接起来
-    * */
+
+
+    /**
+     *
+     * 组装path：把url与参数拼接起来
+     *
+     */
     private static String pathBuilder(String url,Map<String, Object> path){
+
         String pathResult = null;
         try {
             URI uri = new URI(url);
@@ -121,9 +137,15 @@ public class HttpAPIComponent {
         return pathResult;
     }
 
-    /*
-    * 组装header信息
-    * */
+
+
+
+
+    /**
+     *
+     *组装header信息
+     *
+     */
     private static void headerBuilder(Object object,Map<String, Object> headers){
         if (headers != null && object instanceof HttpGet) {
             HttpGet httpGet = (HttpGet)object;
@@ -138,15 +160,20 @@ public class HttpAPIComponent {
                 httpPost.setHeader(entry.getKey(), entry.getValue()!=null?entry.getValue().toString():"");
             }
         }
+
     }
 
 
-    /*
-    * 组装body：form格式
-    * */
-    private static void bodyFormBuilder(HttpPost httpPost, Map<String, Object> bodys){
+
+    /**
+     *
+     * 组装body：form格式
+     *
+     * */
+    private static void bodyFormBuilder(HttpRequestBase httpRequest, Map<String, Object> bodys){
+//    private static void bodyFormBuilder(HttpPost httpPost, Map<String, Object> bodys){
         // 判断map是否为空，不为空则进行遍历，封装from表单对象
-        if (bodys != null && bodys.size()>0) {
+        /*if (bodys != null && bodys.size()>0) {
             List<NameValuePair> list = new ArrayList();
             for (Map.Entry<String, Object> entry : bodys.entrySet()) {
                 list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()!=null?entry.getValue().toString():""));
@@ -158,23 +185,55 @@ public class HttpAPIComponent {
             }catch (UnsupportedEncodingException e){
                 e.printStackTrace();
             }
+        }*/
+
+        if (bodys != null && bodys.size()>0) {
+            StringBuilder sb = new StringBuilder();
+
+            for (Map.Entry<String, Object> entry : bodys.entrySet()) {
+                sb.append("&");
+                sb.append(entry.getKey());
+                sb.append("=");
+                sb.append(entry.getValue()!=null?entry.getValue().toString():"");
+            }
+
+            StringEntity entity = new StringEntity(sb.toString().substring(1),"UTF-8");        // 构造form表单对象
+            System.out.println("+++++++++++++++++++formParams:"+sb.toString().substring(1));
+
+
+//            entity.setContentEncoding("UTF-8");
+//            entity.setContentType("application/x-www-form-urlencoded");
+
+
+//            httpPost.setEntity(entity);   // 把表单放到post里
+            if(httpRequest instanceof HttpPost) {
+                HttpPost httpPost = (HttpPost)httpRequest;
+                httpPost.setEntity(entity);   // 把表单放到post里
+            }
         }
     }
 
 
-    /*
-    * 组装body：Json格式
-    * */
-    private static void bodyJsonBuilder(HttpPost httpPost, String body){
+    /**
+     *
+     *组装body：Json格式
+     *
+     * */
+    private static void bodyJsonBuilder(HttpRequestBase httpRequest, String body){
+//    private static void bodyJsonBuilder(HttpPost httpPost, String body){
         // 判断jsonStr是否为空，不为空则封装成Json参数
         if (body != null) {
             // 构造Json对象
-            StringEntity entity = new StringEntity(body,"utf-8");
-            entity.setContentEncoding("UTF-8");
-            entity.setContentType("application/json");
+            StringEntity entity = new StringEntity(body,"UTF-8");
+//            entity.setContentEncoding("UTF-8");
+//            entity.setContentType("application/json");
 
             // 把Json放到post里
-            httpPost.setEntity(entity);
+//            httpPost.setEntity(entity);
+            if(httpRequest instanceof HttpPost) {
+                HttpPost httpPost = (HttpPost)httpRequest;
+                httpPost.setEntity(entity);   // 把表单放到post里
+            }
         }
     }
 
@@ -189,7 +248,6 @@ public class HttpAPIComponent {
      * @throws Exception
      */
     public HttpResult doGet(String url, Map<String, Object> paths,  Map<String, Object> headers){
-
         if(url==null){
             return HttpResultUtil.setHttpResult(999,"url不能为空");
         }
@@ -198,28 +256,47 @@ public class HttpAPIComponent {
         String urlPath = pathBuilder(url,paths);
 
         // 声明 http get 请求
-        HttpGet httpGet = new HttpGet(urlPath);
+//        HttpGet httpGet = new HttpGet(urlPath);
 
         // 装载配置信息
-        httpGet.setConfig(config);
+//        httpGet.setConfig(config);
 
         //组装header
-        headerBuilder(httpGet,headers);
+//        headerBuilder(httpGet,headers);
 
         // 发起请求
-        HttpResult result = null;
+     /* HttpResult result = null;
         try {
-            System.out.println("urlPath:"+urlPath);
+            httpClient = HttpClientBuilder.create().build();
             CloseableHttpResponse response = httpClient.execute(httpGet);
             result =  getResultResponse(response);
             response.close();
-        } catch (IOException e) {
+            httpClient.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+        HttpRequestBase httpRequest = new HttpGet(urlPath);
+        httpRequest.setConfig(config);
+        headerBuilder(httpRequest,headers);
+        //返回结果
+        return getRequestResult(httpRequest);
+
+    }
+
+    private  HttpResult getRequestResult(HttpRequestBase httpRequest){
+        HttpResult result = null;
+        try {
+            httpClient = HttpClientBuilder.create().build();
+            CloseableHttpResponse response = httpClient.execute(httpRequest);
+            result =  getResultResponse(response);
+            response.close();
+            httpClient.close();
+        }catch (IOException e) {
             e.printStackTrace();
         }
 
-        //返回结果
         return result;
-
     }
 
     /**
@@ -241,7 +318,8 @@ public class HttpAPIComponent {
         //组装url
         String urlPath = pathBuilder(url,paths);
         // 声明httpPost请求
-        HttpPost httpPost = new HttpPost(urlPath);
+ /*       HttpPost httpPost = new HttpPost(urlPath);
+
         // 加入配置信息
         httpPost.setConfig(config);
 
@@ -251,20 +329,35 @@ public class HttpAPIComponent {
         //组装body：form
         bodyFormBuilder(httpPost, bodys);
 
+        if(!httpPost.containsHeader("Content-Type")) {
+            httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        }
+
         // 发起请求
         HttpResult result = null;
         try {
+            httpClient = HttpClientBuilder.create().build();
             CloseableHttpResponse response = httpClient.execute(httpPost);
             result = getResultResponse(response);
             response.close();
+            httpClient.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }*/
+
+        HttpRequestBase httpRequest = new HttpPost(urlPath);
+        httpRequest.setConfig(config);
+        headerBuilder(httpRequest,headers);
+        bodyFormBuilder(httpRequest, bodys);
+        if(!httpRequest.containsHeader("Content-Type")) {
+            httpRequest.addHeader("Content-Type", "application/x-www-form-urlencoded");
         }
 
         //返回结果
-        return result;
+        return getRequestResult(httpRequest);
 
     }
+
 
     /**
      * 带Json参数的post请求
@@ -285,7 +378,7 @@ public class HttpAPIComponent {
         //组装url
         String urlPath = pathBuilder(url,paths);
         // 声明httpPost请求
-        HttpPost httpPost = new HttpPost(urlPath);
+    /*    HttpPost httpPost = new HttpPost(urlPath);
         // 加入配置信息
         httpPost.setConfig(config);
 
@@ -294,189 +387,34 @@ public class HttpAPIComponent {
 
         //组装body：Json格式
         bodyJsonBuilder(httpPost,body);
+        if(!httpPost.containsHeader("Content-Type")) {
+            httpPost.addHeader("Content-Type", "application/json");
+        }
 
         // 发起请求
         HttpResult result = null;
         try {
+            httpClient = HttpClientBuilder.create().build();
             CloseableHttpResponse response = httpClient.execute(httpPost);
             result = getResultResponse(response);
             response.close();
+            httpClient.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }*/
+
+
+        HttpRequestBase httpRequest = new HttpPost(urlPath);
+        httpRequest.setConfig(config);
+        headerBuilder(httpRequest,headers);
+        bodyJsonBuilder(httpRequest, body);
+        if(!httpRequest.containsHeader("Content-Type")) {
+            httpRequest.addHeader("Content-Type", "application/json");
         }
+
         //返回结果
-        return result;
+        return getRequestResult(httpRequest);
     }
 
 
-
-
-    /**
-     * 场景post请求及参数调用
-     *
-     * @param
-     * @return
-     * @throws Exception
-     */
-    public HttpResult doPost() throws Exception{
-        // String method = "POST";
-
-        //初始化url
-        String url = "https://open.workec.com/auth/accesstoken";
-        //设置URL
-        Map<String, Object> mapUrl =new HashMap<>();
-        URIBuilder uriBuilder = new URIBuilder(url);
-        if (mapUrl != null) {
-            // 遍历map,拼接请求参数
-            for (Map.Entry<String, Object> entry : mapUrl.entrySet()) {
-                uriBuilder.setParameter(entry.getKey(), entry.getValue().toString());
-            }
-            url = uriBuilder.build().toString();
-        }
-
-        System.out.println("url:"+url);
-        // 声明httpPost请求
-        HttpPost httpPost = new HttpPost(url);
-        // 加入配置信息
-        httpPost.setConfig(config);
-
-        // 设置headers
-        httpPost.setHeader("Authorization","");
-        httpPost.setHeader("CORP-ID","4855250");
-
-        //设置body
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("appId","200307256498061312");
-        jsonObject.put("appSecret","m1lSYLQOcKh08KxmjaN");
-        String body = jsonObject.toString();
-        System.out.println("body:"+body);
-
-        // 判断body是否为空，不为空则封装成Json参数
-        if (body != null) {
-            // 构造Json对象
-            StringEntity entity = new StringEntity(body,"utf-8");
-            entity.setContentEncoding("UTF-8");
-            entity.setContentType("application/json");
-
-            // 把Json放到post里
-            httpPost.setEntity(entity);
-        }
-
-        // 发起请求
-        CloseableHttpResponse response = this.httpClient.execute(httpPost);
-        return null;
-//        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
-//                response.getEntity(), "UTF-8"));
-
-    }
-
-    public HttpResult doPost1(String str) throws Exception{
-
-        //初始化url
-        String url = "https://open.workec.com/user/findUserInfoById";
-        //设置URL
-        Map<String, Object> mapUrl =new HashMap<>();
-        URIBuilder uriBuilder = new URIBuilder(url);
-        if (mapUrl != null) {
-            // 遍历map,拼接请求参数
-            for (Map.Entry<String, Object> entry : mapUrl.entrySet()) {
-                uriBuilder.setParameter(entry.getKey(), entry.getValue().toString());
-            }
-            url = uriBuilder.build().toString();
-        }
-
-        System.out.println("url:"+url);
-        // 声明httpPost请求
-        HttpPost httpPost = new HttpPost(url);
-        // 加入配置信息
-        httpPost.setConfig(config);
-
-        // 设置headers
-        JSONObject js = new JSONObject(str);
-        String accessToken = js.get("accessToken").toString();
-        String responseBody = js.get("responseBody").toString();
-        System.out.println("accessToken1:"+accessToken);
-        System.out.println("responseBody1:"+responseBody);
-
-        //获取带表达式的存储值
-        String db_value = "AAA_${Rsp:1:regex@\"accessToken\":\"(.*?)\",\"expiresIn\"}_XXX";
-        String matcher_value = null;
-
-        //识别动态参数的提取方式：正则
-        String checkRegular_regex =  "\\$\\{Rsp:(.*?):regex@(.*?)}";
-        System.out.println("checkRegular_regex:"+checkRegular_regex);
-
-        Pattern pattern = Pattern.compile(checkRegular_regex);
-        Matcher macherRegular = pattern.matcher(db_value);
-
-        while(macherRegular.find()){
-            String macher_regular = macherRegular.group(0).trim();
-            System.out.println("macher_regular："+macher_regular);
-
-            //提取正则表达式
-            int startLocation = macher_regular.indexOf("@")+1;  //从@标记符号后开始截取
-            int endLocation = macher_regular.length()-1;    //去掉结尾的}
-
-            System.out.println("startLocation:"+startLocation+",endLocation:"+endLocation);
-            String regex = macher_regular.substring(startLocation,endLocation);
-            System.out.println("regex:" + regex);
-
-            //正则匹配，提取动态参数的值
-            Pattern pattern_get_param = Pattern.compile(regex);
-            Matcher matcher_get_param = pattern_get_param.matcher(responseBody);
-
-            while (matcher_get_param.find()){
-                String matcher_result = matcher_get_param.group(0).trim();
-                System.out.println("matcher_result:" + matcher_result);
-                matcher_value = matcher_get_param.group(1).trim();
-                System.out.println("matcher_value:" + matcher_value);
-                //把参数值中的表达式，替换为真实值
-                db_value = db_value.replace(macher_regular,matcher_value);
-                System.out.println("db_value:"+db_value);
-            }
-        }
-
-
-        httpPost.setHeader("Authorization",matcher_value);
-        httpPost.setHeader("CORP-ID","4855250");
-
-        JSONObject jsonObject_header = new JSONObject();
-        Header[] requestHeaders= httpPost.getAllHeaders();
-        for (int i = 0; i < requestHeaders.length; i++) {
-            String key = requestHeaders[i].getName();
-            String value = requestHeaders[i].getValue();
-            jsonObject_header.put(key,value);
-        }
-        System.out.println("headers:" + jsonObject_header.toString());
-
-        //设置body
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("account","14422222222");
-        String body = jsonObject.toString();
-        System.out.println("body:"+body);
-
-        // 判断body是否为空，不为空则封装成Json参数
-        if (body != null) {
-            // 构造Json对象
-            StringEntity entity = new StringEntity(body,"utf-8");
-            entity.setContentEncoding("UTF-8");
-            entity.setContentType("application/json");
-
-            // 把Json放到post里
-            httpPost.setEntity(entity);
-        }
-
-        // 发起请求
-        CloseableHttpResponse response = this.httpClient.execute(httpPost);
-        return null;
-//        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
-//                response.getEntity(), "UTF-8"));
-
-    }
-
-/*    public static void main(String[] args) throws Exception {
-        HttpAPIService service = new HttpAPIService();
-        String result = service.doPost().toString();
-        System.out.println(result);
-    }*/
 }

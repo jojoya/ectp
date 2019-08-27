@@ -1,5 +1,7 @@
 package com.workec.ectp.service.impl;
 
+import com.workec.ectp.components.DataCacheComponent;
+import com.workec.ectp.configuration.Configuration;
 import com.workec.ectp.entity.Bo.KeyValuePair;
 import com.workec.ectp.entity.Bo.HttpDebugInformation;
 import com.workec.ectp.entity.Bo.HttpResult;
@@ -17,6 +19,8 @@ import org.springframework.validation.BindingResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -24,6 +28,29 @@ public class HttpServiceImpl implements HttpService {
 
     @Autowired
     HttpAPIComponent httpAPIComponent;
+
+    @Autowired
+    DataCacheComponent dataCacheComponent;
+
+
+    private String urlMapping(String url,Integer envId){
+        String regex = "^(http://|https://)(.*?)/";
+
+        //取出域名
+        String domain = null;
+        Matcher matchResult = Pattern.compile(regex).matcher(url);
+        if(matchResult.find()) {
+            domain = matchResult.group(2);
+        }
+
+        //替换域名
+        String ip = dataCacheComponent.getIpByDomainAndEnvId(envId,domain);
+        //域名、ip都不为空就做域名映射
+        if(domain!=null&&ip!=null){
+            url=url.replaceFirst(domain,ip);
+        }
+        return url;
+    }
 
     @Override
     public Result<HttpResult> doDebug(HttpDebugInformation httpDebugInformation, BindingResult bindingResult){
@@ -37,6 +64,15 @@ public class HttpServiceImpl implements HttpService {
 
         Integer method = httpDebugInformation.getMethod();
         String url = httpDebugInformation.getUrl();
+        Integer envId = httpDebugInformation.getApplicationEnvironmentId();
+        //url映射处理
+        if(Configuration.getEnvChange()==true){
+            System.out.println("++++++++++++++++++++++++before:"+url);
+            url = urlMapping(url,envId);
+            System.out.println("++++++++++++++++++++++++after:"+url);
+        }else {
+            System.out.println("-----------------------------定义调试：不做url转换--------------------------");
+        }
 
         List<KeyValuePair> pathList = httpDebugInformation.getPaths();
         Map<String, Object> pathMap = keyPairAssemble(pathList) ;
@@ -71,7 +107,13 @@ public class HttpServiceImpl implements HttpService {
             return ResultUtil.success(httpResult);
         }else if(method==3){
             //postJson请求
-            String bodyStr = httpDebugInformation.getBodys().toString();
+            String bodyStr = null;
+            List<Map<String,String>> list = (List)httpDebugInformation.getBodys();
+            if(list!=null && list.size()>0) {
+                Map<String, String> map = list.get(0);
+                bodyStr = map.get("value");
+            }
+
             httpResult = httpAPIComponent.doPostJson(url, pathMap, headerMap, bodyStr);
             return ResultUtil.success(httpResult);
         }else{

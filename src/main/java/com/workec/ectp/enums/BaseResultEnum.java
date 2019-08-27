@@ -20,6 +20,8 @@ public enum BaseResultEnum {
 
     USER_ERROR(10100,"账号密码不正确！"),
     USER_DUPLICATION(10101,"存在重复的用户！"),
+
+    REGX_SYNTAX_ERROR(10200,"正则表达式错误"),
     ;
 
     private Integer code;

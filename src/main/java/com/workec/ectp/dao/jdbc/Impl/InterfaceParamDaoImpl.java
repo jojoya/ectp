@@ -45,7 +45,7 @@ public class InterfaceParamDaoImpl implements IInterfaceParamDao {
     @Override
     public List<InterfaceParamForCallInfo> findByInterfaceIdAndLocation(Integer interfaceId, Integer location) {
         List<InterfaceParamForCallInfo> list = jdbcTemplate.query
-                ("SELECT a.id as paramId,a.param_name as paramName,0 as valueId,a.value,a.format,a.remark \n" +
+                ("SELECT a.id as paramId,a.param_name as paramName,null as valueId,a.value,a.format,a.remark \n" +
                                 "FROM\n" +
                                 "interface_param a WHERE a.interface_def_id = ? and a.location = ?",
                         new Object[]{interfaceId,location},

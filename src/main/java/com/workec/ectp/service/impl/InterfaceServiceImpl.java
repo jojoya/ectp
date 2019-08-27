@@ -122,6 +122,6 @@ public class InterfaceServiceImpl implements InterfaceService {
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),
                     BaseResultEnum.DATA_NOT_EXIST.getMessage());
         }
-        return ResultUtil.success(interfaceComponent.getInterfaceStructure(0,interfaceId));
+        return ResultUtil.success(interfaceComponent.getInterfaceStructure(interfaceId));
     }
 }

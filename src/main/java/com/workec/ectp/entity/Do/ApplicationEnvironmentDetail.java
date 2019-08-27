@@ -23,7 +23,7 @@ public class ApplicationEnvironmentDetail extends TimeEntity {
 
 
     @NotBlank(message = "ip不能为空")
-    @Size(min=1, max=16, message = "IP长度1~16")
+    @Size(min=1, max=50, message = "IP长度1~50")
     @JsonProperty(value = "ip")
     private String ip;
 

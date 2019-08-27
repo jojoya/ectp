@@ -1,6 +1,7 @@
 package com.workec.ectp.service.impl;
 
 import com.workec.ectp.components.CaseComponent;
+import com.workec.ectp.components.CaseExecuteComponent;
 import com.workec.ectp.dao.jpa.CaseDao;
 import com.workec.ectp.entity.Bo.CallInterfaceAndMiddleValues;
 import com.workec.ectp.entity.Bo.CallInterfaceInfo;
@@ -13,6 +14,7 @@ import com.workec.ectp.service.CaseService;
 import com.workec.ectp.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 
@@ -27,6 +29,8 @@ public class CaseServiceImpl implements CaseService {
     @Autowired
     CaseComponent caseComponent;
 
+    @Autowired
+    CaseExecuteComponent caseExecuteComponent;
 
 
 
@@ -37,6 +41,7 @@ public class CaseServiceImpl implements CaseService {
     }
 
 
+    @Transactional
     @Override
     public Result<Case> updateCase(Case cs) {
 
@@ -44,6 +49,8 @@ public class CaseServiceImpl implements CaseService {
 
     }
 
+
+    @Transactional
     @Override
     public Result deleteCaseById(Integer id){
         if(caseDao.exists(id)){
@@ -79,9 +86,9 @@ public class CaseServiceImpl implements CaseService {
         }
 
 
-
         if(caseDao.exists(caseId)) {
-            return ResultUtil.success(caseComponent.executeOneCase(caseId,applicationEnvironmentId,executeUserId));
+            return ResultUtil.success(caseExecuteComponent.caseExecuteOne(executeUserId,applicationEnvironmentId,caseId));
+//            return ResultUtil.success(caseComponent.executeOneCase(caseId,applicationEnvironmentId,executeUserId));
         }else {
             return ResultUtil.error(
                     BaseResultEnum.DATA_NOT_EXIST.getCode(),

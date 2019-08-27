@@ -6,6 +6,7 @@ import com.workec.ectp.entity.Do.CallInterfaceData;
 import com.workec.ectp.entity.Do.Case;
 import com.workec.ectp.entity.Do.MiddleParam;
 import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Vo.CallInterfaceStepAdjustment;
 import com.workec.ectp.service.AssertService;
 import com.workec.ectp.service.CallInterfaceService;
 import com.workec.ectp.service.CaseService;
@@ -94,6 +95,13 @@ public class CaseController {
     @GetMapping(value = "/case/step/delete/{id}")
     public Result deleteCallInterfaceById(@PathVariable Integer id) {
         return callInterfaceService.deleteCallInterfaceById(id);
+    }
+
+    @ApiOperation(value = "调整步骤顺序", notes = "调整步骤顺序")
+    @ApiImplicitParam(name = "adjustment", value = "中间变量实体", required = true, dataType = "CallInterfaceStepAdjustment")
+    @PostMapping(value = "/case/step/adjust")
+    public Result adjustCallInterface(@RequestBody CallInterfaceStepAdjustment adjustment) {
+        return callInterfaceService.adjustCallInterfaceStep(adjustment);
     }
 
 

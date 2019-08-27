@@ -4,6 +4,7 @@ import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
 import com.workec.ectp.entity.Bo.GroupedCallInterface;
 import com.workec.ectp.entity.Do.CallInterfaceData;
 import com.workec.ectp.entity.Dto.Result;
+import com.workec.ectp.entity.Vo.CallInterfaceStepAdjustment;
 
 public interface CallInterfaceService  {
 
@@ -15,5 +16,8 @@ public interface CallInterfaceService  {
 
      //删除步骤
      Result deleteCallInterfaceById(Integer id);
+
+     //调整步骤顺序
+     Result adjustCallInterfaceStep(CallInterfaceStepAdjustment adjustment);
 
 }

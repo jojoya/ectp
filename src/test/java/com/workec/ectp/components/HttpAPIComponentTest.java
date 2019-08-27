@@ -34,7 +34,6 @@ public class HttpAPIComponentTest {
         System.out.println("httpResult:"+httpResult);
     }
 
-/*
 
     @Test
     public void regexTestDemo01(){
@@ -46,12 +45,13 @@ public class HttpAPIComponentTest {
         System.out.println("regexRegular:"+regexRegular);
 
         //2、指定匹配内容
-        String db_value = "AAA_${1::111::account}_BBB_${3::333}_CCC_${4::444}_DDD_${1::111}_EEE";
+        String db_value = "AAA_${1::111}_BBB_${3::333}_CCC_${4::444}_DDD_${1::111}_EEE";
 
         //3、匹配
         Pattern pattern = Pattern.compile(regexRegular);
         Matcher matchResult = pattern.matcher(db_value);
 
+        Pattern.matches(regexRegular,db_value);
         System.out.println("groupCount:"+ matchResult.groupCount());
         StringBuffer sb = new StringBuffer();
         int strStart = 0;
@@ -68,6 +68,7 @@ public class HttpAPIComponentTest {
 //            System.out.println("group(0):" + matchResult.group(0));
 //            System.out.println("group(1):" + matchResult.group(1));
 //            System.out.println("group(2):" + matchResult.group(2));
+            System.out.println("xxxxxx:"+  matchResult.group(1));
 
             int type = Integer.valueOf(matchResult.group(1));
             int id = Integer.valueOf(matchResult.group(2));
@@ -112,7 +113,6 @@ public class HttpAPIComponentTest {
         System.out.println(sb.toString());
     }
 
-*/
 
 
     @Test

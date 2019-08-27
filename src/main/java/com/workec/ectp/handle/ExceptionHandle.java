@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.regex.PatternSyntaxException;
+
 
 /**
  * Created by user on 2017/11/17.
@@ -65,6 +67,10 @@ public class ExceptionHandle {
             return ResultUtil.error(
                     BaseResultEnum.INVALID_DATA_ACCESS.getCode(),
                     BaseResultEnum.INVALID_DATA_ACCESS.getMessage());
+        }else if(e instanceof PatternSyntaxException){
+            return ResultUtil.error(
+                    BaseResultEnum.REGX_SYNTAX_ERROR.getCode(),
+                    BaseResultEnum.REGX_SYNTAX_ERROR.getMessage());
         }else{
             logger.error("【系统异常】{}",e);
             return ResultUtil.error(

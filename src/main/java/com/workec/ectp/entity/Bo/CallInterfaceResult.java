@@ -10,10 +10,16 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public class CallInterfaceResult {
+    private Integer executeStatus;
+    private String executeMsg;
+
     private Integer callInterfaceId;
     private InterfaceInitDataBackEnd reqInfo;
     private HttpResult result;
 
+    private Integer location;
+    private Integer step;
+    private String label;
 
 
     @Override

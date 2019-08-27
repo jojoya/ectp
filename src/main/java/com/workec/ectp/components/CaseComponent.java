@@ -2,19 +2,17 @@ package com.workec.ectp.components;
 
 import com.workec.ectp.dao.jdbc.IMiddleParamDao;
 import com.workec.ectp.dao.jpa.*;
-import com.workec.ectp.entity.Bo.*;
+import com.workec.ectp.entity.Bo.CallInterfaceAndMiddleValues;
+import com.workec.ectp.entity.Bo.CallInterfaceDataSave;
+import com.workec.ectp.entity.Bo.CallInterfaceInfo;
+import com.workec.ectp.entity.Bo.InterfaceInitDataFrontEnd;
 import com.workec.ectp.entity.Do.*;
 import com.workec.ectp.enums.CallInterfaceLocation;
-import com.workec.ectp.enums.InterfaceParamLocation;
-import com.workec.ectp.enums.ReqDataMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by user on 2018/3/9.
@@ -30,36 +28,30 @@ public class CaseComponent {
     private CallInterfaceDao callInterfaceDao;
 
     @Autowired
-    private InterfaceDefDao interfaceDefDao;
-
-    @Autowired
-    private InterfaceParamDao interfaceParamDao;
-
-    @Autowired
     private CallInterfaceDataDao callInterfaceDataDao;
 
     @Autowired
     private MiddleParamDao middleParamDao;
 
     @Autowired
-    private HttpAPIComponent httpAPIComponent;
-
-    @Autowired
     private InterfaceComponent interfaceComponent;
 
     @Autowired
-    private AssertDao assertDao;
+    private CaseAssertDao caseAssertDao;
 
     @Autowired
     private IMiddleParamDao iMiddleParamDao;
 
+
+
 /**
 * 执行用例：根据caseId执行用例，并获取执行结果
 */
-public CaseExecuteResult executeOneCase(Integer caseId,Integer applicationEnvironmentId,Integer executeUserId){
+/*
+public CaseExecuteResult executeOneCase(Integer caseId,Integer appEnvId,Integer executeUserId){
 
     //初始化用例数据
-    Map map = initCase(caseId);
+    Map map = initCase(caseId,appEnvId,executeUserId);
     List<InterfaceInitDataBackEnd> preCallsDataList= (List<InterfaceInitDataBackEnd>)map.get("beforeCallsDataList");
     List<InterfaceInitDataBackEnd> testCallsData = (List<InterfaceInitDataBackEnd>)map.get("testCallsDataList");
     List<InterfaceInitDataBackEnd> postCallsDataList =  (List<InterfaceInitDataBackEnd>)map.get("afterCallsDataList");
@@ -69,18 +61,16 @@ public CaseExecuteResult executeOneCase(Integer caseId,Integer applicationEnviro
     List<CallInterfaceResult> testResult = getCallInterfaceResultList(testCallsData);
     List<CallInterfaceResult> postResults = getCallInterfaceResultList(postCallsDataList);
 
-    //返回执行结果
-    CaseExecuteResult caseExecuteResult = new CaseExecuteResult();
-    caseExecuteResult.setPreResults(preResults);
-    caseExecuteResult.setTestResult(testResult);
-    caseExecuteResult.setPostResults(postResults);
-
-    return caseExecuteResult;
+    CaseExecuteResult.getThreadInstance().setPreResults(preResults);
+    CaseExecuteResult.getThreadInstance().setTestResult(testResult);
+    CaseExecuteResult.getThreadInstance().setPostResults(postResults);
+    return CaseExecuteResult.getThreadInstance();
 }
+*/
 
 
 
-private List<CallInterfaceResult> getCallInterfaceResultList(List<InterfaceInitDataBackEnd> callInterfaceDataList){
+/*private List<CallInterfaceResult> getCallInterfaceResultList(List<InterfaceInitDataBackEnd> callInterfaceDataList){
 
     List<CallInterfaceResult> list = new ArrayList<>();
 
@@ -117,10 +107,10 @@ private List<CallInterfaceResult> getCallInterfaceResultList(List<InterfaceInitD
 
 
 
- /**
+ *//**
  * 后端组装用例信息：根据caseId获取用例数据
- */
-public Map initCase(Integer caseId){
+ *//*
+public Map initCase(Integer caseId,Integer appEnvId,Integer executeUserId){
 
     //获取前置调用的接口,location=1
     List<CallInterface> beforeCalls = callInterfaceDao.findByCaseIdAndLocationOrderByStepAsc(caseId, CallInterfaceLocation.PREPOSITION.getCode());
@@ -132,39 +122,46 @@ public Map initCase(Integer caseId){
     List<CallInterface> afterCalls = callInterfaceDao.findByCaseIdAndLocationOrderByStepAsc(caseId,CallInterfaceLocation.POSTPOSITION.getCode());
 
     //组装前置接口调用的数据信息
-    List<InterfaceInitDataBackEnd> beforeCallsDataList = initCallInterfaceList(beforeCalls);
+    List<InterfaceInitDataBackEnd> beforeCallsDataList = initCallInterfaceList(beforeCalls,appEnvId,executeUserId);
 
     //组装测试接口调用的数据信息
-    List<InterfaceInitDataBackEnd> testCallsDataList = initCallInterfaceList(testCalls);
+    List<InterfaceInitDataBackEnd> testCallsDataList = initCallInterfaceList(testCalls,appEnvId,executeUserId);
 
     //组装后置接口调用的数据信息
-    List<InterfaceInitDataBackEnd> afterCallsDataList = initCallInterfaceList(afterCalls);
+    List<InterfaceInitDataBackEnd> afterCallsDataList = initCallInterfaceList(afterCalls,appEnvId,executeUserId);
 
     Map map = new HashMap();
     map.put("beforeCallsDataList",beforeCallsDataList);
     map.put("testCallsDataList",testCallsDataList);
     map.put("afterCallsDataList",afterCallsDataList);
     return map;
-}
+}*/
+
+
+/*
 
 //把用例步骤列表 转换为 可执行的用例数据列表
-private List<InterfaceInitDataBackEnd> initCallInterfaceList(List<CallInterface> list){
+private List<InterfaceInitDataBackEnd> initCallInterfaceList(List<CallInterface> list,Integer appEnvId,Integer executeUserId){
     List<InterfaceInitDataBackEnd> resultList = new ArrayList<>();
     //逐个用例组装
     for (CallInterface callInterface:list) {
-        InterfaceInitDataBackEnd initData = initCallInterface(callInterface);
+        InterfaceInitDataBackEnd initData = initCallInterface(callInterface, appEnvId, executeUserId);
         resultList.add(initData);
     }
     return resultList;
 }
+*/
 
 
 
+/*
 
+*/
 /**
  * 组装步骤信息:根据InterfaceId获取请求数据
- */
-public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
+ *//*
+
+public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface,Integer appEnvId,Integer executeUserId){
     InterfaceInitDataBackEnd initData = new InterfaceInitDataBackEnd();
 
     Integer reqMethod;
@@ -189,13 +186,13 @@ public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
 
     //请求头
     List<InterfaceParam> headerList = interfaceParamDao.findByInterfaceDefIdAndLocation(interfaceId,InterfaceParamLocation.HEADER.getCode());
-    headerMap = getKeyValuePairByParamListAndCallInterfaceId(callInterfaceId,headerList);
+    headerMap = getKeyValuePairByParamListAndCallInterfaceId(callInterfaceId,headerList, executeUserId, appEnvId);
 
 
 
     //url参数
     List<InterfaceParam> pathList = interfaceParamDao.findByInterfaceDefIdAndLocation(interfaceId,InterfaceParamLocation.PATH.getCode());
-    pathMap = getKeyValuePairByParamListAndCallInterfaceId(callInterfaceId,pathList);
+    pathMap = getKeyValuePairByParamListAndCallInterfaceId(callInterfaceId,pathList, executeUserId, appEnvId);
 
 
 
@@ -219,7 +216,9 @@ public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
                 //组装Json格式的body
                 CallInterfaceData callInterfaceData = callInterfaceDataDao.findByCallInterfaceIdAndParamKeyId(callInterfaceId,paramId);
                 body = callInterfaceData.getParamsValue();
-                /** 动态参数转换+++ **/
+                */
+/** 动态参数转换+++ **//*
+
 
 
             }else if(formate==1 && paramName!=null){
@@ -227,7 +226,7 @@ public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
                 //请求方法
                 reqMethod = ReqDataMethod.POST_FORM.getCode();
                 //组装Form格式的body
-                body = getKeyValuePairByParamListAndCallInterfaceId(callInterfaceId,bodyList);
+                body = getKeyValuePairByParamListAndCallInterfaceId(callInterfaceId,bodyList, executeUserId, appEnvId);
             }
         }
 
@@ -244,31 +243,10 @@ public InterfaceInitDataBackEnd initCallInterface(CallInterface callInterface){
     initData.setBody(body);
     return initData;
 }
-
-
-
-
-/**
- * 动态参数转换为值
 */
-private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer callInterfaceId,List<InterfaceParam> paramList){
-
-    Map<String, Object> map = new HashMap();
-    for(InterfaceParam interfaceParam: paramList){
-        String paramName = interfaceParam.getParamName();
-        int paramId = interfaceParam.getId();
-        String value = null;
-        CallInterfaceData callInterfaceData = callInterfaceDataDao.findByCallInterfaceIdAndParamKeyId(callInterfaceId,paramId);
-        if(callInterfaceData!=null && !callInterfaceData.equals("")){
-            value = callInterfaceData.getParamsValue();
-            /** 动态参数转换+++ **/
 
 
-        }
-        map.put(paramName,value);
-    }
-    return map;
-}
+
 
 /**
  * 获取调用信息
@@ -279,13 +257,13 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         int interfaceId = callInterface.getInterfaceId();
 
         //组装接口信息
-        InterfaceInitDataFrontEnd interfaceStructure = interfaceComponent.getInterfaceStructure(callInterfaceId,interfaceId);
+        InterfaceInitDataFrontEnd interfaceStructure = interfaceComponent.getCallInterfaceStructure(callInterfaceId,interfaceId);
 
         //中间参数
         List<MiddleParam> middleParams = middleParamDao.findByCallInterfaceId(callInterfaceId);
 
         //检查点列表
-        List<CaseAssert> caseAsserts = assertDao.findAll(callInterfaceId);
+        List<CaseAssert> caseAsserts = caseAssertDao.findByCallInterfaceId(callInterfaceId);
 
 
         //组装结果
@@ -313,7 +291,6 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
     /**
      * 删除用例
      * */
-    @Transactional
     public void deleteCaseById(Integer id) {
 
         //获取用例步骤
@@ -335,24 +312,43 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
     }
 
 
+    /**
+     * 执行步骤重新排序
+     * */
+    public void stepsReorder(Integer caseId,Integer location){
+
+        List<CallInterface> list = callInterfaceDao.findByCaseIdAndLocationOrderByStepAsc(caseId,location);
+
+        for (int i = 0; i < list.size(); i++) {
+            CallInterface stepInfo = list.get(i);
+            stepInfo.setStep(i+1);
+            callInterfaceDao.save(stepInfo);
+        }
+
+    }
+
+
 
     /**
      * 保存步骤
      * */
-    @Transactional
     public CallInterfaceInfo saveStep(CallInterfaceDataSave cifds) {
 
         //保存步骤
         CallInterface callInterface = cifds.getCallInterface();
-        //a.如果已存在准测试接口的步骤数据，不再新增
-        if(callInterface.getId()==0&&callInterface.getLocation()==CallInterfaceLocation.TEST.getCode()){
-            List<CallInterface> tests = callInterfaceDao.findByCaseIdAndLocationOrderByStepAsc(callInterface.getCaseId(),callInterface.getLocation());
-            if(tests!=null&&tests.size()>0){
-                return null;
+        CallInterface callInterfaceReslult;
+        //如果已存在准测试接口的步骤数据，重置id，不再新增
+        if (callInterface.getId() == 0 && callInterface.getLocation() == CallInterfaceLocation.TEST.getCode()) {
+            synchronized (this) {
+                List<CallInterface> tests = callInterfaceDao.getListByCaseIdAndLocation(callInterface.getCaseId(), callInterface.getLocation());
+                if (tests != null && tests.size() > 0) {
+                    callInterface.setId(tests.get(0).getId());
+                }
+                callInterfaceReslult = callInterfaceDao.save(callInterface);
             }
+        }else {
+            callInterfaceReslult = callInterfaceDao.save(callInterface);
         }
-        //b.新增、修改
-        CallInterface callInterfaceReslult = callInterfaceDao.save(callInterface);
 
 
         //保存参数值
@@ -360,6 +356,11 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
         List<CallInterfaceData> paramlist =cifds.getParamData();
         for(int i =0;i< paramlist.size();i++){
             CallInterfaceData callInterfaceData = paramlist.get(i);
+            Integer id = callInterfaceDataDao.findIdByCallInterfaceIdAndParamKeyId(callInterfaceId,callInterfaceData.getParamKeyId());
+            //处理冲突数据,重置id,确保数据唯一
+            if(id!=null && id!=0 && callInterfaceData.getId()==0) {
+                callInterfaceData.setId(id);
+            }
             callInterfaceData.setCallInterfaceId(callInterfaceId);
             callInterfaceDataDao.save(callInterfaceData);
         }
@@ -372,7 +373,6 @@ private Map<String,Object> getKeyValuePairByParamListAndCallInterfaceId(Integer 
             }
         }
 
-        this.getCallInterfaceInfo(callInterfaceId);
         CallInterfaceInfo callInterfaceInfo = this.getCallInterfaceInfo(callInterfaceId);
 
         return callInterfaceInfo;

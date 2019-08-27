@@ -1,5 +1,6 @@
 package com.workec.ectp.components;
 
+import com.workec.ectp.configuration.Configuration;
 import com.workec.ectp.dao.jdbc.Impl.InterfaceParamDaoImpl;
 import com.workec.ectp.dao.jpa.DomainDao;
 import com.workec.ectp.dao.jpa.InterfaceDefDao;
@@ -32,6 +33,9 @@ public class InterfaceComponent {
     @Autowired
     private DomainDao domainDao;
 
+    @Autowired
+    private DataCacheComponent dataCacheComponent;
+
     /* 定义接口-InterfaceDef */
     public InterfaceDef saveDef(@Valid InterfaceDef interfaceDef, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -58,9 +62,9 @@ public class InterfaceComponent {
 
 
     /**
-     * 查询接口的结构，如果有被调用就从调用信息里面取值（callInterfaceId=null），如果没有被调用就从定义里面取值（callInterfaceId!=null）
+     * 查询接口的结构从定义里面取值（callInterfaceId==null）
      * */
-    public InterfaceInitDataFrontEnd getInterfaceStructure(Integer callInterfaceId, Integer interfaceId){
+    public InterfaceInitDataFrontEnd getInterfaceStructure(Integer interfaceId){
         InterfaceInitDataFrontEnd dataFrontEnd = new InterfaceInitDataFrontEnd();
         if(!interfaceDefDao.exists(interfaceId)){
             return dataFrontEnd;
@@ -82,17 +86,55 @@ public class InterfaceComponent {
         //访问地址
         String accessAddress = this.getUrl(resultDef);
 
-        callInterfaceId=callInterfaceId==null?0:callInterfaceId;
+        //获取params，如果有被调用就从调用信息里面取值（callInterfaceId=null），如果没有被调用就从定义里面取值（callInterfaceId!=null）
+        List<InterfaceParamForCallInfo> header = null;
+        List<InterfaceParamForCallInfo> path = null;
+        List<InterfaceParamForCallInfo> body = null;
+        header = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId, InterfaceParamLocation.HEADER.getCode());
+        path = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId,InterfaceParamLocation.PATH.getCode());
+        body = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId,InterfaceParamLocation.BODY.getCode());
+
+
+        dataFrontEnd.setReqMethod(reqMethod);
+        dataFrontEnd.setInterfaceName(interfaceName);
+        dataFrontEnd.setAccessAddress(accessAddress);
+        dataFrontEnd.setHeader(header);
+        dataFrontEnd.setPath(path);
+        dataFrontEnd.setBody(body);
+
+        return dataFrontEnd;
+    }
+
+    /**
+     * 查询接口的结构，从调用信息里面取值（callInterfaceId!=null）
+     * */
+    public InterfaceInitDataFrontEnd getCallInterfaceStructure(Integer callInterfaceId, Integer interfaceId){
+        InterfaceInitDataFrontEnd dataFrontEnd = new InterfaceInitDataFrontEnd();
+        if(!interfaceDefDao.exists(interfaceId)){
+            return dataFrontEnd;
+        }
+
+        //获取def
+        InterfaceDef resultDef = interfaceDefDao.findOne(interfaceId);
+
+        //请求方法
+        String reqMethod = "";
+        if(resultDef.getReqMethod()==1){
+            reqMethod = "GET";
+        }else if(resultDef.getReqMethod()==2){
+            reqMethod = "POST";
+        }
+
+        String interfaceName = resultDef.getLabel();
+
+        //访问地址
+        String accessAddress = this.getUrl(resultDef);
 
         //获取params，如果有被调用就从调用信息里面取值（callInterfaceId=null），如果没有被调用就从定义里面取值（callInterfaceId!=null）
         List<InterfaceParamForCallInfo> header = null;
         List<InterfaceParamForCallInfo> path = null;
         List<InterfaceParamForCallInfo> body = null;
-        if(callInterfaceId==null||callInterfaceId==0){
-            header = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId, InterfaceParamLocation.HEADER.getCode());
-            path = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId,InterfaceParamLocation.PATH.getCode());
-            body = interfaceParamDaoImpl.findByInterfaceIdAndLocation(interfaceId,InterfaceParamLocation.BODY.getCode());
-        }else if(callInterfaceId!=null&&callInterfaceId!=0){
+        if(callInterfaceId!=null&&callInterfaceId!=0){
             header = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId, InterfaceParamLocation.HEADER.getCode());
             path = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.PATH.getCode());
             body = interfaceParamDaoImpl.findByCallInterfaceIdAndInterfaceIdAndLocation(callInterfaceId,interfaceId,InterfaceParamLocation.BODY.getCode());
@@ -109,14 +151,40 @@ public class InterfaceComponent {
     }
 
 
+    public String getUrl(InterfaceDef interfaceDef,Integer appEnvId){
 
+        int reqProtocol = interfaceDef.getReqProtocol();
+        String domain = domainDao.findOne(interfaceDef.getDomainId()).getName();
+        /** 环境切换：url映射处理 **/
+        if(Configuration.getEnvChange()==true){
+            System.out.println("++++++++++++++++++++++++before:"+domain);
+            String ip = dataCacheComponent.getIpByDomainAndEnvId(appEnvId, domain);
+            domain = ip == null ? domain : ip;
+            System.out.println("++++++++++++++++++++++++after:"+domain);
+        }else {
+            System.out.println("-----------------------------用例执行：不做url转换--------------------------");
+
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if(reqProtocol==1){
+            sb.append("http://");
+        }else if(reqProtocol==2){
+            sb.append("https://");
+        }
+
+        sb.append(domain);
+        sb.append("/");
+        sb.append(interfaceDef.getUrl());
+
+        return sb.toString();
+
+    }
 
     public String getUrl(InterfaceDef interfaceDef){
 
         int reqProtocol = interfaceDef.getReqProtocol();
         String domain = domainDao.findOne(interfaceDef.getDomainId()).getName();
-        /** 环境切换转换+++ **/
-
         StringBuilder sb = new StringBuilder();
 
         if(reqProtocol==1){
@@ -132,4 +200,7 @@ public class InterfaceComponent {
         return sb.toString();
 
     }
+
+
+
 }

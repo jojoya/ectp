@@ -16,5 +16,7 @@ public interface CallInterfaceDataDao extends JpaRepository<CallInterfaceData,In
     @Query(value = "SELECT id FROM call_interface_data WHERE call_interface_id=?1", nativeQuery = true)
     List<Integer> getIdByCallInterfaceId(int callInterfaceId);
 
+    @Query(value = "SELECT id FROM call_interface_data WHERE call_interface_id=?1 AND param_key_id=?2", nativeQuery = true)
+    Integer findIdByCallInterfaceIdAndParamKeyId(Integer callInterfaceId,Integer paramKeyId);
 
 }

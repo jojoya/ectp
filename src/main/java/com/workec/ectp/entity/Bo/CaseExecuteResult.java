@@ -1,6 +1,7 @@
 package com.workec.ectp.entity.Bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.workec.ectp.entity.Do.CaseAssert;
 import lombok.Data;
 
 import java.util.List;
@@ -13,17 +14,16 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public class CaseExecuteResult {
 
-    private List<CallInterfaceResult> preResults;
+    private AssertResult assertResult;
+//    private List<CallInterfaceResult> preResults;
     private List<CallInterfaceResult> testResult;
-    private List<CallInterfaceResult> postResults;
+//    private List<CallInterfaceResult> postResults;
 
 
     @Override
     public String toString() {
         return "CaseExecuteResult{" +
-                "preResults=" + preResults +
                 ", testList=" + testResult +
-                ", postResults=" + postResults +
                 '}';
     }
 }

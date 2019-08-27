@@ -72,14 +72,14 @@ public class InterfaceController {
     }
 
 
-    @ApiOperation(value="按照接口id查询接口定义信息", notes="包含接口、参数和参数值，参数值来源于定义数据")
+    @ApiOperation(value="按照接口id查询接口定义信息", notes="【调试专用】包含接口、参数和参数值，参数值来源于定义数据")
     @GetMapping(value = "/interface/info/{id}")
     public Result<InterfaceDebugData> getInterfaceFromDef(@PathVariable("id") Integer id){
         return interfaceService.getInterface(id);
     }
 
 
-    @ApiOperation(value="按照接口id查询接口调用信息", notes="包含接口、参数和参数值，参数值来源于调用数据")
+    @ApiOperation(value="按照接口id查询接口信息", notes="【用例专用】包含接口、参数和参数值，参数值来源于调用数据")
     @GetMapping(value = "/interface/callInfo/{interfaceId}")
     public Result<InterfaceInitDataFrontEnd> getInterfaceStructure(@PathVariable("interfaceId") Integer interfaceId){
         return interfaceService.getInterfaceStructure(interfaceId);

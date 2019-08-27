@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface AssertDao extends JpaRepository<CaseAssert, Integer> {
+public interface CaseAssertDao extends JpaRepository<CaseAssert, Integer> {
 
-    @Query(value = "SELECT * FROM case_assert WHERE call_interface_id=?1", nativeQuery = true)
-    List<CaseAssert> findAll(Integer callInterfaceId);
+    List<CaseAssert> findByCallInterfaceId(Integer callInterfaceId);
 }

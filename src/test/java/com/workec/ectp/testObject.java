@@ -1,9 +1,10 @@
 package com.workec.ectp;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.druid.util.StringUtils;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by user on 2018/3/12.
@@ -31,5 +32,15 @@ public class testObject {
         map = (Map<String,Object>)obj;
         System.out.println("Obj>map:"+map);
 
+    }
+
+
+    @Test
+    public  void testMapToJson(){
+        Map map = new HashMap();
+        map.put("account","caixiaoling");
+        map.put("password","123abc");
+
+        System.out.println(JSONUtils.toJSONString(map));
     }
 }

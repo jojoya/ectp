@@ -14,8 +14,8 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-      ddl-auto: update
-    show-sql: true
+#      ddl-auto: update
+    show-sql: false
     database: mysql
     properties:
       hibernate:
@@ -40,3 +40,5 @@ http:
   staleConnectionCheckEnabled : true
 
 
+EctpConfig:
+  envChange : 1
